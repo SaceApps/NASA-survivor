@@ -1,0 +1,52 @@
+MISSÃO MARTE - jogo educativo cooperativo para crianças de 7 a 12 anos
+Versão @VERSAO@
+
+
+COMO ABRIR
+
+1. Extraia o zip para uma pasta. Não abra de dentro do zip.
+   Se o jogo veio em dois zips (parte1de2 e parte2de2), extraia os dois. Não precisa juntar nada à mão:
+   o JOGAR.cmd junta as duas partes sozinho, desde que elas estejam na mesma pasta ou em pastas vizinhas
+   (é o que o "Extrair tudo" do Windows faz quando os dois zips estão na mesma pasta).
+2. Dê duplo clique em JOGAR.cmd (o da pasta MissaoMarte que tem este LEIA-ME).
+   Abre uma janela preta (é o jogo rodando) e, em seguida, o navegador em http://localhost:5080.
+3. Para encerrar, feche a janela preta. As missões ficam salvas em jogo\partidas.
+
+Não precisa instalar nada: a pasta "jogo" já traz tudo. Funciona em Windows 10 ou 11 de 64 bits.
+
+Se o Windows mostrar "O Windows protegeu o computador", clique em "Mais informações" e em "Executar assim mesmo".
+Se o navegador não abrir sozinho, abra o endereço que aparece na janela preta.
+Se a porta 5080 estiver ocupada, o jogo usa a seguinte (5081, 5082...) e mostra o endereço certo na janela.
+
+
+PARA A APRESENTAÇÃO
+
+Na tela inicial há "Demonstração: a tempestade": uma missão salva no sol 5, no pior dia da tempestade de poeira.
+O roteiro de 5 minutos está em codigo-fonte\README.md.
+
+
+JOGAR COM TABLETS E CELULARES DA MESMA REDE
+
+1. Uma vez só: LIBERAR_REDE.cmd. O Windows pede permissão de administrador. Ele libera as portas 5080 a 5089
+   nas redes marcadas como Privada. Se a rede do evento estiver como Pública no Windows, abra o Prompt de Comando
+   nesta pasta e rode:  LIBERAR_REDE.cmd publica
+2. JOGAR_NA_REDE.cmd. A janela preta mostra o endereço para digitar nos aparelhos, por exemplo http://192.168.0.10:5080.
+3. Para desfazer a liberação: DESFAZER_REDE.cmd.
+
+Atenção: o jogo não tem senha. Quem estiver na mesma rede e souber o endereço entra na mesma missão.
+
+
+O QUE HÁ AQUI
+
+JOGAR.cmd, JOGAR_NA_REDE.cmd          abrem o jogo compilado
+LIBERAR_REDE.cmd, DESFAZER_REDE.cmd   firewall do Windows, só para o jogo em rede
+jogo\                                 o jogo compilado; não precisa do .NET instalado
+codigo-fonte\                         todos os arquivos do projeto: código C#, testes e documentação
+                                      (para compilar: .NET SDK 10; veja codigo-fonte\README.md)
+
+
+O QUE FOI CONFERIDO E O QUE NÃO FOI
+
+Conferido: os 36 testes automáticos passam; o jogo, extraído dos zips numa pasta limpa, abre pelo JOGAR.cmd e
+responde, inclusive juntando as duas partes sozinho.
+Não conferido: o jogo em rede com tablets de verdade, e os dois arquivos de firewall (não foram executados).

@@ -1,0 +1,113 @@
+@inherits PainelBase
+
+@if (P.Relatorios.Count == 0)
+{
+    <section class="cartao">
+        <h2>Relatório do sol</h2>
+        <p>Ainda não há relatório. Quando a equipe encerrar o primeiro sol, o computador roda as 24 horas e conta aqui o que aconteceu e por quê.</p>
+    </section>
+}
+else
+{
+    var rel = P.Relatorios.FirstOrDefault(r => r.Sol == _sol) ?? P.Relatorios[^1];
+    var rotulos = rel.Horas.Select(h => h.Hora + " h").ToArray();
+    var fato = PacoteNasa.Padrao.Fato(rel.FatoId);
+    var p = P.P;
+
+    <section class="cartao larga">
+        <div class="relatorio-topo">
+            <h2>Relatório do sol @(rel.Sol + 1): @Partida.NomeDoCeu(rel.Tau).ToLowerInvariant()</h2>
+            <div class="seletor" role="group" aria-label="Escolher o sol">
+                @foreach (var r in P.Relatorios)
+                {
+                    <button class="seg @(r.Sol == rel.Sol ? "ativo" : "")" aria-pressed="@(r.Sol == rel.Sol ? "true" : "false")" @onclick="() => _sol = r.Sol">Sol @(r.Sol + 1)</button>
+                }
+            </div>
+        </div>
+        <p class="fraco">Das 8 h deste sol às 8 h do seguinte. @(NivelTexto == 1 ? "Verde: tudo bem. Amarelo: atenção. Vermelho: perigo." : "Cada item diz o que aconteceu, por que aconteceu e o que dá para fazer.")</p>
+        <ul class="itens">
+            @foreach (var i in rel.Itens)
+            {
+                <li class="item @Classe(i.Gravidade)">
+                    <span class="item-icone"><Icone Nome="@Classe(i.Gravidade)" Tamanho="22" /></span>
+                    <div>
+                        <b>@i.Titulo</b> <span class="selo">@Rotulo(i.Gravidade)</span>
+                        <p>@i.Simples</p>
+                        @if (NivelTexto >= 2 && i.Porque != i.Simples) { <p class="porque">@i.Porque</p> }
+                        @if (NivelTexto >= 3) { <p class="numeros-texto">@i.Numeros</p> }
+                    </div>
+                </li>
+            }
+        </ul>
+    </section>
+
+    @if (fato != null)
+    {
+        <section class="cartao cartao-fato larga">
+            <h2><Icone Nome="ciencia" /> Fato real do sol: @fato.Titulo</h2>
+            <p>@fato.Texto</p>
+            @if (NivelTexto >= 2 && fato.Valor != "") { <p class="fraco">Medida: @fato.Valor</p> }
+            <small>Fonte: <a href="@fato.Url" target="_blank" rel="noopener">@fato.Fonte</a> · referência: @fato.DataReferencia</small>
+        </section>
+    }
+
+    <div class="grade graficos">
+        <section class="cartao">
+            <Grafico Titulo="Energia: o que os painéis geraram e o que a base gastou" Unidade="kW" Rotulos="rotulos" DesdeZero="true"
+                     Series="@(new() { new("Geração", "--serie-1", rel.Horas.Select(h => h.GeracaoW / 1000).ToArray()), new("Consumo", "--serie-2", rel.Horas.Select(h => h.ConsumoW / 1000).ToArray()) })" />
+        </section>
+        <section class="cartao">
+            <Grafico Titulo="Bateria da base" Unidade="kWh" Rotulos="rotulos" DesdeZero="true" Casas="0"
+                     Series="@(new() { new("Bateria", "--serie-1", rel.Horas.Select(h => h.BateriaWh / 1000).ToArray()) })" />
+        </section>
+        <section class="cartao">
+            <Grafico Titulo="Gás carbônico no ar" Unidade="kPa" Rotulos="rotulos" DesdeZero="true" Casas="2"
+                     Limites="@(new() { new(p.Ppco2AlertaKpa, "limite normal", "atencao"), new(p.Ppco2PerigoKpa, "agir", "perigo") })"
+                     Series="@(new() { new("CO2", "--serie-1", rel.Horas.Select(h => h.Ppco2Kpa).ToArray()) })" />
+        </section>
+        <section class="cartao">
+            <Grafico Titulo="Oxigênio no ar" Unidade="kPa" Rotulos="rotulos" Casas="1"
+                     Limites="@(new() { new(p.Ppo2AlertaKpa, "alerta", "atencao"), new(p.Ppo2PerigoKpa, "perigo", "perigo") })"
+                     Series="@(new() { new("O2", "--serie-1", rel.Horas.Select(h => h.Ppo2Kpa).ToArray()) })" />
+        </section>
+        <section class="cartao">
+            <Grafico Titulo="Água potável no tanque" Unidade="kg" Rotulos="rotulos" Casas="0"
+                     Series="@(new() { new("Água potável", "--serie-1", rel.Horas.Select(h => h.AguaPotavelKg).ToArray()) })" />
+        </section>
+        <section class="cartao">
+            <Grafico Titulo="Temperatura dentro da base" Unidade="°C" Rotulos="rotulos" Casas="1"
+                     Limites="@(new() { new(18, "mínimo confortável", "atencao") })"
+                     Series="@(new() { new("Temperatura", "--serie-1", rel.Horas.Select(h => h.TemperaturaC).ToArray()) })" />
+        </section>
+    </div>
+
+    @if (NivelTexto >= 2)
+    {
+        <section class="cartao larga">
+            <h2>As contas do sol</h2>
+            <ul class="numeros linha">
+                <li><span>Energia gerada</span><b>@rel.GeradoKwh.ToString("0") kWh</b></li>
+                <li><span>Energia gasta</span><b>@rel.ConsumidoKwh.ToString("0") kWh</b></li>
+                <li><span>Oxigênio gerado</span><b>@rel.O2GeradoKg.ToString("0.0") kg</b></li>
+                <li><span>Gás carbônico removido</span><b>@rel.Co2RemovidoKg.ToString("0.0") kg</b></li>
+                <li><span>Água tratada</span><b>@rel.AguaRecuperadaKg.ToString("0.0") kg</b></li>
+                <li><span>Ar perdido para Marte</span><b>@rel.ArVazadoKg.ToString("0.00") kg</b></li>
+            </ul>
+        </section>
+    }
+}
+
+@code {
+    private int _sol = -1;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _sol = Svc.Atual?.Relatorios.LastOrDefault()?.Sol ?? -1;
+    }
+
+    protected override void OnParametersSet()
+    {
+        if (Svc.Atual is { } pt && pt.Relatorios.All(r => r.Sol != _sol)) _sol = pt.Relatorios.LastOrDefault()?.Sol ?? -1;
+    }
+}

@@ -1,0 +1,199 @@
+@inherits PainelBase
+
+@{
+    var amb = P.AmbienteDoSol();
+    var ultimo = P.Relatorios.LastOrDefault();
+    var semaforos = new[]
+    {
+        ("ar", "Ar", P.EstadoDoAr(), $"O2 {P.Ppo2Kpa:0.0} kPa · CO2 {P.Ppco2Kpa:0.00} kPa"),
+        ("agua", "Água", P.EstadoDaAgua(), $"{P.Base.AguaPotavelKg:0} kg de água potável"),
+        ("energia", "Energia", P.EstadoDaEnergia(), $"Bateria com {P.Base.BateriaWh / 1000:0} kWh ({P.BateriaFracao * 100:0}%)"),
+    };
+    bool emAndamento = P.Fase == FaseMissao.EmAndamento;
+}
+
+@if (!emAndamento)
+{
+    <FimDaMissao />
+}
+
+<div class="grade">
+    @if (emAndamento)
+    {
+        <section class="cartao destaque larga">
+            <h2>Bom dia, tripulação! Começa o sol @(P.Sol + 1)</h2>
+            <div class="ceu">
+                <span class="ceu-icone @(amb.Tau >= 1.5 ? "tempestade" : "")"><Icone Nome="@(amb.Tau >= 0.8 ? "poeira" : "sol")" Tamanho="48" /></span>
+                <div>
+                    <div class="ceu-nome">@amb.Ceu</div>
+                    <p>
+                        Hoje os painéis devem gerar cerca de <b>@amb.GeracaoPrevistaKwh.ToString("0") kWh</b>@if (amb.FracaoDoCeuLimpo < 0.95)
+                        {
+                            <text>: só <b>@((amb.FracaoDoCeuLimpo * 100).ToString("0"))%</b> de um dia de céu limpo</text>
+                        }.
+                    </p>
+                    @if (NivelTexto >= 2)
+                    {
+                        <p class="fraco">
+                            Lá fora: de @amb.TempMinC.ToString("0") °C de madrugada a @amb.TempMaxC.ToString("0") °C à tarde.
+                            @if (NivelTexto >= 3) { <text>Opacidade da poeira (tau): @amb.Tau.ToString("0.0").</text> }
+                        </p>
+                    }
+                    @if (amb.TemPrevisao)
+                    {
+                        <p class="previsao"><Icone Nome="ciencia" Tamanho="16" /> Previsão para amanhã: <b>@amb.CeuAmanha</b>.</p>
+                    }
+                    else
+                    {
+                        <p class="fraco">Sem previsão para amanhã. A rotina de quem é cientista traz a previsão pela comunicação com a Terra.</p>
+                    }
+                </div>
+            </div>
+            @if (ultimo != null)
+            {
+                var noticias = ultimo.Itens.Where(i => i.Gravidade == Gravidade.Perigo).Take(4).ToList();
+                if (noticias.Count > 0)
+                {
+                    <div class="noticias">
+                        <h3>O que aconteceu desde ontem</h3>
+                        @foreach (var n in noticias)
+                        {
+                            <div class="noticia perigo"><Icone Nome="perigo" /> <div><b>@n.Titulo.</b> @n.Simples</div></div>
+                        }
+                        <button class="botao" @onclick='() => V.IrPara("relatorio")'>Ver o relatório do sol @(ultimo.Sol + 1)</button>
+                    </div>
+                }
+            }
+        </section>
+    }
+
+    <section class="cartao">
+        <h2>Os três sistemas da vida</h2>
+        <div class="semaforos">
+            @foreach (var (icone, nome, estado, numero) in semaforos)
+            {
+                <button class="semaforo @Classe(estado.G)" @onclick='() => V.IrPara("sistemas")'>
+                    <span class="semaforo-icone"><Icone Nome="@icone" Tamanho="30" /></span>
+                    <span class="semaforo-texto">
+                        <b>@nome</b>
+                        <span class="estado"><Icone Nome="@Classe(estado.G)" Tamanho="15" /> @Rotulo(estado.G)</span>
+                        <span>@estado.Frase</span>
+                        @if (NivelTexto >= 2) { <small>@numero</small> }
+                    </span>
+                </button>
+            }
+        </div>
+    </section>
+
+    <section class="cartao">
+        <h2>Objetivos da missão</h2>
+        <ul class="objetivos">
+            @foreach (var o in P.Objetivos())
+            {
+                <li class="@(o.Cumprido ? "feito" : "")">
+                    <div class="objetivo-topo">
+                        <span><Icone Nome="@(o.Cumprido ? "bom" : "seta")" Tamanho="16" /> @o.Texto@if (!o.Obrigatorio) { <em> (bônus)</em> }</span>
+                        <b>@o.Atual.ToString("0.#") / @o.Meta.ToString("0")</b>
+                    </div>
+                    <div class="barra"><div style="width:@Fmt.N(Math.Clamp(o.Atual / o.Meta, 0, 1) * 100, "0")%"></div></div>
+                </li>
+            }
+        </ul>
+        <p class="fraco">Ânimo da equipe: <b>@P.Moral.ToString("0")</b> de 100. Cada pessoa trabalha <b>@P.HorasPorSol horas</b> por sol.</p>
+    </section>
+
+    @if (emAndamento)
+    {
+        <section class="cartao">
+            <h2>Plano do sol</h2>
+            <p class="fraco">Toque em alguém para dar as tarefas. Depois, encerrem o sol.</p>
+            <div class="fichas">
+                @foreach (var t in P.Tripulacao)
+                {
+                    <button class="ficha" @onclick='() => { V.Escolher(t.Id); V.IrPara("equipe"); }'>
+                        <span class="avatar" style="background:@t.Profissao.Cor()">@t.Inicial</span>
+                        <span><b>@t.Nome</b><small>@(t.Incapacitado ? "precisa de socorro" : $"{Horas(P.HorasLivres(t))} livres{(t.NaBase ? "" : " · fora da base")}")</small></span>
+                    </button>
+                }
+            </div>
+            <div class="acoes">
+                <button class="botao" @onclick="Prever">E se a gente fizer assim? Prever o sol</button>
+                @if (P.Tripulacao.Any(t => !t.NaBase))
+                {
+                    <button class="botao alerta" @onclick="() => Fazer(p => p.RetornoDeEmergencia())">Retorno de emergência</button>
+                }
+            </div>
+            @if (_previsao != null)
+            {
+                bool atual = _previsaoMarca == Svc.Versao;
+                <div class="previsao-caixa">
+                    <h3>Se nada inesperado acontecer, o sol termina assim@(atual ? "" : " (o plano mudou: preveja de novo)")</h3>
+                    <ul class="numeros">
+                        <li><span>Bateria mais baixa</span><b>@((_previsao.BateriaMinWh / 1000).ToString("0")) kWh</b></li>
+                        <li><span>Gás carbônico mais alto</span><b>@_previsao.Horas.Max(h => h.Ppco2Kpa).ToString("0.00") kPa</b></li>
+                        <li><span>Oxigênio mais baixo</span><b>@_previsao.Horas.Min(h => h.Ppo2Kpa).ToString("0.0") kPa</b></li>
+                        <li><span>Água potável amanhã cedo</span><b>@_previsao.AguaPotavelFimKg.ToString("0") kg</b></li>
+                    </ul>
+                    @foreach (var i in _previsao.Itens.Where(i => i.Gravidade != Gravidade.Bom && i.Sistema != "equipe").Take(5))
+                    {
+                        <div class="noticia @Classe(i.Gravidade)"><Icone Nome="@Classe(i.Gravidade)" /> <div><b>@i.Titulo.</b> @(NivelTexto >= 2 ? i.Porque : i.Simples)</div></div>
+                    }
+                    <p class="fraco">O motor não sorteia nada: com o mesmo plano, a conta dá sempre o mesmo resultado.</p>
+                </div>
+            }
+            <div class="encerrar">
+                @if (_solConfirmar != P.Sol)
+                {
+                    <button class="botao principal grande" @onclick="() => _solConfirmar = P.Sol">Encerrar o sol @(P.Sol + 1)</button>
+                }
+                else
+                {
+                    var livres = P.Tripulacao.Where(t => !t.Incapacitado && P.HorasLivres(t) >= 1).ToList();
+                    <div class="confirmar">
+                        @if (livres.Count > 0)
+                        {
+                            <p>Ainda há horas livres: @string.Join(", ", livres.Select(t => $"{t.Nome} ({Horas(P.HorasLivres(t))})")).</p>
+                        }
+                        <p>O computador vai rodar as 24 horas do sol @(P.Sol + 1). Encerrar?</p>
+                        <button class="botao principal grande" @onclick="Encerrar">Sim, encerrar o sol @(P.Sol + 1)</button>
+                        <button class="botao" @onclick="() => _solConfirmar = -1">Ainda não</button>
+                    </div>
+                }
+            </div>
+        </section>
+    }
+
+    <section class="cartao">
+        <h2>Diário da missão</h2>
+        <ul class="diario">
+            @foreach (var linha in P.Diario.AsEnumerable().Reverse().Take(12))
+            {
+                <li>@linha</li>
+            }
+        </ul>
+        <div class="acoes">
+            <button class="botao" @onclick="Svc.Sair">Sair para a tela inicial</button>
+        </div>
+    </section>
+</div>
+
+@code {
+    private RelatorioSol? _previsao;
+    private long _previsaoMarca;
+    private int _solConfirmar = -1;      // o sol que a pessoa pediu para encerrar: a confirmação só vale para ele
+
+    private void Prever()
+    {
+        _previsao = Svc.Prever();
+        _previsaoMarca = Svc.Versao;
+    }
+
+    private void Encerrar()
+    {
+        int sol = _solConfirmar;
+        _solConfirmar = -1;
+        var r = Svc.Fazer(p => p.EncerrarSol(sol));
+        V.Avisar(r);
+        if (r.Ok) { _previsao = null; V.IrPara("relatorio"); }
+    }
+}

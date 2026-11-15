@@ -1,0 +1,115 @@
+@inherits PainelBase
+
+<div class="inicio">
+    <section class="inicio-capa">
+        <h1>Missão Marte</h1>
+        <p class="lema">Uma tripulação, uma base na cratera Jezero e 8 sóis para cuidar do ar, da água e da energia.</p>
+        <ol class="como">
+            <li><b>De manhã</b>, a equipe olha o céu de Marte e combina o plano do sol.</li>
+            <li><b>Cada um</b> faz a sua rotina e as suas tarefas: consertar, explorar, analisar.</li>
+            <li><b>No fim do sol</b>, o computador faz as contas de verdade e mostra o que aconteceu e por quê.</li>
+        </ol>
+        <p class="fraco">O tabuleiro e as peças ficam na mesa. A tela faz as contas: o ar, a água e a energia seguem a física, com números publicados pela NASA.</p>
+    </section>
+
+    <section class="cartao">
+        <h2>Nova missão</h2>
+        <label class="campo">
+            <span>Nome da missão</span>
+            <input @bind="_nome" maxlength="40" placeholder="Missão Jezero" />
+        </label>
+        <fieldset class="campo">
+            <legend>Idade da turma</legend>
+            <div class="opcoes">
+                @foreach (var (n, titulo, texto) in Niveis)
+                {
+                    <button type="button" class="opcao @(_nivel == n ? "ativa" : "")" @onclick="() => _nivel = n" aria-pressed="@(_nivel == n ? "true" : "false")">
+                        <b>@titulo</b><span>@texto</span>
+                    </button>
+                }
+            </div>
+        </fieldset>
+        <fieldset class="campo">
+            <legend>Tripulação (de 2 a 6 pessoas)</legend>
+            @foreach (var j in _jogadores)
+            {
+                <div class="jogador @(j.Entra ? "" : "fora")">
+                    <label class="marcar">
+                        <input type="checkbox" @bind="j.Entra" />
+                        <span class="bolinha" style="background:@j.Profissao.Cor()"></span>
+                        <b>@j.Profissao.Nome()</b>
+                    </label>
+                    <input @bind="j.Nome" maxlength="20" placeholder="Nome de quem joga" disabled="@(!j.Entra)" aria-label="@($"Nome de quem joga como {j.Profissao.Nome()}")" />
+                    <small>@j.Profissao.Papel()</small>
+                </div>
+            }
+        </fieldset>
+        <button class="botao principal grande" disabled="@(_jogadores.Count(j => j.Entra) < 2)" @onclick="Comecar">Começar a missão</button>
+        @if (_jogadores.Count(j => j.Entra) < 2)
+        {
+            <p class="fraco">Escolha pelo menos 2 profissões.</p>
+        }
+    </section>
+
+    @if (_salvas.Count > 0)
+    {
+        <section class="cartao">
+            <h2>Continuar uma missão</h2>
+            <ul class="lista-salvas">
+                @foreach (var s in _salvas.Take(8))
+                {
+                    <li>
+                        <div>
+                            <b>@s.Nome</b>
+                            <span class="fraco">@Situacao(s) · @s.Tripulantes tripulantes · salva em @s.SalvaEm.ToString("dd/MM HH:mm")</span>
+                        </div>
+                        <button class="botao" @onclick="() => Continuar(s.Id)">Abrir</button>
+                    </li>
+                }
+            </ul>
+        </section>
+    }
+</div>
+
+@code {
+    private sealed class Jogador { public Profissao Profissao; public string Nome = ""; public bool Entra = true; }
+
+    private static readonly (int, string, string)[] Niveis =
+    {
+        (1, "7 a 8 anos", "Frases curtas, menos imprevistos e tempestade mais fraca."),
+        (2, "9 a 10 anos", "Causa e consequência, com os imprevistos da missão."),
+        (3, "11 a 12 anos", "Com os números, as unidades e mais um imprevisto."),
+    };
+
+    private string _nome = "";
+    private int _nivel = 2;
+    private readonly List<Jogador> _jogadores = Enum.GetValues<Profissao>().Select(p => new Jogador { Profissao = p }).ToList();
+    private List<ResumoPartida> _salvas = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _salvas = Svc.Salvas();
+    }
+
+    private void Comecar()
+    {
+        Svc.Nova(_nome, _jogadores.Where(j => j.Entra).Select(j => (j.Nome, j.Profissao)), _nivel);
+        V.Limpar();
+        V.IrPara("comando");
+    }
+
+    private void Continuar(string id)
+    {
+        if (Svc.Carregar(id)) { V.Limpar(); V.IrPara("comando"); }
+        else _salvas = Svc.Salvas();
+    }
+
+    private static string Situacao(ResumoPartida s) => s.Fase switch
+    {
+        FaseMissao.EmAndamento => $"Sol {s.Sol + 1} de {s.Sols}",
+        FaseMissao.Vitoria => "Missão cumprida",
+        FaseMissao.Derrota => "Missão interrompida",
+        _ => "Missão incompleta",
+    };
+}

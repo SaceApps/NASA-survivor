@@ -1,0 +1,13 @@
+# Build do Windows gerado pelo Unity na raiz (distribuir pelo GitHub Releases, não pelo repositório)
+/*.exe
+/*.dll
+/D3D12/
+/MonoBleedingEdge/
+/*_Data/
+/*_BurstDebugInformation_DoNotShip/
+/Exe/
+
+# Sistema
+Thumbs.db
+desktop.ini
+.DS_Store

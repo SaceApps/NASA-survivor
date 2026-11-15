@@ -1,0 +1,33 @@
+<div class="medidor @Estado">
+    <div class="medidor-topo">
+        <span class="medidor-nome">@Nome</span>
+        <span class="medidor-valor">@Valor @if (!string.IsNullOrEmpty(Unidade)) { <small>@Unidade</small> }</span>
+    </div>
+    <div class="medidor-trilho" role="meter" aria-valuemin="0" aria-valuemax="100" aria-valuenow="@((int)Math.Round(Cheio))" aria-label="@Nome">
+        <div class="medidor-cheio" style="width:@Fmt.N(Cheio, "0.#")%"></div>
+        @if (Marca is { } m)
+        {
+            <div class="medidor-marca" style="left:@Fmt.N(Math.Clamp(m, 0, 1) * 100, "0.#")%" title="@MarcaTexto"></div>
+        }
+    </div>
+    <div class="medidor-estado">
+        <Icone Nome="@Estado" Tamanho="14" /> <span>@Rotulo</span>
+        @if (!string.IsNullOrEmpty(Dica)) { <span class="medidor-dica">@Dica</span> }
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Nome { get; set; } = "";
+    [Parameter] public string Valor { get; set; } = "";
+    [Parameter] public string Unidade { get; set; } = "";
+    /// <summary>Quanto da barra está cheio, de 0 a 1.</summary>
+    [Parameter] public double Fracao { get; set; }
+    /// <summary>"bom", "atencao" ou "perigo".</summary>
+    [Parameter] public string Estado { get; set; } = "bom";
+    [Parameter] public string Dica { get; set; } = "";
+    [Parameter] public double? Marca { get; set; }
+    [Parameter] public string MarcaTexto { get; set; } = "";
+
+    private double Cheio => Math.Clamp(Fracao, 0, 1) * 100;
+    private string Rotulo => Estado switch { "perigo" => "Perigo", "atencao" => "Atenção", _ => "Tudo bem" };
+}

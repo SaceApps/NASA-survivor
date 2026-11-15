@@ -1,0 +1,202 @@
+@inherits PainelBase
+
+@{
+    var sel = P.Tripulacao.FirstOrDefault(t => t.Id == V.TripulanteId) ?? P.Tripulacao[0];
+    var alvo = V.Hex is { } hx ? P.Cel(hx) : null;
+    bool jogando = P.Fase == FaseMissao.EmAndamento;
+}
+
+<div class="mapa-grade">
+    <section class="cartao">
+        <h2>Jezero: cada hexágono vale 1 km</h2>
+        <div class="fichas" role="group" aria-label="Quem vai agir">
+            @foreach (var t in P.Tripulacao)
+            {
+                <button class="ficha @(t.Id == sel.Id ? "ativa" : "")" @onclick="() => V.Escolher(t.Id)" aria-pressed="@(t.Id == sel.Id ? "true" : "false")">
+                    <span class="avatar" style="background:@t.Profissao.Cor()">@t.Inicial</span>
+                    <span><b>@t.Nome</b><small>@(t.Incapacitado ? "precisa de socorro" : $"{Horas(P.HorasLivres(t))} livres")</small></span>
+                </button>
+            }
+        </div>
+        <div class="mapa-rolagem">
+        <svg class="mapa" viewBox="-292 -236 584 472" role="group" aria-label="Mapa em hexágonos. Toque num hexágono para ver o que há nele.">
+            @foreach (var c in P.Celulas)
+            {
+                var (x, y) = Fmt.Centro(c.Pos);
+                <g class="hex t-@c.Terreno.ToString().ToLowerInvariant() @(c.Explorado ? "" : "oculto") @(V.Hex == c.Pos ? "sel" : "")"
+                   role="button" tabindex="0" aria-label="@Descricao(c)" @onclick="() => V.Tocar(c.Pos)" @onkeydown="e => Tecla(e, c.Pos)">
+                    <polygon points="@Fmt.HexPontos(x, y, Fmt.Lado - 1.5)" />
+                    @if (!c.Explorado)
+                    {
+                        <g><text class="interrogacao" x="@Fmt.N(x)" y="@Fmt.N(y + 5)" text-anchor="middle">?</text></g>
+                    }
+                    else if (c.Pos == Hex.Origem)
+                    {
+                        <g><text class="base-rotulo" x="@Fmt.N(x)" y="@Fmt.N(y - 12)" text-anchor="middle">BASE</text></g>
+                    }
+                    else if (c.Nome != null)
+                    {
+                        <circle class="lugar @(c.DescobertaVista ? "visto" : "")" cx="@Fmt.N(x)" cy="@Fmt.N(y - 15)" r="5" />
+                    }
+                    <title>@Descricao(c)</title>
+                </g>
+            }
+            @{
+                var (vx, vy) = Fmt.Centro(P.Veiculo.Pos);
+            }
+            <g class="veiculo-peca" aria-hidden="true">
+                <rect x="@Fmt.N(vx - 13)" y="@Fmt.N(vy - 6)" width="26" height="12" rx="4" />
+                <g><text x="@Fmt.N(vx)" y="@Fmt.N(vy + 4)" text-anchor="middle">V</text></g>
+            </g>
+            @foreach (var grupo in P.Tripulacao.GroupBy(t => t.Pos))
+            {
+                var (gx, gy) = Fmt.Centro(grupo.Key);
+                var lista = grupo.ToList();
+                for (int i = 0; i < lista.Count; i++)
+                {
+                    var t = lista[i];
+                    double px = gx + (i - (lista.Count - 1) / 2.0) * 13;
+                    <g class="peca @(t.Id == sel.Id ? "sel" : "")" aria-hidden="true">
+                        <circle cx="@Fmt.N(px)" cy="@Fmt.N(gy + 17)" r="8" fill="@t.Profissao.Cor()" />
+                        <g><text x="@Fmt.N(px)" y="@Fmt.N(gy + 21)" text-anchor="middle">@t.Inicial</text></g>
+                    </g>
+                }
+            }
+        </svg>
+        </div>
+        <p class="fraco so-celular">Arraste o mapa para os lados para ver tudo.</p>
+        <ul class="legenda-terreno">
+            @foreach (var tr in new[] { Terreno.Planicie, Terreno.Rochoso, Terreno.Dunas, Terreno.Cratera, Terreno.Delta, Terreno.Escarpa })
+            {
+                <li><i class="t-@tr.ToString().ToLowerInvariant()"></i>@MapaJezero.NomeDoTerreno(tr)</li>
+            }
+            <li><i class="marca-lugar"></i>Lugar com nome</li>
+            <li><i class="marca-veiculo">V</i>Veículo</li>
+        </ul>
+        <p class="fraco">Mapa explorado: <b>@((P.FracaoExplorada * 100).ToString("0"))%</b>. O relevo já é conhecido pelas imagens de órbita; o que cada lugar guarda só aparece quando alguém chega lá. Quem é geólogo enxerga também os hexágonos vizinhos.</p>
+    </section>
+
+    <aside class="cartao">
+        @if (alvo is null)
+        {
+            <h2>Toque num hexágono</h2>
+            <p>Escolha quem vai agir e toque num lugar do mapa para ver o caminho, o tempo e as tarefas.</p>
+            <h3>Lugares conhecidos</h3>
+            <ul class="lugares">
+                @foreach (var c in P.Celulas.Where(c => c.Explorado && c.Nome != null && c.Pos != Hex.Origem).OrderBy(c => c.Pos.Distancia(Hex.Origem)))
+                {
+                    <li><button class="link" @onclick="() => V.Tocar(c.Pos)">@c.Nome</button> <span class="fraco">a @c.Pos.Distancia(Hex.Origem) km</span></li>
+                }
+            </ul>
+        }
+        else
+        {
+            var aqui = P.Tripulacao.Where(t => t.Pos == alvo.Pos).ToList();
+            bool veiculoAqui = P.Veiculo.Pos == alvo.Pos;
+            <h2>@(alvo.Explorado && alvo.Nome != null ? alvo.Nome : MapaJezero.NomeDoTerreno(alvo.Terreno))</h2>
+            <p><b>@MapaJezero.NomeDoTerreno(alvo.Terreno).</b> @MapaJezero.DicaDoTerreno(alvo.Terreno) @if (alvo.Pos != Hex.Origem) { <text> Fica a @alvo.Pos.Distancia(Hex.Origem) km da base.</text> }</p>
+            @if (!alvo.Explorado)
+            {
+                <p class="fraco">Ninguém esteve aqui ainda. O que há neste lugar é surpresa.</p>
+            }
+            else
+            {
+                <ul class="numeros">
+                    @if (alvo.Amostras > 0) { <li><span>Rochas para amostra</span><b>@alvo.Amostras</b></li> }
+                    @if (alvo.ArgilaKg > 0) { <li><span>Solo argiloso com água</span><b>@alvo.ArgilaKg.ToString("0") kg</b></li> }
+                    @if (alvo.Amostras == 0 && alvo.ArgilaKg <= 0 && alvo.Pos != Hex.Origem) { <li><span>Nada para coletar aqui</span><b></b></li> }
+                </ul>
+                @if (alvo.DescobertaVista && PacoteNasa.Padrao.Fato(alvo.DescobertaId) is { } fato)
+                {
+                    <div class="cartao-fato">
+                        <b>Cartão de ciência: @fato.Titulo</b>
+                        <p>@fato.Texto</p>
+                        <small>Fonte: @fato.Fonte (@fato.DataReferencia)</small>
+                    </div>
+                }
+                else if (alvo.DescobertaId != null)
+                {
+                    <p class="fraco">Este lugar guarda um cartão de ciência. Quem chegar primeiro ganha para a equipe.</p>
+                }
+            }
+            @if (veiculoAqui)
+            {
+                <p><Icone Nome="veiculo" Tamanho="18" /> O veículo está aqui, com <b>@((P.Base.RoverBateriaWh / 1000).ToString("0.0")) kWh</b>@(P.Veiculo.CargaArgilaKg > 0 ? $", {P.Veiculo.CargaArgilaKg:0} kg de solo" : "")@(P.Veiculo.Amostras > 0 ? $", {P.Veiculo.Amostras} amostra(s)" : "").</p>
+            }
+            @if (aqui.Count > 0)
+            {
+                <p>Aqui: @string.Join(", ", aqui.Select(t => t.Nome + (t.NoVeiculo ? " (no veículo)" : ""))).</p>
+            }
+
+            @if (jogando)
+            {
+                <h3>@sel.Nome (@sel.Profissao.Nome())</h3>
+                <div class="acoes coluna">
+                    @if (sel.Incapacitado)
+                    {
+                        <p class="fraco">@sel.Nome precisa de cuidados médicos antes de agir.</p>
+                    }
+                    else if (sel.Pos == alvo.Pos)
+                    {
+                        if (alvo.Explorado && alvo.Amostras > 0)
+                        {
+                            <button class="botao" @onclick="() => Fazer(x => x.ColetarAmostra(sel.Id))">Coletar uma amostra (@(sel.Profissao == Profissao.Geologo ? 1 : 2) h)</button>
+                        }
+                        if (alvo.Explorado && alvo.ArgilaKg > 0)
+                        {
+                            <button class="botao" @onclick="() => Fazer(x => x.ColetarArgila(sel.Id))">Carregar solo argiloso (2 h, duas pessoas e o veículo)</button>
+                        }
+                        if (veiculoAqui)
+                        {
+                            <button class="botao" @onclick="() => Fazer(x => x.Embarcar(sel.Id, !sel.NoVeiculo))">@(sel.NoVeiculo ? "Sair do veículo" : "Entrar no veículo")</button>
+                        }
+                        if (!(alvo.Explorado && (alvo.Amostras > 0 || alvo.ArgilaKg > 0)) && !veiculoAqui)
+                        {
+                            <p class="fraco">@sel.Nome já está aqui.</p>
+                        }
+                    }
+                    else
+                    {
+                        var ape = P.CustoAPe(sel.Pos, alvo.Pos);
+                        if (ape is { } a)
+                        {
+                            <button class="botao" @onclick="() => Fazer(x => x.MoverAPe(sel.Id, alvo.Pos))"><Icone Nome="pe" Tamanho="16" /> Ir a pé: @a.Km km, @Horas(a.Horas) de traje</button>
+                        }
+                    }
+                    @if (P.NoVeiculo.Any() && !veiculoAqui)
+                    {
+                        var vc = P.CustoVeiculo(alvo.Pos);
+                        if (vc is { } v)
+                        {
+                            <button class="botao" @onclick="() => Fazer(x => x.MoverVeiculo(alvo.Pos))"><Icone Nome="veiculo" Tamanho="16" /> Levar o veículo: @v.Km km, @Horas(v.Horas), @v.Kwh.ToString("0.0") kWh</button>
+                            <small class="fraco">A bordo: @string.Join(", ", P.NoVeiculo.Select(t => t.Nome)).@(P.NoVeiculo.Any(t => t.Profissao == Profissao.Piloto) ? "" : " Sem piloto, a viagem gasta mais.")</small>
+                        }
+                        else
+                        {
+                            <p class="fraco">O veículo não chega aqui: a escarpa bloqueia o caminho.</p>
+                        }
+                    }
+                    else if (!P.NoVeiculo.Any() && !veiculoAqui)
+                    {
+                        <small class="fraco">Para levar o veículo, alguém precisa entrar nele primeiro (toque no hexágono onde ele está).</small>
+                    }
+                </div>
+            }
+            <button class="botao pequeno" @onclick="() => V.Tocar(null)">Fechar</button>
+        }
+    </aside>
+</div>
+
+@code {
+    private string Descricao(Celula c)
+    {
+        string nome = c.Explorado && c.Nome != null ? c.Nome : MapaJezero.NomeDoTerreno(c.Terreno);
+        string quem = string.Join(", ", P.Tripulacao.Where(t => t.Pos == c.Pos).Select(t => t.Nome));
+        return $"{nome}, a {c.Pos.Distancia(Hex.Origem)} km da base{(c.Explorado ? "" : ", ainda não explorado")}{(quem != "" ? $". Aqui: {quem}" : "")}{(P.Veiculo.Pos == c.Pos ? ". Veículo aqui" : "")}";
+    }
+
+    private void Tecla(KeyboardEventArgs e, Hex h)
+    {
+        if (e.Key is "Enter" or " ") V.Tocar(h);
+    }
+}

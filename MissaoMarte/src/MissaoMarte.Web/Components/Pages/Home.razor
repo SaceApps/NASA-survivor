@@ -1,0 +1,68 @@
+﻿@page "/"
+@inherits PainelBase
+
+<PageTitle>Missão Marte</PageTitle>
+
+@if (Svc.Atual is null)
+{
+    <NovaPartida />
+}
+else
+{
+    var amb = P.AmbienteDoSol();
+    <header class="topo">
+        <div class="marca">
+            <span class="marca-nome">Missão Marte</span>
+            <span class="marca-sub">@P.Nome</span>
+        </div>
+        <div class="topo-dados">
+            <span class="pilula"><Icone Nome="relogio" Tamanho="16" /> Sol @Math.Min(P.Sol + 1, P.SolsDaMissao) de @P.SolsDaMissao</span>
+            <span class="pilula"><Icone Nome="@(amb.Tau >= 0.8 ? "poeira" : "sol")" Tamanho="16" /> @amb.Ceu</span>
+            <span class="pilula"><Icone Nome="energia" Tamanho="16" /> Bateria @((P.BateriaFracao * 100).ToString("0"))%</span>
+        </div>
+        <div class="topo-nivel" role="group" aria-label="Idade de quem lê">
+            <span class="rotulo">Texto para</span>
+            @foreach (var (n, texto) in Niveis)
+            {
+                <button class="seg @(NivelTexto == n ? "ativo" : "")" @onclick="() => V.Nivel(n)" aria-pressed="@(NivelTexto == n ? "true" : "false")">@texto</button>
+            }
+            <span class="rotulo">anos</span>
+        </div>
+    </header>
+    <nav class="abas" aria-label="Telas do jogo">
+        @foreach (var (id, nome, icone) in Abas)
+        {
+            <button class="aba @(V.Aba == id ? "ativa" : "")" @onclick="() => V.IrPara(id)" aria-current="@(V.Aba == id ? "page" : null)">
+                <Icone Nome="@icone" /> <span>@nome</span>
+            </button>
+        }
+    </nav>
+    @if (V.Mensagem != null)
+    {
+        <div class="aviso @(V.MensagemOk ? "ok" : "erro")" role="status" aria-live="polite">
+            <Icone Nome="@(V.MensagemOk ? "bom" : "atencao")" />
+            <span>@V.Mensagem</span>
+            <button class="aviso-fechar" @onclick="V.Limpar">fechar</button>
+        </div>
+    }
+    <main class="conteudo">
+        @switch (V.Aba)
+        {
+            case "sistemas": <PainelSistemas /> break;
+            case "mapa": <PainelMapa /> break;
+            case "equipe": <PainelTripulacao /> break;
+            case "ciencia": <PainelCiencia /> break;
+            case "relatorio": <PainelRelatorio /> break;
+            default: <PainelComando /> break;
+        }
+    </main>
+}
+
+@code {
+    private static readonly (int, string)[] Niveis = { (1, "7 a 8"), (2, "9 a 10"), (3, "11 a 12") };
+    private static readonly (string, string, string)[] Abas =
+    {
+        ("comando", "Comando", "comando"), ("sistemas", "Sistemas", "sistemas"), ("mapa", "Mapa", "mapa"),
+        ("equipe", "Tripulação", "equipe"), ("ciencia", "Ciência", "ciencia"), ("relatorio", "Relatório", "relatorio"),
+    };
+}

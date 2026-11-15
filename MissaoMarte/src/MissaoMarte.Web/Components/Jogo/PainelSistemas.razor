@@ -1,0 +1,206 @@
+@inherits PainelBase
+
+@{
+    var b = P.Base;
+    var p = P.P;
+    double usada = b.AguaResidualKg + b.AguaEmTratamentoKg;
+    var amb = P.AmbienteDoSol();
+}
+
+<div class="grade">
+    <section class="cartao">
+        <h2>Tabuleiro da base</h2>
+        <p class="fraco">Os mesmos módulos do tabuleiro da mesa. A cor e a palavra mostram como cada um está agora.</p>
+        <svg class="base-svg" viewBox="-150 -140 300 280" role="img" aria-label="Módulos da base e o estado de cada um">
+            @foreach (var m in Modulos())
+            {
+                var (x, y) = Fmt.Centro(m.Pos, 50);
+                <g class="modulo @Classe(m.G)">
+                    <polygon points="@Fmt.HexPontos(x, y, 48)" />
+                    <text class="modulo-nome" x="@Fmt.N(x)" y="@Fmt.N(y - 6)" text-anchor="middle">@m.Nome</text>
+                    <text class="modulo-estado" x="@Fmt.N(x)" y="@Fmt.N(y + 12)" text-anchor="middle">@Rotulo(m.G)</text>
+                    <title>@m.Nome: @m.Frase</title>
+                </g>
+            }
+        </svg>
+    </section>
+
+    <section class="cartao">
+        <h2><Icone Nome="ar" /> Ar</h2>
+        <p class="frase @Classe(P.EstadoDoAr().G)"><Icone Nome="@Classe(P.EstadoDoAr().G)" Tamanho="16" /> @P.EstadoDoAr().Frase</p>
+        <div class="medidores">
+            <Medidor Nome="Oxigênio no ar" Valor="@P.Ppo2Kpa.ToString("0.0")" Unidade="kPa" Fracao="@(P.Ppo2Kpa / 25)"
+                     Estado="@(P.Ppo2Kpa < p.Ppo2PerigoKpa ? "perigo" : P.Ppo2Kpa < p.Ppo2AlertaKpa - 0.1 ? "atencao" : "bom")"
+                     Marca="@(p.Ppo2AlertaKpa / 25)" MarcaTexto="Alerta" Dica="@(NivelTexto >= 2 ? $"ideal {p.Ppo2AlvoKpa:0.0}; alerta abaixo de {p.Ppo2AlertaKpa:0.0}" : "")" />
+            <Medidor Nome="Gás carbônico no ar" Valor="@P.Ppco2Kpa.ToString("0.00")" Unidade="kPa" Fracao="@(P.Ppco2Kpa / 2.5)"
+                     Estado="@(P.Ppco2Kpa >= p.Ppco2PerigoKpa ? "perigo" : P.Ppco2Kpa >= p.Ppco2AlertaKpa ? "atencao" : "bom")"
+                     Marca="@(p.Ppco2AlertaKpa / 2.5)" MarcaTexto="Limite normal" Dica="@(NivelTexto >= 2 ? $"limite normal {p.Ppco2AlertaKpa:0.00}; agir em {p.Ppco2PerigoKpa:0.00}" : "")" />
+            <Medidor Nome="Pressão da base" Valor="@P.PressaoKpa.ToString("0.0")" Unidade="kPa" Fracao="@(P.PressaoKpa / 110)"
+                     Estado="@(P.PressaoKpa < 70 ? "perigo" : P.PressaoKpa < 95 ? "atencao" : "bom")" Dica="@(NivelTexto >= 2 ? $"normal {p.PressaoCabineKpa:0.0}, como na Terra ao nível do mar" : "")" />
+            <Medidor Nome="Umidade" Valor="@((P.Umidade * 100).ToString("0"))" Unidade="%" Fracao="@P.Umidade"
+                     Estado="@(P.Umidade > 0.98 ? "perigo" : P.Umidade > 0.75 || P.Umidade < 0.25 ? "atencao" : "bom")" Dica="@(NivelTexto >= 2 ? "o confortável é de 25 a 75%" : "")" />
+            <Medidor Nome="Temperatura na base" Valor="@b.TemperaturaC.ToString("0.0")" Unidade="°C" Fracao="@(b.TemperaturaC / 40)"
+                     Estado="@(b.TemperaturaC < 12 || b.TemperaturaC > 30 ? "perigo" : b.TemperaturaC < 18 || b.TemperaturaC > 27 ? "atencao" : "bom")" Dica="@(NivelTexto >= 2 ? "o confortável é de 18 a 27 °C" : "")" />
+            <Medidor Nome="Oxigênio de reserva (trajes e emergência)" Valor="@b.TanqueO2Kg.ToString("0.0")" Unidade="kg" Fracao="@(b.TanqueO2Kg / p.TanqueO2InicialKg)"
+                     Estado="@(b.TanqueO2Kg < 3 ? "perigo" : b.TanqueO2Kg < 10 ? "atencao" : "bom")" />
+            <Medidor Nome="Nitrogênio de reserva (repõe a pressão)" Valor="@b.TanqueN2Kg.ToString("0")" Unidade="kg" Fracao="@(b.TanqueN2Kg / p.TanqueN2InicialKg)"
+                     Estado="@(b.TanqueN2Kg < 5 ? "perigo" : b.TanqueN2Kg < 20 ? "atencao" : "bom")" />
+        </div>
+    </section>
+
+    <section class="cartao">
+        <h2><Icone Nome="agua" /> Água</h2>
+        <p class="frase @Classe(P.EstadoDaAgua().G)"><Icone Nome="@Classe(P.EstadoDaAgua().G)" Tamanho="16" /> @P.EstadoDaAgua().Frase</p>
+        <div class="medidores">
+            <Medidor Nome="Água potável" Valor="@b.AguaPotavelKg.ToString("0")" Unidade="kg" Fracao="@(b.AguaPotavelKg / p.TanquePotavelCapacidadeKg)"
+                     Estado="@(b.AguaPotavelKg <= p.ReservaBebidaKg ? "perigo" : b.AguaPotavelKg < 80 ? "atencao" : "bom")"
+                     Marca="@(p.ReservaBebidaKg / p.TanquePotavelCapacidadeKg)" MarcaTexto="Reserva para beber" Dica="@(NivelTexto >= 2 ? $"o tanque guarda {p.TanquePotavelCapacidadeKg:0} kg" : "")" />
+            <Medidor Nome="Água usada, esperando ou em tratamento" Valor="@usada.ToString("0")" Unidade="kg" Fracao="@(usada / 150)"
+                     Estado="@(usada > 120 ? "perigo" : usada > 60 ? "atencao" : "bom")" Dica="@(NivelTexto >= 2 ? $"o tratamento leva {p.AguaTempoTratamentoH:0} h e devolve {p.AguaRecuperacaoFracao * 100:0}%" : "")" />
+        </div>
+        <ul class="numeros">
+            <li><span>Salmoura (a parte que não volta)</span><b>@b.SalmouraKg.ToString("0.0") kg</b></li>
+            <li><span>Água tirada do solo de Marte</span><b>@b.AguaExtraidaDeMarteKg.ToString("0.0") kg</b></li>
+            <li><span>Solo argiloso esperando o forno</span><b>@b.RegolitoKg.ToString("0") kg@(P.ArgilaChegandoKg > 0 ? $" (+{P.ArgilaChegandoKg:0} kg chegando)" : "")</b></li>
+        </ul>
+        <button class="chave @(P.RacionamentoHigiene ? "ligada" : "")" role="switch" aria-checked="@(P.RacionamentoHigiene ? "true" : "false")" @onclick="() => Fazer(x => x.AlternarRacionamento())">
+            Economizar água no banho: @(P.RacionamentoHigiene ? "sim" : "não")
+        </button>
+        <p class="fraco">Economizando, a equipe usa menos da metade da água de higiene, mas o ânimo cai um pouco a cada sol.</p>
+    </section>
+
+    <section class="cartao">
+        <h2><Icone Nome="energia" /> Energia</h2>
+        <p class="frase @Classe(P.EstadoDaEnergia().G)"><Icone Nome="@Classe(P.EstadoDaEnergia().G)" Tamanho="16" /> @P.EstadoDaEnergia().Frase</p>
+        <div class="medidores">
+            <Medidor Nome="Bateria da base" Valor="@((b.BateriaWh / 1000).ToString("0"))" Unidade="kWh" Fracao="@P.BateriaFracao"
+                     Estado="@(P.BateriaFracao < 0.10 ? "perigo" : P.BateriaFracao < 0.30 ? "atencao" : "bom")" Dica="@(NivelTexto >= 2 ? $"cabe {p.BateriaCapacidadeWh / 1000:0} kWh; de manhã ela está no ponto mais baixo" : "")" />
+            <Medidor Nome="Painéis solares limpos" Valor="@(((1 - b.SujeiraPaineis) * 100).ToString("0"))" Unidade="%" Fracao="@(1 - b.SujeiraPaineis)"
+                     Estado="@(b.SujeiraPaineis >= 0.12 ? "perigo" : b.SujeiraPaineis >= 0.04 ? "atencao" : "bom")" Dica="@(NivelTexto >= 2 ? "a poeira assenta um pouco a cada sol; na tempestade, muito mais" : "")" />
+            <Medidor Nome="Bateria do veículo" Valor="@((b.RoverBateriaWh / 1000).ToString("0.0"))" Unidade="kWh" Fracao="@(b.RoverBateriaWh / p.RoverBateriaWh)"
+                     Estado="@(b.RoverBateriaWh < p.RoverBateriaWh * 0.2 ? "atencao" : "bom")" Dica="@(b.RoverNaBase ? "na base, ligado ao carregador" : "fora da base")" />
+        </div>
+        <ul class="numeros">
+            <li><span>Geração prevista para hoje</span><b>@amb.GeracaoPrevistaKwh.ToString("0") kWh</b></li>
+            @if (NivelTexto >= 2)
+            {
+                <li><span>Com céu limpo seria</span><b>@P.GeracaoPrevistaKwh(p.TauCeuLimpo).ToString("0") kWh</b></li>
+            }
+            @if (NivelTexto >= 3)
+            {
+                <li><span>Painéis</span><b>@p.AreaPaineisM2.ToString("0") m² com @((p.EficienciaPainel * 100).ToString("0"))% de eficiência</b></li>
+            }
+        </ul>
+    </section>
+
+    <section class="cartao larga">
+        <h2>Máquinas da base</h2>
+        @if (NivelTexto >= 2)
+        {
+            <p class="fraco">Quando a energia não dá para tudo, ela vai primeiro para as máquinas de prioridade 1. As de prioridade 4 são as primeiras a parar.</p>
+        }
+        <div class="maquinas">
+            @foreach (var eq in b.Equipamentos)
+            {
+                var conserto = P.Servicos.FirstOrDefault(s => s.Tipo == "reparo" && s.Equip == eq.Tipo);
+                string estado = eq.Quebrado ? "perigo" : eq.Saude < 0.999 ? "atencao" : "bom";
+                <div class="maquina @estado">
+                    <div class="maquina-nome">
+                        <b>@eq.Nome</b>
+                        <small>@eq.Explica</small>
+                        @if (NivelTexto >= 2) { <small class="potencia">@Potencia(eq.Tipo)</small> }
+                    </div>
+                    <div class="maquina-estado">
+                        <span class="estado"><Icone Nome="@estado" Tamanho="15" /> @(eq.Quebrado ? "Quebrado" : eq.Saude < 0.999 ? $"Com defeito ({eq.Saude * 100:0}%)" : "Funcionando")</span>
+                        @if (conserto != null)
+                        {
+                            <small>Conserto marcado: pronto às @conserto.Fim.ToString("0") h.</small>
+                        }
+                        else if (eq.Saude < 0.999 && P.Fase == FaseMissao.EmAndamento)
+                        {
+                            var quem = QuemConserta();
+                            if (quem != null)
+                            {
+                                <button class="botao pequeno" @onclick="() => Fazer(x => x.Reparar(quem.Id, eq.Tipo))">
+                                    <Icone Nome="ferramenta" Tamanho="15" /> @quem.Nome conserta (@(quem.Profissao == Profissao.Engenheiro ? 3 : 6) h)
+                                </button>
+                            }
+                            else
+                            {
+                                <small>Ninguém na base tem horas para consertar hoje.</small>
+                            }
+                        }
+                    </div>
+                    @if (eq.UsaEnergia)
+                    {
+                        <div class="maquina-controles">
+                            <button class="chave @(eq.Ligado ? "ligada" : "")" role="switch" aria-checked="@(eq.Ligado ? "true" : "false")" aria-label="@($"{eq.Nome}: {(eq.Ligado ? "ligado" : "desligado")}")"
+                                    @onclick="() => Fazer(x => x.Alternar(eq.Tipo))">@(eq.Ligado ? "Ligado" : "Desligado")</button>
+                            @if (NivelTexto >= 2)
+                            {
+                                <div class="prioridade" role="group" aria-label="@($"Prioridade de {eq.Nome}")">
+                                    <span class="rotulo">Prioridade</span>
+                                    @for (int n = 1; n <= 4; n++)
+                                    {
+                                        int pr = n;
+                                        <button class="seg @(eq.Prioridade == pr ? "ativo" : "")" aria-pressed="@(eq.Prioridade == pr ? "true" : "false")" @onclick="() => Fazer(x => x.MudarPrioridade(eq.Tipo, pr))">@pr</button>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </section>
+</div>
+
+@code {
+    private sealed record Modulo(Hex Pos, string Nome, Gravidade G, string Frase);
+
+    private List<Modulo> Modulos()
+    {
+        var b = P.Base;
+        var lab = b.Eq(TipoEquip.Laboratorio); var forno = b.Eq(TipoEquip.FornoRegolito); var carga = b.Eq(TipoEquip.CarregadorRover);
+        var ar = P.EstadoDoAr(); var agua = P.EstadoDaAgua(); var en = P.EstadoDaEnergia();
+        Gravidade casa = b.TemperaturaC < 12 || b.TemperaturaC > 30 ? Gravidade.Perigo
+            : b.TemperaturaC < 18 || b.TemperaturaC > 27 || !b.Eq(TipoEquip.Iluminacao).Ligado ? Gravidade.Atencao : Gravidade.Bom;
+        Gravidade De(Equipamento e) => e.Quebrado ? Gravidade.Perigo : !e.Ligado || e.Saude < 0.999 ? Gravidade.Atencao : Gravidade.Bom;
+        return new()
+        {
+            new(new Hex(0, 0), "Moradia", casa, $"{b.TemperaturaC:0.0} °C dentro da base."),
+            new(new Hex(0, -1), "Ar", ar.G, ar.Frase),
+            new(new Hex(1, -1), "Água", agua.G, agua.Frase),
+            new(new Hex(1, 0), "Energia", en.G, en.Frase),
+            new(new Hex(0, 1), "Laboratório", De(lab), $"{P.AmostrasNaBase} amostra(s) esperando análise."),
+            new(new Hex(-1, 1), "Forno", De(forno), $"{b.RegolitoKg:0} kg de solo esperando."),
+            new(new Hex(-1, 0), "Garagem", !b.RoverNaBase ? Gravidade.Atencao : De(carga), b.RoverNaBase ? $"Veículo na base com {b.RoverBateriaWh / 1000:0.0} kWh." : "O veículo está fora da base."),
+        };
+    }
+
+    private Tripulante? QuemConserta()
+    {
+        var eng = P.Tripulacao.FirstOrDefault(t => t.Profissao == Profissao.Engenheiro && t.NaBase && !t.Incapacitado && P.HorasLivres(t) >= 3);
+        if (eng != null) return eng;
+        return P.Tripulacao.Where(t => t.NaBase && !t.Incapacitado && P.HorasLivres(t) >= 6).OrderByDescending(P.HorasLivres).FirstOrDefault();
+    }
+
+    private string Potencia(TipoEquip t)
+    {
+        var p = P.P;
+        return t switch
+        {
+            TipoEquip.RemovedorCo2 => $"Gasta {p.Co2RemocaoPotenciaW / 1000:0.0} kW o tempo todo.",
+            TipoEquip.GeradorO2 => $"Gasta {p.EletroliseKwhPorKgO2:0.0} kWh para cada kg de oxigênio. É a máquina que mais usa energia.",
+            TipoEquip.Desumidificador => $"Gasta {p.DesumidificadorPotenciaW / 1000:0.0} kW o tempo todo.",
+            TipoEquip.Aquecimento => $"Gasta até {p.AquecimentoPotenciaMaxW / 1000:0} kW; mais de noite, quando lá fora faz {p.TempExternaMinC:0} °C.",
+            TipoEquip.ProcessadorAgua => $"Gasta {p.AguaProcessadorPotenciaW / 1000:0.0} kW enquanto há água para tratar.",
+            TipoEquip.Comunicacao => $"Gasta {p.ComunicacaoPotenciaW / 1000:0.00} kW. Sem ela, não chega a previsão do tempo.",
+            TipoEquip.Laboratorio => $"Gasta {p.LaboratorioPotenciaW / 1000:0.0} kW só durante uma análise.",
+            TipoEquip.FornoRegolito => $"Gasta {p.FornoKwhPorKgAgua:0.0} kWh para cada kg de água tirada do solo.",
+            TipoEquip.CarregadorRover => $"Gasta até {p.RoverCarregadorPotenciaW / 1000:0} kW enquanto o veículo carrega.",
+            TipoEquip.Iluminacao => $"Gasta {p.IluminacaoPotenciaW / 1000:0.0} kW enquanto a equipe está acordada.",
+            _ => "Não usa energia.",
+        };
+    }
+}

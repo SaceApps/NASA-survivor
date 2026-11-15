@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/MissaoMarte.Nucleo/MissaoMarte.Nucleo.csproj" />
+    <Project Path="src/MissaoMarte.Simulador/MissaoMarte.Simulador.csproj" />
+    <Project Path="src/MissaoMarte.Web/MissaoMarte.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/MissaoMarte.Testes/MissaoMarte.Testes.csproj" />
+  </Folder>
+</Solution>

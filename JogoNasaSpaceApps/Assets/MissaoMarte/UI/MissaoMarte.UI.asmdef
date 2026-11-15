@@ -1,0 +1,20 @@
+{
+    "name": "MissaoMarte.UI",
+    "rootNamespace": "MissaoMarte.UI",
+    "references": [
+        "MissaoMarte.Simulation",
+        "MissaoMarte.Events",
+        "MissaoMarte.Game",
+        "UnityEngine.UI",
+        "Unity.InputSystem"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

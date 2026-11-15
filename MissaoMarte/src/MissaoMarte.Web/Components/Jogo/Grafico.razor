@@ -1,0 +1,130 @@
+@* Gráfico de linhas de um sol (24 horas). Um eixo só; linha fina; régua que acompanha o ponteiro ou as setas do
+   teclado; os mesmos números numa tabela. As cores das séries vêm da paleta validada (ver app.css). *@
+<figure class="grafico">
+    <figcaption>
+        <strong>@Titulo</strong> <span class="grafico-unidade">@Unidade</span>
+        @if (Series.Count > 1)
+        {
+            <span class="grafico-legenda">
+                @foreach (var s in Series)
+                {
+                    <span class="chave-serie"><i style="background:var(@s.Cor)"></i>@s.Nome</span>
+                }
+            </span>
+        }
+    </figcaption>
+    <div class="grafico-area" tabindex="0" @onkeydown="Tecla" @onmouseleave="() => _i = -1" @onblur="() => _i = -1"
+         aria-label="@($"{Titulo}. Use as setas para percorrer as horas.")">
+        <svg viewBox="0 0 @L @A" role="img" aria-label="@Titulo">
+            @foreach (var t in _marcas)
+            {
+                <line class="grade" x1="@E" x2="@(L - D)" y1="@Fmt.N(Y(t))" y2="@Fmt.N(Y(t))" />
+                <g><text class="eixo" x="@(E - 6)" y="@Fmt.N(Y(t) + 3.5)" text-anchor="end">@t.ToString(_formato)</text></g>
+            }
+            @for (int k = 0; k < N; k += 4)
+            {
+                <g><text class="eixo" x="@Fmt.N(X(k))" y="@(A - 6)" text-anchor="middle">@Rotulos[k]</text></g>
+            }
+            @foreach (var lim in Limites)
+            {
+                if (lim.Valor >= _min && lim.Valor <= _max)
+                {
+                    <line class="limite @lim.Classe" x1="@E" x2="@(L - D)" y1="@Fmt.N(Y(lim.Valor))" y2="@Fmt.N(Y(lim.Valor))" />
+                    <g><text class="eixo limite-texto" x="@(L - D - 2)" y="@Fmt.N(Y(lim.Valor) - 4)" text-anchor="end">@lim.Texto</text></g>
+                }
+            }
+            @foreach (var s in Series)
+            {
+                <polyline class="linha" style="stroke:var(@s.Cor)" points="@Pontos(s)" />
+            }
+            @if (_i >= 0)
+            {
+                <line class="regua" x1="@Fmt.N(X(_i))" x2="@Fmt.N(X(_i))" y1="@T" y2="@(A - B)" />
+                @foreach (var s in Series)
+                {
+                    <circle class="ponto" style="fill:var(@s.Cor)" cx="@Fmt.N(X(_i))" cy="@Fmt.N(Y(s.Valores[_i]))" r="4.5" />
+                }
+            }
+            @for (int k = 0; k < N; k++)
+            {
+                int hora = k;
+                <rect class="alvo" x="@Fmt.N(X(k) - Passo / 2)" y="@T" width="@Fmt.N(Passo)" height="@(A - T - B)" @onmouseenter="() => _i = hora" @onclick="() => _i = hora" />
+            }
+        </svg>
+        @if (_i >= 0)
+        {
+            <div class="dica @(_i > N / 2 ? "esq" : "")" style="left:@Fmt.N(X(_i) / L * 100, "0.#")%">
+                <div class="dica-hora">@Rotulos[_i]</div>
+                @foreach (var s in Series)
+                {
+                    <div class="dica-linha"><i style="background:var(@s.Cor)"></i><b>@s.Valores[_i].ToString(_formato)</b> @(Series.Count > 1 ? s.Nome : Unidade)</div>
+                }
+            </div>
+        }
+    </div>
+    <details class="grafico-tabela">
+        <summary>Ver os números em tabela</summary>
+        <table>
+            <thead><tr><th>Hora</th>@foreach (var s in Series) { <th>@s.Nome (@Unidade)</th> }</tr></thead>
+            <tbody>
+                @for (int k = 0; k < N; k++)
+                {
+                    <tr><td>@Rotulos[k]</td>@foreach (var s in Series) { <td>@s.Valores[k].ToString(_formato)</td> }</tr>
+                }
+            </tbody>
+        </table>
+    </details>
+</figure>
+
+@code {
+    public sealed record Serie(string Nome, string Cor, double[] Valores);
+    public sealed record Limite(double Valor, string Texto, string Classe);
+
+    [Parameter, EditorRequired] public string Titulo { get; set; } = "";
+    [Parameter] public string Unidade { get; set; } = "";
+    [Parameter, EditorRequired] public List<Serie> Series { get; set; } = new();
+    [Parameter, EditorRequired] public string[] Rotulos { get; set; } = Array.Empty<string>();
+    [Parameter] public List<Limite> Limites { get; set; } = new();
+    [Parameter] public bool DesdeZero { get; set; }
+    [Parameter] public int Casas { get; set; } = 1;
+
+    private const int L = 360, A = 190, E = 44, D = 10, T = 12, B = 26;
+    private int _i = -1;
+    private double _min, _max;
+    private double[] _marcas = Array.Empty<double>();
+    private string _formato = "0.0";
+    private int N => Rotulos.Length;
+    private double Passo => (L - E - D) / (double)Math.Max(1, N - 1);
+
+    protected override void OnParametersSet()
+    {
+        _formato = Casas <= 0 ? "0" : "0." + new string('0', Casas);
+        var todos = Series.SelectMany(s => s.Valores).ToList();
+        if (todos.Count == 0) { _min = 0; _max = 1; _marcas = new[] { 0.0, 1.0 }; return; }
+        double min = todos.Min(), max = todos.Max();
+        foreach (var lim in Limites.Where(l => l.Valor <= max * 1.6 + 1e-9)) { min = Math.Min(min, lim.Valor); max = Math.Max(max, lim.Valor); }
+        if (DesdeZero) min = Math.Min(0, min);
+        if (max - min < 1e-9) { max += 1; min -= DesdeZero ? 0 : 1; }
+        double bruto = (max - min) / 3.0;
+        double grandeza = Math.Pow(10, Math.Floor(Math.Log10(bruto)));
+        double f = bruto / grandeza;
+        double passo = (f < 1.5 ? 1 : f < 3 ? 2 : f < 7 ? 5 : 10) * grandeza;
+        _min = Math.Floor(min / passo + 1e-9) * passo;
+        _max = Math.Ceiling(max / passo - 1e-9) * passo;
+        var m = new List<double>();
+        for (double v = _min; v <= _max + passo / 2; v += passo) m.Add(Math.Round(v, 6));
+        _marcas = m.ToArray();
+        if (_i >= N) _i = -1;
+    }
+
+    private double X(int k) => E + k * Passo;
+    private double Y(double v) => T + (1 - (v - _min) / (_max - _min)) * (A - T - B);
+    private string Pontos(Serie s) => string.Join(" ", s.Valores.Select((v, k) => Fmt.N(X(k)) + "," + Fmt.N(Y(v))));
+
+    private void Tecla(KeyboardEventArgs e)
+    {
+        if (e.Key == "ArrowRight") _i = Math.Min(N - 1, _i + 1);
+        else if (e.Key == "ArrowLeft") _i = Math.Max(0, _i < 0 ? N - 1 : _i - 1);
+        else if (e.Key == "Escape") _i = -1;
+    }
+}

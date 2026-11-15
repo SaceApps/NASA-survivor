@@ -1,0 +1,446 @@
+{
+  "gerado_em": "2026-11-14",
+  "aviso": "Pacote offline. Cada fato traz a fonte, o endereço e a data de referência. Os números que mudam com o tempo (hodômetro do Perseverance, tubos de amostra) valem na data indicada.",
+  "fatos": [
+    {
+      "id": "marte-01",
+      "categoria": "marte",
+      "titulo": "Um dia em Marte",
+      "texto": "Um dia em Marte se chama sol e dura cerca de 24 horas e 40 minutos. É quase igual ao dia da Terra, só um pouquinho mais comprido.",
+      "valor": "24,6597 h (dia solar médio, cerca de 24 h 39 min)",
+      "fonte": "NASA NSSDCA, Mars Fact Sheet, tabela 'Orbital parameters', linha 'Length of day (hrs)'",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+      "data_referencia": "2025-05-19",
+      "confianca": "alta",
+      "nota": "A rotação sideral é de 24,6229 h. O dia solar (sol) é de 24,6597 h. Folha atualizada em 19 May 2025 (DRW)."
+    },
+    {
+      "id": "marte-02",
+      "categoria": "marte",
+      "titulo": "Gravidade fraquinha",
+      "texto": "Em Marte a gravidade é só cerca de 38% da gravidade da Terra. Uma criança de 30 kg se sentiria leve, como se tivesse uns 11 kg!",
+      "valor": "3,69 m/s² no equador (0,377 da Terra)",
+      "fonte": "NASA NSSDCA, Mars Fact Sheet, 'Bulk parameters', linha 'Surface acceleration (eq) (m/s2)' e razão Marte/Terra",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+      "data_referencia": "2025-05-19",
+      "confianca": "alta",
+      "nota": "Fiz a conta dos 11 kg: 30 x 0,377 = 11,3. A tabela comparativa da NSSDCA arredonda a gravidade para 3,7 m/s²."
+    },
+    {
+      "id": "marte-03",
+      "categoria": "marte",
+      "titulo": "Ar de gás carbônico",
+      "texto": "O ar de Marte é quase todo gás carbônico, o mesmo gás que a gente solta quando respira. Ele é tão fininho que a pressão lá é menos de 1% da pressão do ar na Terra.",
+      "valor": "CO2 95,1% (em volume); pressão de 6,36 mb (variando de 4,0 a 8,7 mb)",
+      "fonte": "NASA NSSDCA, Mars Fact Sheet, seção 'Mars Atmosphere' (Surface pressure; Composition)",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+      "data_referencia": "2025-05-19",
+      "confianca": "alta",
+      "nota": "Outros gases: N2 2,59%, Ar 1,94%, O2 0,16%, CO 0,06%. Comparação: 6,36 mb = 0,00636 bar, contra 1 bar na Terra (tabela comparativa da NSSDCA), ou seja, cerca de 0,6%."
+    },
+    {
+      "id": "marte-04",
+      "categoria": "marte",
+      "titulo": "Muito frio",
+      "texto": "Marte é muito frio: a temperatura média fica perto de 60 graus abaixo de zero. No lugar mais quente pode chegar a 20 °C, e no mais frio, a uns 153 graus abaixo de zero.",
+      "valor": "média de cerca de -59 °C (214 K); faixa de -153 °C a +20 °C",
+      "fonte": "NASA NSSDCA, Mars Fact Sheet ('Average temperature ~214 K (-59 C)'); NASA Science, Mars Facts (faixa de temperatura)",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+      "data_referencia": "2025-05-19",
+      "confianca": "alta",
+      "nota": "A tabela comparativa da NSSDCA usa -65 °C como média. No local do Viking 1, a variação ao longo do dia vai de -89 a -31 °C."
+    },
+    {
+      "id": "marte-05",
+      "categoria": "marte",
+      "titulo": "Por que Marte é vermelho",
+      "texto": "Marte parece vermelho porque o ferro das rochas e da poeira enferrujou. É o mesmo tipo de ferrugem que aparece num prego velho!",
+      "valor": "",
+      "fonte": "NASA Science, Mars Facts ('The reason Mars looks reddish is due to oxidization — or rusting — of iron in the rocks...')",
+      "url": "https://science.nasa.gov/mars/facts/",
+      "data_referencia": "2026-07-10",
+      "confianca": "alta",
+      "nota": "Página atualizada em 10/07/2026. O prego velho é só uma comparação para a criança."
+    },
+    {
+      "id": "marte-06",
+      "categoria": "marte",
+      "titulo": "Duas luas",
+      "texto": "Marte tem duas luas pequenas, chamadas Fobos e Deimos. Deimos tem mais ou menos metade do tamanho de Fobos e fica bem mais longe de Marte.",
+      "valor": "2 luas (Fobos e Deimos)",
+      "fonte": "NASA NSSDCA, Mars Fact Sheet (Satellites: Phobos, Deimos); NASA Science, Mars Facts ('Deimos is about half as big as Phobos and orbits two and a half times farther away')",
+      "url": "https://science.nasa.gov/mars/facts/",
+      "data_referencia": "2026-07-10",
+      "confianca": "alta",
+      "nota": ""
+    },
+    {
+      "id": "marte-07",
+      "categoria": "marte",
+      "titulo": "Metade da Terra",
+      "texto": "Marte tem mais ou menos metade do tamanho da Terra. De um lado ao outro, ele mede cerca de 6.800 quilômetros.",
+      "valor": "diâmetro de 6.792 km; raio médio de 3.389,5 km (0,532 do raio da Terra)",
+      "fonte": "NASA NSSDCA, Mars Fact Sheet ('Volumetric mean radius' e razão 0,532); Planetary Fact Sheet - Metric (Diameter 6792 km)",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+      "data_referencia": "2025-05-19",
+      "confianca": "alta",
+      "nota": ""
+    },
+    {
+      "id": "marte-08",
+      "categoria": "marte",
+      "titulo": "Longe, longe",
+      "texto": "Marte fica, em média, a quase 228 milhões de quilômetros do Sol. A distância até a Terra muda muito: de uns 55 milhões até uns 401 milhões de quilômetros.",
+      "valor": "semieixo maior de 227,956 milhões de km; distância da Terra entre 54,6 e 401,4 milhões de km",
+      "fonte": "NASA NSSDCA, Mars Fact Sheet ('Semimajor axis (10^6 km)'; 'Distance from Earth' mínima e máxima)",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+      "data_referencia": "2025-05-19",
+      "confianca": "alta",
+      "nota": ""
+    },
+    {
+      "id": "marte-09",
+      "categoria": "marte",
+      "titulo": "Um ano bem comprido",
+      "texto": "Marte demora 687 dias da Terra para dar uma volta completa em torno do Sol. Então um ano marciano dura quase dois anos nossos!",
+      "valor": "686,980 dias terrestres (669,6 sóis)",
+      "fonte": "NASA NSSDCA, Mars Fact Sheet ('Sidereal orbit period (days)'); NASA Science, Mars Facts ('A year on Mars lasts 669.6 sols, which is the same as 687 Earth days')",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+      "data_referencia": "2025-05-19",
+      "confianca": "alta",
+      "nota": "687 / 365 = 1,88 ano terrestre."
+    },
+    {
+      "id": "jezero-01",
+      "categoria": "jezero",
+      "titulo": "A cratera Jezero",
+      "texto": "A cratera Jezero tem 45 quilômetros de largura. Ela fica na beira de uma grande planície chamada Isidis Planitia, um pouco ao norte do equador de Marte.",
+      "valor": "45 km (28 milhas) de largura",
+      "fonte": "NASA, press release 'NASA Announces Landing Site for Mars 2020 Rover' (19/11/2018)",
+      "url": "https://www.nasa.gov/news-release/nasa-announces-landing-site-for-mars-2020-rover/",
+      "data_referencia": "2018-11-19",
+      "confianca": "alta",
+      "nota": "Li a largura no release. A localização na borda oeste de Isidis Planitia, ao norte do equador, veio do trecho do mesmo release e do press kit do JPL mostrado na busca."
+    },
+    {
+      "id": "jezero-02",
+      "categoria": "jezero",
+      "titulo": "Um lago antigo com delta",
+      "texto": "Há uns 3,5 bilhões de anos, a cratera Jezero era um lago cheio de água. Um rio entrava nela e deixou um delta, um grande leque de areia, lama e pedras.",
+      "valor": "lago há cerca de 3,5 bilhões de anos",
+      "fonte": "NASA/JPL, Mars 2020 Perseverance Landing Press Kit, seção 'Landing Site' ('was home to a lake about 3.5 billion years ago' e 'an ancient river delta')",
+      "url": "https://www.jpl.nasa.gov/news/press_kits/mars_2020/landing/mission/landing_site/",
+      "data_referencia": "2021-02",
+      "confianca": "alta",
+      "nota": "O press kit de pouso é de fevereiro de 2021. O release de 2018 cita 'landforms reaching as far back as 3.6 billion years old' (as formas de relevo, não o lago)."
+    },
+    {
+      "id": "jezero-03",
+      "categoria": "jezero",
+      "titulo": "Por que Jezero foi escolhida",
+      "texto": "A NASA escolheu Jezero em 2018, depois de estudar mais de 60 lugares de Marte. O antigo lago e o delta podem ter guardado sinais de vida microscópica do passado.",
+      "valor": "escolhida em 19/11/2018 entre mais de 60 candidatos (busca de 5 anos)",
+      "fonte": "NASA, press release 'NASA Announces Landing Site for Mars 2020 Rover' ('could have collected and preserved ancient organic molecules and other potential signs of microbial life')",
+      "url": "https://www.nasa.gov/news-release/nasa-announces-landing-site-for-mars-2020-rover/",
+      "data_referencia": "2018-11-19",
+      "confianca": "alta",
+      "nota": ""
+    },
+    {
+      "id": "perseverance-01",
+      "categoria": "perseverance",
+      "titulo": "O pouso do Perseverance",
+      "texto": "O robô Perseverance pousou na cratera Jezero em 18 de fevereiro de 2021. Até outubro de 2026, ele já tinha rodado mais de 45 quilômetros por lá.",
+      "valor": "pouso em 2021-02-18; hodômetro de 45,22 km em 2026-10-11",
+      "fonte": "NASA Science, página da missão Mars 2020: Perseverance Rover (lançamento 30/07/2020, pouso 18/02/2021; 'odometer reached 28.10 miles (45.22 kilometers)')",
+      "url": "https://science.nasa.gov/mission/mars-2020-perseverance/",
+      "data_referencia": "2021-02-18",
+      "confianca": "alta",
+      "nota": "O hodômetro é de 11/10/2026 (página atualizada em 14/10/2026). Esse número cresce: atualizar quando houver internet."
+    },
+    {
+      "id": "perseverance-02",
+      "categoria": "perseverance",
+      "titulo": "Tubinhos de amostras",
+      "texto": "O Perseverance guarda pedacinhos de rocha e de poeira de Marte em tubinhos bem fechados. Até julho de 2025 ele já tinha usado 33 tubos e deixou 10 deles no chão, num depósito chamado Three Forks.",
+      "valor": "33 tubos até 2025-07-24: 27 núcleos de rocha, 2 de regolito, 1 de atmosfera e 3 tubos-testemunha; 10 no depósito Three Forks e 23 a bordo",
+      "fonte": "NASA Science Photojournal, 'The 33 Sample Tubes Collected by Perseverance' (imagem adicionada em 24/07/2025)",
+      "url": "https://science.nasa.gov/photojournal/the-33-sample-tubes-collected-by-perseverance/",
+      "data_referencia": "2025-07-24",
+      "confianca": "alta",
+      "nota": "Contagem do sol 1.574. O depósito de Three Forks foi concluído em 28/01/2023. O número pode ter aumentado depois de 2025."
+    },
+    {
+      "id": "perseverance-03",
+      "categoria": "perseverance",
+      "titulo": "Ingenuity, o helicóptero",
+      "texto": "O Ingenuity foi a primeira aeronave a voar em outro planeta, a partir de 19 de abril de 2021. Ele foi feito para até 5 voos de teste, mas voou 72 vezes!",
+      "valor": "72 voos; 1º voo em 2021-04-19; altitude máxima de 12 m; mais de 2 h de voo no total; 14 vezes mais longe que o planejado",
+      "fonte": "NASA, press release 'After Three Years on Mars, NASA's Ingenuity Helicopter Mission Ends' (25/01/2024)",
+      "url": "https://www.nasa.gov/news-release/after-three-years-on-mars-nasas-ingenuity-helicopter-mission-ends/",
+      "data_referencia": "2024-01-25",
+      "confianca": "alta",
+      "nota": "A missão acabou porque uma ou mais pás do rotor se danificaram no pouso do último voo (18/01/2024)."
+    },
+    {
+      "id": "perseverance-04",
+      "categoria": "perseverance",
+      "titulo": "MOXIE fez oxigênio",
+      "texto": "O MOXIE, um aparelho dentro do Perseverance, fez oxigênio usando o gás carbônico do ar de Marte. No total fez 122 gramas, mais ou menos o que um cachorrinho respira em 10 horas.",
+      "valor": "122 g de O2 em 16 rodadas; pico de 12 g/h com pureza de 98% ou mais",
+      "fonte": "NASA, 'NASA's Oxygen-Generating Experiment MOXIE Completes Mars Mission' (release 2023-127)",
+      "url": "https://www.nasa.gov/missions/mars-2020-perseverance/perseverance-rover/nasas-oxygen-generating-experiment-moxie-completes-mars-mission/",
+      "data_referencia": "2023-09-06",
+      "confianca": "alta",
+      "nota": "O MOXIE 'separates one oxygen atom from each molecule of carbon dioxide'. A última rodada foi em 07/08/2023."
+    },
+    {
+      "id": "agua-01",
+      "categoria": "agua",
+      "titulo": "Gelo provado pela Phoenix",
+      "texto": "Em 2008, a sonda Phoenix esquentou um pouco do solo do norte de Marte num forninho e achou água. Os cientistas disseram que foi a primeira vez que a água de Marte foi tocada e provada.",
+      "valor": "água confirmada em 2008-07-31 pelo instrumento TEGA",
+      "fonte": "NASA, press release 08-195 'NASA Spacecraft Confirms Martian Water, Mission Extended' (citação de William Boynton, cientista-chefe do TEGA)",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/text/phoenix_pr_20080731.txt",
+      "data_referencia": "2008-07-31",
+      "confianca": "alta",
+      "nota": "Li a cópia do release no NSSDCA. Antes disso, em 20/06/2008, o JPL anunciou que o material branco nas valas era gelo de água, porque sublimava (https://www.jpl.nasa.gov/news/nasa-phoenix-mars-lander-confirms-frozen-water/)."
+    },
+    {
+      "id": "agua-02",
+      "categoria": "agua",
+      "titulo": "Muito gelo no polo sul",
+      "texto": "No polo sul de Marte há tanto gelo que, se derretesse, cobriria o planeta inteiro com uma camada de água de uns 11 metros. Quem mediu isso foi um radar a bordo de uma nave em órbita.",
+      "valor": "camada equivalente de cerca de 11 m sobre o planeta todo; depósitos com até 3,7 km de profundidade e pelo menos 90% de água congelada",
+      "fonte": "NASA/JPL, notícia 'Mars' South Pole Ice Deep and Wide' (radar MARSIS da nave Mars Express)",
+      "url": "https://www.jpl.nasa.gov/news/mars-south-pole-ice-deep-and-wide/",
+      "data_referencia": "2007-03-15",
+      "confianca": "alta",
+      "nota": "A Mars Express é da ESA. O radar MARSIS foi feito em conjunto por NASA e Agência Espacial Italiana."
+    },
+    {
+      "id": "agua-03",
+      "categoria": "agua",
+      "titulo": "Água reciclada na ISS",
+      "texto": "Na Estação Espacial Internacional, quase toda a água é reciclada: cerca de 98%. Até o suor, o vapor da respiração e o xixi dos astronautas são limpos e viram água de beber de novo.",
+      "valor": "cerca de 98% de recuperação da água (antes do processador de salmoura era de 93 a 94%)",
+      "fonte": "NASA Marshall Space Flight Center, ficha 'Environmental Control and Life Support System' (MSFC-02-2025-G-657270), seção Water Recovery System; NASA, 'NASA Achieves Water Recovery Milestone on International Space Station' (20/06/2023)",
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/08/g-657270-59-hp-environmental-control-and-life-support-system-eclss.pdf",
+      "data_referencia": "2023-06-20",
+      "confianca": "alta",
+      "nota": "A ficha da MSFC diz: 'ECLSS reclaims 98 percent of all astronaut sweat and urine' e que o sistema de reciclagem de água opera na estação desde 2008."
+    },
+    {
+      "id": "ar-01",
+      "categoria": "ar",
+      "titulo": "Tirando o gás carbônico do ar",
+      "texto": "Quando os astronautas respiram, eles soltam gás carbônico, que não pode se acumular dentro da estação. Máquinas com peneiras especiais, chamadas peneiras moleculares, prendem esse gás e deixam o ar limpo.",
+      "valor": "",
+      "fonte": "NASA Marshall Space Flight Center, ficha 'Environmental Control and Life Support System', seção Air Revitalization System ('Carbon dioxide is removed using molecular sieves, materials that separate and capture gases based on their size.')",
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/08/g-657270-59-hp-environmental-control-and-life-support-system-eclss.pdf",
+      "data_referencia": "2025",
+      "confianca": "alta",
+      "nota": "Código do documento: MSFC-02-2025. O mesmo sistema remove outros contaminantes com carvão ativado, um oxidador catalítico e hidróxido de lítio."
+    },
+    {
+      "id": "ar-02",
+      "categoria": "ar",
+      "titulo": "Oxigênio feito de água",
+      "texto": "Na ISS, o oxigênio vem da água: com eletricidade dos painéis solares, uma máquina quebra a água em oxigênio e hidrogênio. Depois o hidrogênio se junta ao gás carbônico e vira água de novo, mais um gás chamado metano.",
+      "valor": "",
+      "fonte": "NASA Marshall Space Flight Center, ficha 'Environmental Control and Life Support System', seções Oxygen Generation System e ECLSS Facts (eletrólise; reator Sabatier)",
+      "url": "https://www.nasa.gov/wp-content/uploads/2025/08/g-657270-59-hp-environmental-control-and-life-support-system-eclss.pdf",
+      "data_referencia": "2025",
+      "confianca": "alta",
+      "nota": "O metano é jogado para o espaço. Na estação, esse processo se chama 'eletrólise' e usa 'an electrical current generated from the station's solar panels'."
+    },
+    {
+      "id": "energia-01",
+      "categoria": "energia",
+      "titulo": "Menos sol em Marte",
+      "texto": "Marte fica mais longe do Sol, então lá chega menos da metade da luz que chega à Terra: uns 43%. Por isso, um painel solar igual produz menos energia em Marte do que aqui.",
+      "valor": "586,2 W/m² em Marte contra 1.361,0 W/m² na Terra (razão de 0,431)",
+      "fonte": "NASA NSSDCA, Mars Fact Sheet, 'Bulk parameters', linha 'Solar irradiance (W/m2)'",
+      "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+      "data_referencia": "2025-05-19",
+      "confianca": "alta",
+      "nota": "A segunda frase é uma conclusão direta do número (mesmo painel, céu limpo). A poeira no ar e nos painéis reduz ainda mais a energia."
+    },
+    {
+      "id": "energia-02",
+      "categoria": "energia",
+      "titulo": "Opportunity e a tempestade de 2018",
+      "texto": "O robô Opportunity usava painéis solares e foi feito para durar só 90 dias marcianos, mas trabalhou mais de 14 anos. Em junho de 2018, uma tempestade de poeira cobriu Marte inteiro, tapou o Sol e ele nunca mais respondeu.",
+      "valor": "último contato em 2018-06-10; missão encerrada em 2019-02-13; mais de 45 km rodados; mais de mil comandos de resgate",
+      "fonte": "NASA Science, 'NASA's Opportunity Rover Mission on Mars Comes to End' (13/02/2019)",
+      "url": "https://science.nasa.gov/missions/mer/nasas-opportunity-rover-mission-on-mars-comes-to-end/",
+      "data_referencia": "2019-02-13",
+      "confianca": "alta",
+      "nota": "O relatório de fim de missão (NTRS 20200000214) fala em 'more than fourteen years operating on the surface' até o sol 5111. O release conta a missão de 2004 a 2019 como 'more than 15 years'."
+    },
+    {
+      "id": "energia-03",
+      "categoria": "energia",
+      "titulo": "InSight e os painéis empoeirados",
+      "texto": "A sonda InSight também usava energia do Sol e escutou 1.319 tremores em Marte, os martemotos. A poeira foi cobrindo os painéis, a energia caiu de uns 5.000 para uns 500 watts-hora por dia e a missão acabou em dezembro de 2022.",
+      "valor": "cerca de 5.000 Wh por sol logo após o pouso (nov/2018) e cerca de 500 Wh por sol na primavera de 2022; 1.319 martemotos; último contato em 2022-12-15",
+      "fonte": "NASA Science, 'InSight's Power Generation: After Landing and Spring 2022' (17/05/2022); NASA, 'NASA Retires InSight Mars Lander Mission After Years of Science' (21/12/2022)",
+      "url": "https://science.nasa.gov/resource/insights-power-generation-after-landing-and-spring-2022/",
+      "data_referencia": "2022-12-21",
+      "confianca": "alta",
+      "nota": ""
+    }
+  ],
+  "imagens": [
+    {
+      "nasa_id": "PIA23239",
+      "titulo": "Jezero Crater, Mars 2020's Landing Site",
+      "descricao": "A cratera Jezero vista lá de cima por uma nave em órbita: é o lugar onde o Perseverance pousou.",
+      "data": "2019-05-15",
+      "credito": "NASA/JPL-Caltech/MSSS/JHU-APL (centro: JPL)",
+      "url_thumb": "https://images-assets.nasa.gov/image/PIA23239/PIA23239~thumb.jpg",
+      "url_pagina": "https://images.nasa.gov/details/PIA23239",
+      "tema": "cratera Jezero vista de órbita"
+    },
+    {
+      "nasa_id": "PIA25212",
+      "titulo": "Jezero Crater's Delta Is Getting Closer",
+      "descricao": "O Perseverance olha para o delta de Jezero, onde um rio antigo deixou areia e pedras dentro de um lago.",
+      "data": "2022-04-19",
+      "credito": "NASA/JPL-Caltech/ASU/MSSS (centro: JPL)",
+      "url_thumb": "https://images-assets.nasa.gov/image/PIA25212/PIA25212~thumb.jpg",
+      "url_pagina": "https://images.nasa.gov/details/PIA25212",
+      "tema": "delta de Jezero"
+    },
+    {
+      "nasa_id": "PIA24542",
+      "titulo": "Perseverance's Selfie with Ingenuity",
+      "descricao": "O robô Perseverance tirou uma selfie com o helicóptero Ingenuity, que estava a uns 4 metros dele.",
+      "data": "2021-04-07",
+      "credito": "NASA/JPL-Caltech/MSSS (centro: JPL)",
+      "url_thumb": "https://images-assets.nasa.gov/image/PIA24542/PIA24542~thumb.jpg",
+      "url_pagina": "https://images.nasa.gov/details/PIA24542",
+      "tema": "selfie do Perseverance"
+    },
+    {
+      "nasa_id": "PIA24550",
+      "titulo": "Ingenuity's First Flight Recorded by Mastcam-Z",
+      "descricao": "O helicóptero Ingenuity visto pela câmera do Perseverance no dia do primeiro voo de uma aeronave em outro planeta.",
+      "data": "2021-04-19",
+      "credito": "NASA/JPL-Caltech/ASU/MSSS (centro: JPL)",
+      "url_thumb": "https://images-assets.nasa.gov/image/PIA24550/PIA24550~thumb.jpg",
+      "url_pagina": "https://images.nasa.gov/details/PIA24550",
+      "tema": "Ingenuity"
+    },
+    {
+      "nasa_id": "PIA24176",
+      "titulo": "Engineers Lower MOXIE into Perseverance",
+      "descricao": "Engenheiros colocam o MOXIE, a máquina que fez oxigênio em Marte, dentro da barriga do Perseverance.",
+      "data": "2020-11-24",
+      "credito": "NASA/JPL-Caltech (centro: JPL)",
+      "url_thumb": "https://images-assets.nasa.gov/image/PIA24176/PIA24176~thumb.jpg",
+      "url_pagina": "https://images.nasa.gov/details/PIA24176",
+      "tema": "MOXIE"
+    },
+    {
+      "nasa_id": "PIA22329",
+      "titulo": "Dust Storm Covers Opportunity",
+      "descricao": "Mapa de Marte mostrando a tempestade de poeira de 2018 crescendo sobre o lugar onde estava o robô Opportunity.",
+      "data": "2018-06-10",
+      "credito": "NASA/JPL-Caltech/MSSS (centro: JPL)",
+      "url_thumb": "https://images-assets.nasa.gov/image/PIA22329/PIA22329~thumb.jpg",
+      "url_pagina": "https://images.nasa.gov/details/PIA22329",
+      "tema": "tempestade de poeira em Marte"
+    },
+    {
+      "nasa_id": "PIA10906",
+      "titulo": "Disappearing Ice",
+      "descricao": "Pedacinhos de gelo numa vala cavada pela sonda Phoenix somem aos poucos, porque viram vapor no ar fininho de Marte.",
+      "data": "2008-06-20",
+      "credito": "NASA/JPL-Caltech/University of Arizona/Texas A&M University (centro: JPL)",
+      "url_thumb": "https://images-assets.nasa.gov/image/PIA10906/PIA10906~thumb.jpg",
+      "url_pagina": "https://images.nasa.gov/details/PIA10906",
+      "tema": "gelo em Marte (Phoenix)"
+    },
+    {
+      "nasa_id": "PIA19400",
+      "titulo": "Sunset in Mars Gale Crater",
+      "descricao": "O pôr do sol em Marte, fotografado pelo Curiosity, fica azulado perto do Sol por causa da poeira fininha do ar.",
+      "data": "2015-05-08",
+      "credito": "NASA/JPL-Caltech/MSSS/Texas A&M Univ. (centro: JPL)",
+      "url_thumb": "https://images-assets.nasa.gov/image/PIA19400/PIA19400~thumb.jpg",
+      "url_pagina": "https://images.nasa.gov/details/PIA19400",
+      "tema": "pôr do sol em Marte"
+    },
+    {
+      "nasa_id": "PIA23302",
+      "titulo": "First Humans on Mars (Artist's Concept)",
+      "descricao": "Desenho de artista que imagina os primeiros astronautas e suas casas em Marte.",
+      "data": "2019-06-12",
+      "credito": "NASA (centro: JPL)",
+      "url_thumb": "https://images-assets.nasa.gov/image/PIA23302/PIA23302~thumb.jpg",
+      "url_pagina": "https://images.nasa.gov/details/PIA23302",
+      "tema": "conceito artístico de base e astronautas em Marte"
+    },
+    {
+      "nasa_id": "PIA25286",
+      "titulo": "InSight's Dusty Solar Panel",
+      "descricao": "Um painel solar da sonda InSight coberto de poeira, que foi diminuindo a energia dela pouco a pouco.",
+      "data": "2022-05-17",
+      "credito": "NASA/JPL-Caltech (centro: JPL)",
+      "url_thumb": "https://images-assets.nasa.gov/image/PIA25286/PIA25286~thumb.jpg",
+      "url_pagina": "https://images.nasa.gov/details/PIA25286",
+      "tema": "painéis solares empoeirados (InSight)"
+    }
+  ],
+  "servicos": [
+    {
+      "nome": "NASA Image and Video Library API (busca)",
+      "url_exemplo": "https://images-api.nasa.gov/search?q=jezero&media_type=image",
+      "funciona": true,
+      "sem_chave": true,
+      "observacao": "Testei em 2026-11-14 e voltou JSON válido. A busca 'jezero' sem page_size é grande (cerca de 231 mil caracteres numa página). Com page_size=5, a busca 'jezero crater landing site' deu total_hits=30. O thumbnail é o link com rel='preview' (~thumb.jpg), que nem sempre é o primeiro do array links (o primeiro costuma ser ~medium.jpg). Testei https://images-assets.nasa.gov/image/PIA23239/PIA23239~thumb.jpg: abre como image/jpeg de 76,1 KB, sem chave. O endpoint irmão https://images-api.nasa.gov/asset/PIA24542 (testado) lista orig, large, medium, small, thumb e metadata.json, mas devolve as URLs em http:// (trocar para https). Itens do JPL não têm o campo photographer: o crédito fica em secondary_creator.",
+      "data_teste": "2026-11-14"
+    },
+    {
+      "nome": "api.nasa.gov InSight Mars Weather Service",
+      "url_exemplo": "https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0",
+      "funciona": true,
+      "sem_chave": false,
+      "observacao": "Responde com DEMO_KEY (público, sem cadastro). Sem o parâmetro api_key dá HTTP 403 (testado). Os DADOS ESTÃO CONGELADOS: o último sol completo é o 681 (First_UTC 2020-10-25T22:29:51Z, Last_UTC 2020-10-26T23:09:26Z, Season 'fall'; AT média -62,434 °C, mín -95,447, máx -4,444; PRE média 743,55 Pa; HWS média 5,632 m/s). O sol 682 aparece como valid=false. A InSight encerrou a missão em 2022-12-21. Serve como pacote fixo de 'clima real de Marte', não como dado ao vivo. Limites do DEMO_KEY: 30 pedidos por hora e 50 por dia por IP (li em fontes secundárias, porque a página oficial carrega o texto por JavaScript).",
+      "data_teste": "2026-11-14"
+    },
+    {
+      "nome": "api.nasa.gov APOD (legado) com DEMO_KEY",
+      "url_exemplo": "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=2021-02-20",
+      "funciona": false,
+      "sem_chave": false,
+      "observacao": "Testei 4 vezes em 2026-11-14. Sem data (pede o APOD de hoje) dá HTTP 500, inclusive com &thumbs=true. Com date=2024-01-01, date=2021-02-20 ou count=1 responde 200, mas com conteúdo de preenchimento (logo da NASA no lugar da foto do dia). Por isso marquei como não funcionando para uso real. O aviso em https://api.nasa.gov/assets/html/header.html diz: 'The APOD API has been updated. It now returns information from https://science.nasa.gov/wp-json/wp/v2/apod-basic' e 'The legacy APOD API will be archived on December 1, 2026.'",
+      "data_teste": "2026-11-14"
+    },
+    {
+      "nome": "APOD novo (NASA Science WordPress REST)",
+      "url_exemplo": "https://science.nasa.gov/wp-json/wp/v2/apod-basic",
+      "funciona": true,
+      "sem_chave": true,
+      "observacao": "Substituto oficial do APOD indicado pela api.nasa.gov. Testei em 2026-11-14: o primeiro item é de 2026-11-14 ('Apollo 12 and Surveyor 3'). A resposta é pesada (cerca de 280 mil caracteres, porque traz o HTML completo de cada página), então convém guardar só os campos usados.",
+      "data_teste": "2026-11-14"
+    },
+    {
+      "nome": "Mars Trek WMTS (mosaico global colorido Viking MDIM 2.1, 232 m/pixel)",
+      "url_exemplo": "https://trek.nasa.gov/tiles/Mars/EQ/Mars_Viking_MDIM21_ClrMosaic_global_232m/1.0.0/default/default028mm/0/0/0.jpg",
+      "funciona": true,
+      "sem_chave": true,
+      "observacao": "O tile 0/0/0 abriu como JPEG de 51,7 KB, sem chave. Capabilities em https://trek.nasa.gov/tiles/Mars/EQ/Mars_Viking_MDIM21_ClrMosaic_global_232m/1.0.0/WMTSCapabilities.xml (OGC WMTS 1.0.0; MatrixWidth e MatrixHeight vêm escritos como decimais, '2.0', e um parser estrito pode reclamar). Para jogo offline, baixar os níveis 0 a 3 e guardar localmente.",
+      "data_teste": "2026-11-14"
+    },
+    {
+      "nome": "Mars Rover Photos API (api.nasa.gov/mars-photos)",
+      "url_exemplo": "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY",
+      "funciona": false,
+      "sem_chave": false,
+      "observacao": "CONFIRMADO ARQUIVADO. Esta URL e também /mars-photos/api/v1/manifests/perseverance?api_key=DEMO_KEY dão HTTP 404 (testado em 2026-11-14). O aviso oficial em https://api.nasa.gov/assets/html/header.html diz: 'The Mars Rover API has also been archived.' Segundo fonte secundária (busca), o repositório de origem corincerami/mars-photo-api foi arquivado pelo dono em 2025-10-08. Alternativa: buscar fotos de rovers na NASA Image and Video Library.",
+      "data_teste": "2026-11-14"
+    }
+  ]
+}

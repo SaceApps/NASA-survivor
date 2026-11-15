@@ -1,0 +1,17 @@
+{
+    "name": "MissaoMarte.Game",
+    "rootNamespace": "MissaoMarte.Game",
+    "references": [
+        "MissaoMarte.Simulation",
+        "MissaoMarte.Events"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": true
+}

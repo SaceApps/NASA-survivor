@@ -1,0 +1,208 @@
+@inherits PainelBase
+@inject NasaOnline Nasa
+
+@{
+    var pacote = PacoteNasa.Padrao;
+    var conquistados = P.CartoesConquistados();
+}
+
+<nav class="subabas" aria-label="Partes da central científica">
+    @foreach (var (id, nome) in Partes)
+    {
+        <button class="seg @(_parte == id ? "ativo" : "")" aria-pressed="@(_parte == id ? "true" : "false")" @onclick="() => _parte = id">@nome</button>
+    }
+</nav>
+
+@if (_parte == "cartoes")
+{
+    <section class="cartao larga">
+        <h2>Cartões de ciência: @conquistados.Count de @pacote.Fatos.Count</h2>
+        <p class="fraco">Cada cartão é um fato real, com a fonte e a data. A equipe ganha um por sol e um em cada lugar com nome do mapa.</p>
+    </section>
+    <div class="grade cartoes">
+        @foreach (var f in pacote.Fatos.Where(f => conquistados.Contains(f.Id)))
+        {
+            <section class="cartao cartao-fato">
+                <span class="selo">@Categoria(f.Categoria)</span>
+                <h3>@f.Titulo</h3>
+                <p>@f.Texto</p>
+                @if (NivelTexto >= 2 && f.Valor != "") { <p class="fraco">Medida: @f.Valor</p> }
+                @if (NivelTexto >= 3 && f.Nota != "") { <p class="fraco">Nota: @f.Nota</p> }
+                <small>Fonte: <a href="@f.Url" target="_blank" rel="noopener">@f.Fonte</a> · referência: @f.DataReferencia · confiança: @f.Confianca</small>
+            </section>
+        }
+        @if (conquistados.Count < pacote.Fatos.Count)
+        {
+            <section class="cartao trancado">
+                <h3>Faltam @(pacote.Fatos.Count - conquistados.Count) cartões</h3>
+                <p>Explorem os lugares com nome no mapa e cheguem ao fim de cada sol para ganhar os outros.</p>
+            </section>
+        }
+    </div>
+}
+else if (_parte == "imagens")
+{
+    <section class="cartao larga">
+        <h2>Imagens reais da NASA</h2>
+        <p class="fraco">@pacote.Aviso Pacote montado em @pacote.GeradoEm; as imagens abaixo estão guardadas no jogo e funcionam sem internet.</p>
+        <div class="galeria">
+            @foreach (var img in pacote.Imagens)
+            {
+                <figure>
+                    <img src="nasa/@(img.NasaId).jpg" alt="@img.Descricao" loading="lazy" />
+                    <figcaption>
+                        <b>@img.Descricao</b>
+                        <small>@img.Titulo · @img.Data · Crédito: @img.Credito · <a href="@img.UrlPagina" target="_blank" rel="noopener">abrir na NASA</a></small>
+                    </figcaption>
+                </figure>
+            }
+        </div>
+    </section>
+    <section class="cartao larga">
+        <h2>Buscar imagens novas (precisa de internet)</h2>
+        <div class="acoes">
+            @foreach (var (termo, nome) in Buscas)
+            {
+                <button class="botao" disabled="@_buscando" @onclick="() => Buscar(termo)">@nome</button>
+            }
+        </div>
+        @if (_buscando) { <p class="fraco">Perguntando à NASA…</p> }
+        @if (_erroBusca != null) { <p class="frase atencao"><Icone Nome="atencao" Tamanho="16" /> @_erroBusca</p> }
+        @if (_online.Count > 0)
+        {
+            <div class="galeria">
+                @foreach (var img in _online)
+                {
+                    <figure>
+                        <img src="@img.Thumb" alt="@img.Titulo" loading="lazy" referrerpolicy="no-referrer" />
+                        <figcaption><b>@img.Titulo</b><small>@img.Data · Crédito: @img.Credito · <a href="@img.Pagina" target="_blank" rel="noopener">abrir na NASA</a></small></figcaption>
+                    </figure>
+                }
+            </div>
+            <p class="fraco">Resultado ao vivo da NASA Image and Video Library, consultado agora. Os títulos vêm em inglês, como a NASA publica.</p>
+        }
+    </section>
+}
+else if (_parte == "numeros")
+{
+    var cat = Catalogo;
+    <section class="cartao larga">
+        <h2>De onde vêm os números do jogo</h2>
+        <p>O motor não tem nenhum número escondido no código: todos estão nesta lista, com unidade, fonte e confiança. Versão do modelo: @cat.VersaoModelo. @cat.Nota</p>
+        <div class="acoes">
+            @foreach (var (tipo, nome) in Tipos)
+            {
+                <button class="seg @(_tipo == tipo ? "ativo" : "")" aria-pressed="@(_tipo == tipo ? "true" : "false")" @onclick="() => _tipo = tipo">@nome (@cat.Parametros.Count(x => x.Tipo == tipo))</button>
+            }
+        </div>
+        <div class="tabela-rolagem">
+            <table class="tabela">
+                <thead><tr><th>O que é</th><th>Valor</th><th>Confiança</th><th>Fonte</th></tr></thead>
+                <tbody>
+                    @foreach (var r in cat.Parametros.Where(x => x.Tipo == _tipo))
+                    {
+                        <tr>
+                            <td>@r.Descricao @if (NivelTexto >= 3 && !string.IsNullOrEmpty(r.Nota)) { <small class="fraco">@r.Nota</small> }</td>
+                            <td class="num">@r.Valor.ToString("0.#####") <small>@r.Unidade</small></td>
+                            <td>@r.Confianca</td>
+                            <td>@if (r.Url.StartsWith("http")) { <a href="@r.Url" target="_blank" rel="noopener">@r.Fonte</a> } else { @r.Fonte }</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </section>
+}
+else
+{
+    var livro = P.Base.Livro;
+    double bateria0 = P.P.BateriaCapacidadeWh * P.P.BateriaInicialFracao;
+    double fechamentoEnergia = livro.EnergiaGeradaWh - livro.EnergiaCargasWh - livro.EnergiaPerdasWh - livro.EnergiaDesperdicadaWh - (P.Base.BateriaWh - bateria0);
+    <div class="grade">
+        <section class="cartao">
+            <h2>A conta da massa</h2>
+            <p>Na base nada aparece do nada e nada some. O que saiu do tanque foi para algum lugar; o que entrou veio de algum lugar. Se a conta estiver certa, a diferença é zero.</p>
+            <ul class="numeros">
+                <li><span>Massa guardada no começo</span><b>@P.MassaInicialKg.ToString("0.000") kg</b></li>
+                <li><span>Massa guardada agora</span><b>@P.Base.MassaTotalKg().ToString("0.000") kg</b></li>
+                <li><span>Entrou pela fronteira</span><b>@livro.TotalEntradasKg.ToString("0.000") kg</b></li>
+                <li><span>Saiu pela fronteira</span><b>@livro.TotalSaidasKg.ToString("0.000") kg</b></li>
+                <li class="total"><span>Diferença: agora + saiu − entrou − começo</span><b>@Math.Abs(P.DiferencaDeMassaKg).ToString("0.000000000") kg</b></li>
+            </ul>
+            @if (NivelTexto >= 2)
+            {
+                <h3>O que saiu da base</h3>
+                <ul class="numeros">
+                    @foreach (var s in livro.SaidasKg.OrderByDescending(s => s.Value)) { <li><span>@s.Key</span><b>@s.Value.ToString("0.00") kg</b></li> }
+                </ul>
+                <h3>O que entrou na base</h3>
+                <ul class="numeros">
+                    @foreach (var s in livro.EntradasKg.OrderByDescending(s => s.Value)) { <li><span>@s.Key</span><b>@s.Value.ToString("0.00") kg</b></li> }
+                    @if (livro.EntradasKg.Count == 0) { <li><span>Nada entrou ainda</span><b></b></li> }
+                </ul>
+            }
+        </section>
+        <section class="cartao">
+            <h2>A conta da energia</h2>
+            <p>Toda a energia que os painéis geraram foi usada pelas máquinas, perdida nos fios e na bateria, desperdiçada com a bateria cheia ou está guardada na bateria.</p>
+            <ul class="numeros">
+                <li><span>Gerada pelos painéis</span><b>@((livro.EnergiaGeradaWh / 1000).ToString("0.0")) kWh</b></li>
+                <li><span>Usada pelas máquinas</span><b>@((livro.EnergiaCargasWh / 1000).ToString("0.0")) kWh</b></li>
+                <li><span>Perdida nos fios e na bateria</span><b>@((livro.EnergiaPerdasWh / 1000).ToString("0.0")) kWh</b></li>
+                <li><span>Sobrou com a bateria cheia</span><b>@((livro.EnergiaDesperdicadaWh / 1000).ToString("0.0")) kWh</b></li>
+                <li><span>Variação da bateria desde o começo</span><b>@(((P.Base.BateriaWh - bateria0) / 1000).ToString("0.0")) kWh</b></li>
+                <li class="total"><span>Diferença: gerada − usada − perdida − sobra − bateria</span><b>@(Math.Abs(fechamentoEnergia / 1000).ToString("0.000000000")) kWh</b></li>
+            </ul>
+            @if (NivelTexto >= 3)
+            {
+                <h3>As leis usadas</h3>
+                <ul class="leis">
+                    <li>Gases: lei dos gases ideais, p = n·R·T / V, para cada gás do ar.</li>
+                    <li>Oxigênio: eletrólise da água, 2 H2O → 2 H2 + O2 (1,126 kg de água por kg de O2).</li>
+                    <li>Sol: 1361 W/m² ÷ (distância em UA)², vezes o cosseno do ângulo do Sol, vezes exp(−k·tau) da poeira.</li>
+                    <li>Calor: o que a base perde é U·A × (dentro − fora); o aquecimento e as máquinas repõem.</li>
+                    <li>Corpo: comida seca + O2 = CO2 + água + resíduo. A água que entra é igual à que sai.</li>
+                </ul>
+            }
+        </section>
+        <section class="cartao larga">
+            <h2>Serviços de dados da NASA testados em @pacote.GeradoEm</h2>
+            <ul class="servicos">
+                @foreach (var s in pacote.Servicos)
+                {
+                    <li class="@(s.Funciona ? "bom" : "atencao")">
+                        <span class="estado"><Icone Nome="@(s.Funciona ? "bom" : "atencao")" Tamanho="15" /> @(s.Funciona ? "Funciona" : "Fora do ar")@(s.SemChave ? ", sem chave" : "")</span>
+                        <b>@s.Nome</b>
+                        @if (NivelTexto >= 3) { <small>@s.Observacao</small> }
+                    </li>
+                }
+            </ul>
+        </section>
+    </div>
+}
+
+@code {
+    private static readonly (string, string)[] Partes = { ("cartoes", "Cartões de ciência"), ("imagens", "Imagens da NASA"), ("numeros", "Os números do jogo"), ("balancos", "As contas fecham?") };
+    private static readonly (string, string)[] Tipos = { ("ciencia", "Medidas publicadas"), ("cenario", "Escolhas desta base"), ("referencia", "Só para comparar") };
+    private static readonly (string, string)[] Buscas = { ("Jezero crater", "Cratera Jezero"), ("Perseverance rover", "Perseverance"), ("Mars dust storm", "Tempestade de poeira"), ("Ingenuity helicopter", "Ingenuity") };
+    private static readonly Lazy<CatalogoParametros> _catalogo = new(CatalogoParametros.Carregar);
+    private static CatalogoParametros Catalogo => _catalogo.Value;
+
+    private string _parte = "cartoes";
+    private string _tipo = "ciencia";
+    private bool _buscando;
+    private string? _erroBusca;
+    private List<ImagemOnline> _online = new();
+
+    private async Task Buscar(string termo)
+    {
+        _buscando = true; _erroBusca = null;
+        var (imagens, erro) = await Nasa.Buscar(termo);
+        _online = imagens; _erroBusca = erro; _buscando = false;
+    }
+
+    private static string Categoria(string c) => c switch
+    {
+        "marte" => "Marte", "jezero" => "Jezero", "perseverance" => "Perseverance", "agua" => "Água", "ar" => "Ar", "energia" => "Energia", _ => c,
+    };
+}

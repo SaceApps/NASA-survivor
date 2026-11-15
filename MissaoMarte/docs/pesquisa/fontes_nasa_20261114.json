@@ -1,0 +1,1435 @@
+{
+  "vida": {
+    "parametros": [
+      {
+        "chave": "o2_consumo_kg_cm_dia",
+        "valor": 0.895,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Oxigênio consumido por tripulante por dia (valor nominal)",
+        "fonte": "NASA BVAD Rev 2 (NASA/TP-2015-218570/REV2, 2022), Tabela 3-31 Summary of Nominal Human Metabolic Interface Values",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "Tripulante de 82 kg com exercício diário (MetMan 2019). A Tabela 4-1 arredonda para 0,90 (faixa de 0,61 a 1,08). O projeto da ISS (Perry et al. 2012) usava 0,84."
+      },
+      {
+        "chave": "co2_producao_kg_cm_dia",
+        "valor": 1.085,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "CO2 produzido por tripulante por dia",
+        "fonte": "BVAD Rev 2, Tabela 3-31",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "Faixa da Tabela 4-1: 0,74 a 1,31. O projeto da ISS usava 1,0 kg/d (Perry et al. 2012)."
+      },
+      {
+        "chave": "agua_bebida_kg_cm_dia",
+        "valor": 2.717,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Água potável bebida (inclui o extra do exercício)",
+        "fonte": "BVAD Rev 2, seção 3.3.5 e Tabela 3-31 (água potável total de 3,217)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "O BVAD divide os 3,217 kg de água potável assim: 2,00 de bebida + 0,50 de preparo + 0,717 a mais para o suor do exercício. Aqui 2,00 + 0,717 = 2,717, para fechar o balanço. Sem exercício, use 2,00 (Tabela 4-20)."
+      },
+      {
+        "chave": "agua_preparo_alimento_kg_cm_dia",
+        "valor": 0.5,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Água potável para reidratar ou preparar o alimento",
+        "fonte": "BVAD Rev 2, seção 3.3.5 e Tabela 4-20 (Food Rehydration Water)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "agua_no_alimento_kg_cm_dia",
+        "valor": 0.76,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Água que já vem no alimento antes da reidratação",
+        "fonte": "BVAD Rev 2, Tabela 3-31 (Water in food prior to rehydration)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "agua_metabolica_kg_cm_dia",
+        "valor": 0.49,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Água formada no corpo pela oxidação do alimento",
+        "fonte": "BVAD Rev 2, Tabela 3-31",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "urina_kg_cm_dia",
+        "valor": 1.42,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Água eliminada na urina (só a água, sem os sólidos)",
+        "fonte": "BVAD Rev 2, Tabela 3-31 (Urine water)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "A urina tem ainda 0,061 kg/d de sólidos, o que dá cerca de 1,48 kg de massa total. A Tabela 4-21 usa 1,50 kg/d para trânsito e base planetária e 1,20 para a ISS."
+      },
+      {
+        "chave": "vapor_respiracao_transpiracao_kg_cm_dia",
+        "valor": 2.946,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Água que sai pela respiração e pelo suor (vai para o ar e vira condensado)",
+        "fonte": "BVAD Rev 2, Tabela 3-31 (Respiration and perspiration water)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "Pela Tabela 3-27, são 2,52 kg de vapor + 0,43 kg de suor. A Tabela 4-21 usa 2,27 kg/d de condensado (sem o exercício pesado)."
+      },
+      {
+        "chave": "agua_fecal_kg_cm_dia",
+        "valor": 0.101,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Água eliminada nas fezes",
+        "fonte": "BVAD Rev 2, Tabela 3-31",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "alimento_seco_kg_cm_dia",
+        "valor": 0.8,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Massa seca do alimento, sem embalagem",
+        "fonte": "BVAD Rev 2, Tabela 3-31 (Food solids, mass)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "Energia de 12,778 MJ/d. Desse total, 0,120 kg/d viram resíduo sólido: fezes 0,032, urina 0,061 e suor/outros 0,027. O restante (0,680 kg) é oxidado."
+      },
+      {
+        "chave": "agua_higiene_kg_cm_dia",
+        "valor": 2.12,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Água de higiene numa base inicial em superfície: higiene pessoal/oral, lavar as mãos e banho",
+        "fonte": "BVAD Rev 2, Tabela 4-20 (Early Planetary Base e Devon Island)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "media",
+        "nota": "Soma de: higiene pessoal/oral 0,4 (HIDH 2014), banho 1,08 (Bamsey 2009) e lavar as mãos 0,64. Este último vem da coluna Devon Island, porque a base planetária marca TBD. A descarga ficou de fora. A Tabela 4-21 usa um valor bem maior para lavar as mãos (4,08, de NASA 1991) e higiene oral de 0,37. Sem lavar as mãos, o total seria 1,48."
+      },
+      {
+        "chave": "descarga_urina_kg_cm_dia",
+        "valor": 0.5,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Água da descarga do mictório, numa base planetária",
+        "fonte": "BVAD Rev 2, Tabelas 4-20 e 4-21 (Urinal Flush, Early Planetary Base)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "Na ISS e na nave de trânsito o valor é 0,30."
+      },
+      {
+        "chave": "calor_metabolico_w",
+        "valor": 143.8,
+        "unidade": "W por tripulante",
+        "descricao": "Calor metabólico total médio de um tripulante",
+        "fonte": "BVAD Rev 2, Tabela 3-31 (Total metabolic heat load = 12,426 MJ/tripulante·dia)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "12,426 MJ/d ÷ 86.400 s. Sensível: 6,308 MJ/d (73,0 W). Latente: 6,118 MJ/d (70,8 W). Fica de fora o calor do aparelho de exercício."
+      },
+      {
+        "chave": "calor_sensivel_w",
+        "valor": 73,
+        "unidade": "W por tripulante",
+        "descricao": "Parte sensível do calor metabólico (aquece o ar)",
+        "fonte": "BVAD Rev 2, Tabela 3-31 (6,308 MJ/tripulante·dia)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "calor_latente_w",
+        "valor": 70.8,
+        "unidade": "W por tripulante",
+        "descricao": "Parte latente do calor metabólico (água evaporada)",
+        "fonte": "BVAD Rev 2, Tabela 3-31 (6,118 MJ/tripulante·dia)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "agua_potavel_total_kg_cm_dia",
+        "valor": 3.217,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Água potável total consumida (bebida + preparo + extra do exercício)",
+        "fonte": "BVAD Rev 2, Tabela 3-31 (Potable water content)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "solidos_residuais_kg_cm_dia",
+        "valor": 0.12,
+        "unidade": "kg/(tripulante·dia)",
+        "descricao": "Sólidos secos eliminados (fezes 0,032 + urina 0,061 + suor/outros 0,027)",
+        "fonte": "BVAD Rev 2, Tabela 3-31",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "cdra_potencia_w",
+        "valor": 1000,
+        "unidade": "W",
+        "descricao": "Potência elétrica do removedor de CO2 da ISS (CDRA)",
+        "fonte": "D. Jan (NASA Ames), apresentação 'NASA CO2 Removal', 24/07/2019, slides de apoio com a especificação do CDRA; NASA TM-108541 (Perry, Franks e Knox, 1997)",
+        "url": "https://usea.org/sites/default/files/event-/JAN_NASA%20DCA%207-24-2019sW2.pdf",
+        "confianca": "media",
+        "nota": "Número arredondado, numa apresentação da NASA publicada no site da USEA. No teste integrado de 1997, o CDRA gastou em média 541 W com ciclo dia/noite e 775 W em operação contínua (https://ntrs.nasa.gov/api/citations/19970034574/downloads/19970034574.pdf). Rejeita 620 W ao sistema térmico."
+      },
+      {
+        "chave": "cdra_capacidade_co2_kg_dia",
+        "valor": 4.16,
+        "unidade": "kg CO2/dia",
+        "descricao": "Capacidade de projeto do CDRA (4 tripulantes)",
+        "fonte": "D. Jan (NASA Ames), 'NASA CO2 Removal', 2019 (CDRA: 4,16 kg/dia, 4 tripulantes, 450 lb)",
+        "url": "https://usea.org/sites/default/files/event-/JAN_NASA%20DCA%207-24-2019sW2.pdf",
+        "confianca": "alta",
+        "nota": "No teste de 1997 (TM-108541), o CDRA removeu 0,166 a 0,198 kg/h, ou cerca de 4,0 a 4,75 kg/dia. A faixa de projeto é de 2,0 a 3,9 mmHg de CO2 na cabine (OCHMO TB-004)."
+      },
+      {
+        "chave": "oga_potencia_w",
+        "valor": 3573,
+        "unidade": "W",
+        "descricao": "Potência do gerador de oxigênio da ISS (OGA) em produção",
+        "fonte": "Erickson et al., 'ISS USOS Oxygen Generation System On-orbit Operational Experience' (NASA MSFC/Hamilton Sundstrand, 2008)",
+        "url": "https://ntrs.nasa.gov/api/citations/20080036243/downloads/20080036243.pdf",
+        "confianca": "alta",
+        "nota": "3573 W em produção (Process) e 382 W em espera (Standby). A fonte de energia rende no mínimo 91%."
+      },
+      {
+        "chave": "oga_o2_kg_dia",
+        "valor": 9.2,
+        "unidade": "kg O2/dia",
+        "descricao": "Produção máxima contínua de O2 do OGA por eletrólise",
+        "fonte": "Erickson et al. 2008 (de 2,3 a 9,2 kg/d contínuo); Takada et al., ICES-2024-101 (9,25 kg/d a 46,9 A)",
+        "url": "https://ntrs.nasa.gov/api/citations/20080036243/downloads/20080036243.pdf",
+        "confianca": "alta",
+        "nota": "O nominal de projeto, com ciclo dia/noite, é 5,4 kg/d (12 lb/d), conforme NASA FS-2004-12-175-MSFC. A ICES-2024-101 diz que 9,25 kg/d dão para cerca de 10,9 tripulantes a 0,85 kg/d cada (https://ntrs.nasa.gov/api/citations/20240006776/downloads/ICES%202024%20101%20AOGA%20final.pdf)."
+      },
+      {
+        "chave": "eletrolise_kwh_por_kg_o2",
+        "valor": 9.3,
+        "unidade": "kWh/kg O2",
+        "descricao": "Energia elétrica real para produzir 1 kg de O2 no OGA da ISS (conjunto inteiro)",
+        "fonte": "Calculado de Erickson et al. 2008 (3573 W) e ICES-2024-101 (9,25 kg/d)",
+        "url": "https://ntrs.nasa.gov/api/citations/20080036243/downloads/20080036243.pdf",
+        "confianca": "media",
+        "nota": "Conta: 3,573 kW × 24 h ÷ 9,25 kg ≈ 9,3 kWh/kg, supondo que 3573 W é a potência na taxa máxima (a fonte não diz). O valor inclui bombas, controle e perdas da fonte. Teórico: ΔG = 2 × 237,1 kJ por mol de O2, ou 14,8 MJ/kg = 4,12 kWh/kg (1,23 V). Termoneutro: ΔH = 2 × 285,8 kJ, ou 17,9 MJ/kg = 4,96 kWh/kg (1,48 V)."
+      },
+      {
+        "chave": "eletrolise_kwh_por_kg_o2_teorico",
+        "valor": 4.12,
+        "unidade": "kWh/kg O2",
+        "descricao": "Mínimo teórico (energia livre de Gibbs) para tirar O2 da água",
+        "fonte": "Cálculo termodinâmico com ΔG°f(H2O líquida) = -237,1 kJ/mol",
+        "url": "https://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=6",
+        "confianca": "media",
+        "nota": "Pela entalpia (termoneutro), o valor é 4,96 kWh/kg. Conta minha, com valores-padrão de termoquímica, sem ler o número numa fonte da NASA."
+      },
+      {
+        "chave": "wrs_recuperacao_fracao",
+        "valor": 0.98,
+        "unidade": "fração",
+        "descricao": "Recuperação total de água da ISS com o processador de salmoura (BPA) ligado",
+        "fonte": "Williamson et al., 'Status of ISS Water Management and Recovery', ICES-2026-425 ('98+% when BPA is in operation'); NASA, 20/06/2023",
+        "url": "https://ntrs.nasa.gov/api/citations/20260004140/downloads/2026%20Status%20of%20ISS%20Water%20FINAL.pdf",
+        "confianca": "alta",
+        "nota": "Antes do BPA, a recuperação era de 93% a 94% (https://www.nasa.gov/missions/station/iss-research/nasa-achieves-water-recovery-milestone-on-international-space-station/). O UPA recupera 87% da urina do segmento americano (meta de 90%) e 70% da urina do segmento russo."
+      },
+      {
+        "chave": "wpa_capacidade_kg_h",
+        "valor": 5.9,
+        "unidade": "kg/h",
+        "descricao": "Vazão nominal de processamento do processador de água da ISS (WPA)",
+        "fonte": "Kayatin et al., 'Upgrades to the ISS Water Processor Assembly', ICES-2018-163 ('nominal flowrate of 13 lb/hr')",
+        "url": "https://ntrs.nasa.gov/api/citations/20180006391/downloads/20180006391.pdf",
+        "confianca": "media",
+        "nota": "13 lb/h = 5,9 kg/h. É a vazão nominal pelos leitos, não uma capacidade declarada. O WPA funciona em lotes. A NASA (2007) cita até cerca de 28 galões/dia (≈106 kg/d). De 2024 a 2026, a produção média foi de uns 24,5 L/d (ICES-2026-425)."
+      },
+      {
+        "chave": "upa_capacidade_kg_dia",
+        "valor": 9,
+        "unidade": "kg/dia",
+        "descricao": "Carga de projeto do processador de urina (UPA): urina + água de descarga",
+        "fonte": "ICES-2026-425 e ICES-2022-098 (Status of ISS Water Management and Recovery): 9 kg/dia (19,8 lb/dia), carga de 6 tripulantes",
+        "url": "https://ntrs.nasa.gov/api/citations/20260004140/downloads/2026%20Status%20of%20ISS%20Water%20FINAL.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "wrs_potencia_w",
+        "valor": 1355,
+        "unidade": "W",
+        "descricao": "Potência do sistema de recuperação de água da ISS (WRS = UPA + WPA)",
+        "fonte": "Jones et al., 'Developing the Water Supply System for Travel to Mars', ICES-2016-108 (NASA Ames), texto e Tabela 9",
+        "url": "https://ntrs.nasa.gov/api/citations/20160014539/downloads/20160014539.pdf",
+        "confianca": "media",
+        "nota": "É o teto de requisito ('less than 1,355 Watts'). A Tabela 9 do mesmo artigo usa 1,36 kW, com 1612 kg e 3,0 m³. Não achei média medida em órbita. O UPA trabalha com cerca de 25% de ciclo de uso, então a média real deve ser menor."
+      },
+      {
+        "chave": "pressao_cabine_kpa",
+        "valor": 101.3,
+        "unidade": "kPa",
+        "descricao": "Pressão total nominal da cabine da ISS (nível do mar)",
+        "fonte": "Perry et al. (NASA MSFC), 'Integrated Atmosphere Resource Recovery...', Tabela 1 (ISS a 101,3 kPa; faixa de 97,9 a 102,7); OCHMO-TB-003",
+        "url": "https://ntrs.nasa.gov/api/citations/20120015343/downloads/20120015343.pdf",
+        "confianca": "alta",
+        "nota": "NASA-STD-3001 Vol 2 Rev D [V2 6006]: para exposição indefinida, de 34,5 a 103 kPa. Atmosferas de exploração citadas no BVAD: 70,3 kPa com 26,5% de O2 e 56,5 a 57 kPa com 34% de O2."
+      },
+      {
+        "chave": "fracao_o2_cabine",
+        "valor": 0.21,
+        "unidade": "fração molar",
+        "descricao": "Fração de O2 no ar da cabine da ISS",
+        "fonte": "NASA OCHMO-TB-003 Habitable Atmosphere ('ISS: 14.7 psia, 21% O2')",
+        "url": "https://www.nasa.gov/wp-content/uploads/2023/12/ochmo-tb-003-habitable-atmosphere.pdf",
+        "confianca": "alta",
+        "nota": "NASA-STD-3001 [V2 6002]: pelo menos 30% de gás diluente (N2)."
+      },
+      {
+        "chave": "ppo2_min_kpa",
+        "valor": 19.5,
+        "unidade": "kPa",
+        "descricao": "Pressão parcial mínima de O2 na cabine da ISS (parâmetro de projeto)",
+        "fonte": "Perry et al., Tabela 1 'Cabin atmosphere design parameters for the ISS at 101.3 kPa' (ppO2 de 19,5 a 23,1 kPa)",
+        "url": "https://ntrs.nasa.gov/api/citations/20120015343/downloads/20120015343.pdf",
+        "confianca": "alta",
+        "nota": "Limites fisiológicos do BVAD (Tabela 4-1): perda mensurável de desempenho de 17,2 a 18,6 kPa e tolerância de 1 h em 15,2 a 17,2 kPa. NASA-STD-3001: PIO2 hipóxica leve de 127 mmHg e limite absoluto de 122 mmHg (média de 1 h)."
+      },
+      {
+        "chave": "ppo2_max_kpa",
+        "valor": 23.1,
+        "unidade": "kPa",
+        "descricao": "Pressão parcial máxima de O2 na cabine da ISS (parâmetro de projeto)",
+        "fonte": "Perry et al., Tabela 1 (ISS)",
+        "url": "https://ntrs.nasa.gov/api/citations/20120015343/downloads/20120015343.pdf",
+        "confianca": "alta",
+        "nota": "O limite fisiológico é bem mais alto: o BVAD (Tabela 4-1) dá 50,6 kPa como teto sem prejuízo à saúde. Na cabine, o limite real vem do risco de incêndio."
+      },
+      {
+        "chave": "ppco2_limite_operacional_kpa",
+        "valor": 0.4,
+        "unidade": "kPa",
+        "descricao": "Limite nominal de CO2 (média de 1 hora)",
+        "fonte": "NASA-STD-3001 Vol 2 Rev D, requisito [V2 6004] (≤ 3 mmHg, média de 1 h); BVAD Rev 2, seção 4.1 (diretiva do Controle da Missão: ≤ 0,40 kPa)",
+        "url": "https://www.nasa.gov/reference/6-0-natural-and-induced-environments-vol-2",
+        "confianca": "alta",
+        "nota": "0,40 kPa = 3,0 mmHg. Para manter o risco de dor de cabeça abaixo de 1%, a média de 7 dias deve ficar abaixo de 2,5 mmHg (0,33 kPa), segundo o OCHMO-TB-004. Faixa do CDRA: 2,0 a 3,9 mmHg."
+      },
+      {
+        "chave": "ppco2_limite_curto_prazo_kpa",
+        "valor": 1.33,
+        "unidade": "kPa",
+        "descricao": "CO2 fora do nominal, tolerável por até 8 horas, com ação imediata",
+        "fonte": "BVAD Rev 2, seção 4.1 / Tabela 4-1 (regras de voo da ISS, Flight Rule B17-5)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "media",
+        "nota": "1,33 kPa = 10 mmHg (≈1,3% a 1 atm, perto do SMAC de 1 h). Antes disso: a 1,01 kPa (7,6 mmHg) é obrigatório agir para baixar o CO2, e a 0,80 kPa (6 mmHg) por 1 dia consulta-se o médico de voo. O NASA-STD-3001 não fixa limites fora do nominal e deixa para o programa."
+      },
+      {
+        "chave": "ppco2_perigo_kpa",
+        "valor": 2,
+        "unidade": "kPa",
+        "descricao": "Nível de emergência de CO2 (máscaras individuais e possível evacuação)",
+        "fonte": "BVAD Rev 2, seção 4.1 (regras de voo da ISS: emergência a 2,00 ou 2,67 kPa)",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "media",
+        "nota": "2,00 kPa = 15 mmHg. O BVAD também cita 2,67 kPa (20 mmHg) como emergência. Na Apollo 13, o pico foi de 14,9 mmHg (OCHMO-TB-004)."
+      },
+      {
+        "chave": "umidade_relativa_min",
+        "valor": 0.25,
+        "unidade": "fração",
+        "descricao": "Umidade relativa mínima da cabine",
+        "fonte": "Perry et al., Tabela 1 (ISS: UR de 25% a 70%); NASA-STD-3001 Vol 2 Rev D [V2 6012] (média acima de 25%)",
+        "url": "https://ntrs.nasa.gov/api/citations/20120015343/downloads/20120015343.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "umidade_relativa_max",
+        "valor": 0.7,
+        "unidade": "fração",
+        "descricao": "Umidade relativa máxima da cabine da ISS",
+        "fonte": "Perry et al., Tabela 1 (ISS)",
+        "url": "https://ntrs.nasa.gov/api/citations/20120015343/downloads/20120015343.pdf",
+        "confianca": "alta",
+        "nota": "Pela curva de saúde do NASA-STD-3001 [V2 6012], o máximo é 75% a 18 °C e 25% a 27 °C. O BVAD (Tabela 4-1) usa 25/40/75% (mínimo/nominal/máximo)."
+      },
+      {
+        "chave": "temperatura_cabine_min_c",
+        "valor": 17.8,
+        "unidade": "°C",
+        "descricao": "Temperatura mínima da cabine da ISS",
+        "fonte": "Perry et al., Tabela 1 (ISS: 17,8 a 26,7 °C)",
+        "url": "https://ntrs.nasa.gov/api/citations/20120015343/downloads/20120015343.pdf",
+        "confianca": "alta",
+        "nota": "NASA-STD-3001: curva de saúde de 18 a 27 °C e zona de bom desempenho de 20 a 25 °C. BVAD Tabela 4-1: 291/296/300 K."
+      },
+      {
+        "chave": "temperatura_cabine_max_c",
+        "valor": 26.7,
+        "unidade": "°C",
+        "descricao": "Temperatura máxima da cabine da ISS",
+        "fonte": "Perry et al., Tabela 1 (ISS)",
+        "url": "https://ntrs.nasa.gov/api/citations/20120015343/downloads/20120015343.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "vazamento_ar_iss_kg_dia",
+        "valor": 0.23,
+        "unidade": "kg/dia",
+        "descricao": "Vazamento de ar da ISS (limite de projeto)",
+        "fonte": "Perry et al., Tabela 1 (Leakage rate < 0,23 kg/dia)",
+        "url": "https://ntrs.nasa.gov/api/citations/20120015343/downloads/20120015343.pdf",
+        "confianca": "alta",
+        "nota": "É um teto de projeto, não uma medição. O BVAD Rev 2 (Tabela 4-1) usa 0,02 kg/d por módulo como nominal, o dobro dos 0,01 medidos em solo, com faixa até 0,09 kg/d por módulo."
+      },
+      {
+        "chave": "volume_pressurizado_iss_m3",
+        "valor": 1005,
+        "unidade": "m³",
+        "descricao": "Volume pressurizado da ISS",
+        "fonte": "NASA, Space Station Facts and Figures (35.491 ft³)",
+        "url": "https://www.nasa.gov/international-space-station/space-station-facts-and-figures/",
+        "confianca": "alta"
+      },
+      {
+        "chave": "volume_habitavel_iss_m3",
+        "valor": 388,
+        "unidade": "m³",
+        "descricao": "Volume habitável da ISS, sem contar os veículos visitantes",
+        "fonte": "NASA, Space Station Facts and Figures (13.696 ft³)",
+        "url": "https://www.nasa.gov/international-space-station/space-station-facts-and-figures/",
+        "confianca": "alta"
+      },
+      {
+        "chave": "eva_o2_kg_h",
+        "valor": 0.086,
+        "unidade": "kg/(tripulante·h)",
+        "descricao": "Consumo metabólico de O2 de um astronauta em caminhada espacial (EVA)",
+        "fonte": "BVAD Rev 2, Tabela 4-70 Typical EVA Metabolic Loads",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "Não inclui as perdas do traje. Com vazamento, a Tabela 4-69 dá 0,069 a 0,110 kg/h (nominal 0,092). Um PLSS de ciclo fechado gasta 0,3 kg numa saída de 4 h."
+      },
+      {
+        "chave": "eva_co2_kg_h",
+        "valor": 0.109,
+        "unidade": "kg/(tripulante·h)",
+        "descricao": "CO2 produzido durante a EVA",
+        "fonte": "BVAD Rev 2, Tabela 4-70",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta"
+      },
+      {
+        "chave": "eva_agua_potavel_kg_h",
+        "valor": 0.24,
+        "unidade": "kg/(tripulante·h)",
+        "descricao": "Água potável extra bebida em EVA de mais de 3 h",
+        "fonte": "BVAD Rev 2, Tabela 4-70",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "Água de resfriamento do traje: 0,19 kg/h com radiador e 0,57 kg/h sem radiador (seção 4.6.2)."
+      },
+      {
+        "chave": "eva_duracao_max_h",
+        "valor": 8,
+        "unidade": "h",
+        "descricao": "Duração de uma saída tradicional de EVA",
+        "fonte": "BVAD Rev 2, seção 4.6.2 Surface Operations",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "Para Marte, o BVAD propõe saídas de meio dia: 4 h, duas por dia de trabalho. EVA de contingência: até 6 h. O recorde da ISS é cerca de 8 h 56 min (STS-102, 2001), dado de memória e não conferido nesta pesquisa. A pressão do traje é 29,6 kPa."
+      },
+      {
+        "chave": "calor_fusao_gelo_kj_kg",
+        "valor": 333.6,
+        "unidade": "kJ/kg",
+        "descricao": "Calor latente de fusão do gelo a 0 °C",
+        "fonte": "Dickinson e Osborne, 'Specific Heat and Heat of Fusion of Ice', Bulletin of the Bureau of Standards (NBS/NIST) vol. 12, 1915 (79,75 cal20/g)",
+        "url": "https://nvlpubs.nist.gov/nistpubs/bulletin/12/nbsbulletinv12n1p49_A2b.pdf",
+        "confianca": "alta",
+        "nota": "O valor moderno usual é 333,55 kJ/kg."
+      },
+      {
+        "chave": "calor_especifico_agua_kj_kg_k",
+        "valor": 4.184,
+        "unidade": "kJ/(kg·K)",
+        "descricao": "Calor específico da água líquida",
+        "fonte": "USGS Water Science School, 'Specific Heat Capacity and Water' (4184 J por kg por °C)",
+        "url": "https://www.usgs.gov/water-science-school/science/specific-heat-capacity-and-water",
+        "confianca": "alta",
+        "nota": "NIST WebBook: Cp do líquido ≈ 75,3 J/(mol·K) a 298 K, ou 4,18 kJ/(kg·K). A 0 °C é cerca de 4,22."
+      },
+      {
+        "chave": "calor_especifico_gelo_kj_kg_k",
+        "valor": 2.1,
+        "unidade": "kJ/(kg·K)",
+        "descricao": "Calor específico do gelo perto de 0 °C",
+        "fonte": "Dickinson e Osborne, NBS Bulletin vol. 12, 1915: s = 0,5057 + 0,001863·θ cal20/(g·°C), válida de -40 a -2 °C",
+        "url": "https://nvlpubs.nist.gov/nistpubs/bulletin/12/nbsbulletinv12n1p49_A2b.pdf",
+        "confianca": "alta",
+        "nota": "Pela fórmula: 2,10 a -2 °C, 2,08 a -5 °C e 2,04 a -10 °C. A -60 °C, típico de Marte, fica perto de 1,7 (extrapolação)."
+      },
+      {
+        "chave": "massa_tripulante_kg",
+        "valor": 82,
+        "unidade": "kg",
+        "descricao": "Massa do tripulante de referência usada nos valores metabólicos",
+        "fonte": "BVAD Rev 2, Tabela 3-31",
+        "url": "https://ntrs.nasa.gov/api/citations/20210024855/downloads/BVAD_2.15.22-final.pdf",
+        "confianca": "alta",
+        "nota": "Quociente respiratório nominal: 0,86."
+      }
+    ],
+    "observacoes": "1) O balanço do BVAD Rev 2 (Tabela 3-31) fecha exato. Água: entram 3,217 + 0,760 + 0,490 = 4,467 kg e saem 1,420 + 2,946 + 0,101 = 4,467 kg. Massa: 0,800 kg de alimento seco + 0,895 kg de O2 = 1,085 kg de CO2 + 0,490 kg de água metabólica + 0,120 kg de sólidos (diferença zero). Pela razão molar CO2/O2 o QR dá 0,88; a tabela declara 0,86.\n2) Incoerências: a bebida de 2,717 já inclui 0,717 kg de suor do exercício; a Tabela 4-20 dá 2,00 + 0,50 sem exercício. A Tabela 4-21 usa urina de 1,50 e condensado de 2,27, que não fecham com a Tabela 3-31. O projeto antigo da ISS usa O2 0,84 e CO2 1,0.\n3) Os valores mais incertos: potência do WRS (só o teto de 1355 W), potência do CDRA (1000 W arredondado contra 541 a 775 W em teste) e capacidade do WPA (vazão nominal de 13 lb/h, não capacidade declarada). O kWh/kg real da eletrólise (9,3) supõe que os 3573 W valem na taxa máxima.\n4) Higiene: a Tabela 4-20 deixa \"lavar as mãos\" como TBD para a base planetária. Usei 0,64 de Devon Island; a Tabela 4-21 usa 4,08. Os limites de CO2 de curto prazo e de perigo vêm de regras de voo da ISS citadas no BVAD; o NASA-STD-3001 só fixa o nominal de 3 mmHg.\n5) O vazamento de 0,23 kg/d é teto de projeto da ISS. O BVAD usa 0,02 kg/d por módulo, então o valor para uma base em Marte é escolha de projeto."
+  },
+  "marte": {
+    "parametros": [
+      {
+        "chave": "sol_segundos",
+        "valor": 88775.244,
+        "unidade": "s",
+        "descricao": "Duração do dia solar médio marciano (sol)",
+        "fonte": "NASA GISS Mars24 – Technical Notes (Allison & McEwen): 24 h 39 min 35,244 s",
+        "url": "https://www.giss.nasa.gov/tools/mars24/help/notes.html",
+        "confianca": "alta",
+        "nota": "A NSSDCA dá 'length of day' = 24,6597 h, ou seja, cerca de 88.775 s, o que confere."
+      },
+      {
+        "chave": "ano_marciano_sols",
+        "valor": 668.5921,
+        "unidade": "sol",
+        "descricao": "Ano tropical marciano em sols",
+        "fonte": "NASA GISS Mars24 – Technical Notes",
+        "url": "https://www.giss.nasa.gov/tools/mars24/help/notes.html",
+        "confianca": "alta",
+        "nota": "Equivale a 686,9725 dias terrestres. A NSSDCA dá período tropical de 686,972 dias."
+      },
+      {
+        "chave": "gravidade_m_s2",
+        "valor": 3.73,
+        "unidade": "m/s2",
+        "descricao": "Gravidade superficial média",
+        "fonte": "NSSDCA Mars Fact Sheet – Bulk parameters",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "confianca": "alta"
+      },
+      {
+        "chave": "pressao_media_superficie_pa",
+        "valor": 636,
+        "unidade": "Pa",
+        "descricao": "Pressão superficial média no raio médio",
+        "fonte": "NSSDCA Mars Fact Sheet – Atmosphere: 6,36 mb, variando de 4,0 a 8,7 mb",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "confianca": "alta",
+        "nota": "Varia de 400 a 870 Pa conforme a altitude e a estação."
+      },
+      {
+        "chave": "atmosfera_co2_fracao",
+        "valor": 0.951,
+        "unidade": "fração molar",
+        "descricao": "Fração de CO2 na atmosfera, em volume",
+        "fonte": "NSSDCA Mars Fact Sheet – Atmospheric composition: 95,1% CO2",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "confianca": "alta"
+      },
+      {
+        "chave": "temperatura_media_superficie_c",
+        "valor": -59,
+        "unidade": "°C",
+        "descricao": "Temperatura média global da superfície",
+        "fonte": "NSSDCA Mars Fact Sheet – Average temperature: ~214 K (-59 °C)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "confianca": "alta",
+        "nota": "Fontes secundárias citam -55 a -63 °C."
+      },
+      {
+        "chave": "semi_eixo_ua",
+        "valor": 1.52366231,
+        "unidade": "UA",
+        "descricao": "Semi-eixo maior da órbita de Marte",
+        "fonte": "NSSDCA Mars Fact Sheet – elementos orbitais J2000",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "confianca": "alta",
+        "nota": "Equivale a 227,956 milhões de km."
+      },
+      {
+        "chave": "excentricidade",
+        "valor": 0.0935,
+        "unidade": "adimensional",
+        "descricao": "Excentricidade orbital",
+        "fonte": "NSSDCA Mars Fact Sheet – Orbital parameters",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "confianca": "alta",
+        "nota": "O valor J2000 na mesma página é 0,09341233."
+      },
+      {
+        "chave": "obliquidade_graus",
+        "valor": 25.19,
+        "unidade": "graus",
+        "descricao": "Obliquidade do eixo em relação ao plano da órbita",
+        "fonte": "NSSDCA Mars Fact Sheet – Obliquity to orbit",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "confianca": "alta"
+      },
+      {
+        "chave": "ls_perielio_graus",
+        "valor": 251,
+        "unidade": "graus (Ls)",
+        "descricao": "Longitude solar areocêntrica do periélio",
+        "fonte": "NASA GISS Mars24 – Technical Notes: Ls,p = 251,000° + 0,0064891°×(ano-2000)",
+        "url": "https://www.giss.nasa.gov/tools/mars24/help/notes.html",
+        "confianca": "alta",
+        "nota": "O periélio cai perto do verão do hemisfério sul, que é a época das tempestades globais de poeira."
+      },
+      {
+        "chave": "constante_solar_terra_w_m2",
+        "valor": 1361,
+        "unidade": "W/m2",
+        "descricao": "Irradiância solar média a 1 UA",
+        "fonte": "NSSDCA Earth Fact Sheet – Solar irradiance",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/earthfact.html",
+        "confianca": "alta"
+      },
+      {
+        "chave": "irradiancia_media_marte_w_m2",
+        "valor": 586.2,
+        "unidade": "W/m2",
+        "descricao": "Irradiância solar média no topo da atmosfera de Marte",
+        "fonte": "NSSDCA Mars Fact Sheet – Solar irradiance",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "confianca": "alta"
+      },
+      {
+        "chave": "irradiancia_perielio_w_m2",
+        "valor": 713.2,
+        "unidade": "W/m2",
+        "descricao": "Irradiância no topo da atmosfera no periélio",
+        "fonte": "Calculado com a NSSDCA: 1361 W/m2 ÷ (206,650e6 km / 149,598e6 km)² = 1361 / 1,38137²",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "confianca": "media",
+        "nota": "Derivado pela lei do inverso do quadrado, não lido pronto. A mesma conta com o semi-eixo dá 586,2 W/m2, idêntico ao valor da página."
+      },
+      {
+        "chave": "irradiancia_afelio_w_m2",
+        "valor": 490.2,
+        "unidade": "W/m2",
+        "descricao": "Irradiância no topo da atmosfera no afélio",
+        "fonte": "Calculado com a NSSDCA: 1361 W/m2 ÷ (249,261e6 km / 149,598e6 km)² = 1361 / 1,66621²",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "confianca": "media",
+        "nota": "Derivado pela lei do inverso do quadrado. A razão periélio/afélio é cerca de 1,45."
+      },
+      {
+        "chave": "jezero_lat_graus",
+        "valor": 18.4446,
+        "unidade": "graus N",
+        "descricao": "Latitude do local de pouso do Perseverance (Octavia E. Butler Landing)",
+        "fonte": "Bell et al. 2022, Science Advances 8, eabo4856 (Mars 2020): 'Jezero crater (18.4446°N, 77.4509°E)'",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9683734/",
+        "confianca": "alta",
+        "nota": "O centro da cratera fica em cerca de 18,38°N 77,58°E. O pouso foi em 18/02/2021."
+      },
+      {
+        "chave": "jezero_lon_graus_leste",
+        "valor": 77.4509,
+        "unidade": "graus E",
+        "descricao": "Longitude leste do local de pouso",
+        "fonte": "Bell et al. 2022, Science Advances (Mars 2020)",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9683734/",
+        "confianca": "alta"
+      },
+      {
+        "chave": "jezero_elevacao_m",
+        "valor": -2600,
+        "unidade": "m (em relação ao geoide/datum)",
+        "descricao": "Elevação do fundo da cratera Jezero",
+        "fonte": "NASA/JPL PIA26476 'Jezero Crater Elevation Graph': cerca de 2.600 m abaixo do nível de referência",
+        "url": "https://www.jpl.nasa.gov/images/pia26476-jezero-crater-elevation-graph/",
+        "confianca": "alta",
+        "nota": "Valor arredondado. Uma tabela JPL de locais candidatos dá -2656 m (MOLA) no centro da elipse, visto só em trecho de busca. A escarpa do delta fica 70 a 90 m acima do ponto de pouso (Bell et al. 2022)."
+      },
+      {
+        "chave": "jezero_temp_min_tipica_c",
+        "valor": -83,
+        "unidade": "°C",
+        "descricao": "Temperatura mínima do ar medida pelo MEDA",
+        "fonte": "NASA – 'NASA's First Weather Report from Jezero Crater on Mars' (sols 43–44, 3–4/abr/2021)",
+        "url": "https://www.nasa.gov/feature/nasa-s-first-weather-report-from-jezero-crater-on-mars",
+        "confianca": "alta",
+        "nota": "Período: sols 43–44, primavera do norte. Ao longo do primeiro ano marciano, a UPV/EHU (Nature Geoscience 2023) dá média do ar de cerca de -55 °C, com variação dia-noite de 50 a 60 °C."
+      },
+      {
+        "chave": "jezero_temp_max_tipica_c",
+        "valor": -22,
+        "unidade": "°C",
+        "descricao": "Temperatura máxima do ar medida pelo MEDA no mesmo período",
+        "fonte": "NASA – 'NASA's First Weather Report from Jezero Crater on Mars' (sols 43–44)",
+        "url": "https://www.nasa.gov/feature/nasa-s-first-weather-report-from-jezero-crater-on-mars",
+        "confianca": "alta",
+        "nota": "Período: sols 43–44 (abr/2021). No verão a máxima do ar pode ser alguns graus maior, sem número confirmado aqui. A superfície do solo marcou -20 °C no 1º registro (19/02/2021)."
+      },
+      {
+        "chave": "jezero_pressao_min_pa",
+        "valor": 626,
+        "unidade": "Pa",
+        "descricao": "Pressão média diária mínima observada pelo MEDA (inverno do sul)",
+        "fonte": "Sánchez-Lavega et al. 2023, JGR Planets 128, e2022JE007480 (também no NTRS 20230001083): 626 Pa no sol 308 (Ls 157)",
+        "url": "https://arxiv.org/abs/2401.12931",
+        "confianca": "media",
+        "nota": "Número lido em trecho indexado do artigo; o PDF completo não abriu. Período do estudo: sols 15–460, Ls 13°–241° do ano marciano 36. A amplitude diária fica entre 10 e 35 Pa (Harri et al. 2024)."
+      },
+      {
+        "chave": "jezero_pressao_max_pa",
+        "valor": 761,
+        "unidade": "Pa",
+        "descricao": "Pressão média diária máxima observada pelo MEDA nos primeiros 250 sols",
+        "fonte": "Rodriguez-Manfredi et al. 2023, Nature Geoscience 16:19–28: subiu de 735 Pa (sols 15–20, Ls 13–16°) para o máximo de 761 Pa (sols 99–110, Ls 52–57°)",
+        "url": "https://www.nature.com/articles/s41561-022-01084-0",
+        "confianca": "media",
+        "nota": "Número lido em trecho indexado; a página do periódico pede login. Esse máximo é local, do outono do sul. O pico anual do ciclo de CO2 fica perto de Ls 250–270 (verão do sul) e pode passar um pouco disso, sem valor confirmado aqui."
+      },
+      {
+        "chave": "tau_ceu_limpo",
+        "valor": 0.5,
+        "unidade": "adimensional",
+        "descricao": "Opacidade óptica típica da poeira fora de tempestade",
+        "fonte": "NASA/JPL Education – 'Mars Rover Mission Comes to an End...': 'An average tau for Opportunity's location is 0.5'",
+        "url": "https://www.jpl.nasa.gov/edu/resources/teachable-moment/mars-rover-mission-comes-to-an-end-but-science-legacy-live-on/",
+        "confianca": "alta",
+        "nota": "Em Jezero, Bell et al. 2022 mediram τ(880 nm) de 0,4 a 0,5 nos primeiros 275 sols, chegando a cerca de 0,25 no início do verão."
+      },
+      {
+        "chave": "tau_tempestade_regional",
+        "valor": 1.5,
+        "unidade": "adimensional",
+        "descricao": "Opacidade em tempestade regional",
+        "fonte": "NASA InSight Blog, 20/out/2022: tau estimado em 1,5 durante a tempestade regional de set–out/2022",
+        "url": "https://science.nasa.gov/blogs/insight/",
+        "confianca": "alta",
+        "nota": "Faixa típica de 1 a 2. A JPL relatou τ de 1,0 a 2,0 em Gale em 12/06/2018 ('NASA Encounters the Perfect Storm for Science')."
+      },
+      {
+        "chave": "tau_tempestade_global_2018",
+        "valor": 10.8,
+        "unidade": "adimensional",
+        "descricao": "Opacidade máxima medida pelo Opportunity na tempestade global de 2018",
+        "fonte": "NASA/JPL – 'Opportunity Hunkers Down During Dust Storm': 'estimated tau of 10.8 as of Sunday morning' (10/06/2018)",
+        "url": "https://www.jpl.nasa.gov/news/opportunity-hunkers-down-during-dust-storm",
+        "confianca": "alta",
+        "nota": "A página 'On Mars, Light Is Energy' do NASA Science dá 10,5 para o mesmo dia (sol 5111). É o recorde em superfície."
+      },
+      {
+        "chave": "tau_tempestade_2007",
+        "valor": 5.5,
+        "unidade": "adimensional",
+        "descricao": "Opacidade máxima na tempestade de 2007 (Opportunity)",
+        "fonte": "NASA/JPL – 'Opportunity Hunkers Down During Dust Storm' (2018): 'The previous storm had an opacity level, or tau, somewhere above 5.5'",
+        "url": "https://www.jpl.nasa.gov/news/opportunity-hunkers-down-during-dust-storm",
+        "confianca": "alta",
+        "nota": "A Planetary Society (Lemmon) dá 5 a 5,5. O NASA Science 'A Darkened Mars Sky' (jul/2007) diz que 99% da luz direta foi bloqueada, o que equivale a τ de cerca de 4,6. Pior fase: meados de julho de 2007."
+      },
+      {
+        "chave": "opportunity_energia_normal_wh_sol",
+        "valor": 700,
+        "unidade": "Wh/sol",
+        "descricao": "Geração diária típica do Opportunity antes das tempestades de 2007",
+        "fonte": "NASA/JPL – 'NASA Mars Rovers Braving Severe Dust Storms' (atualizado em 23/07/2007): 'about 700 watt hours of electricity per day'",
+        "url": "https://www.jpl.nasa.gov/news/nasa-mars-rovers-braving-severe-dust-storms",
+        "confianca": "alta",
+        "nota": "Era junho de 2007, antes da tempestade. Com painel limpo no início da missão (jan/2004) eram cerca de 900 Wh/sol (JPL)."
+      },
+      {
+        "chave": "opportunity_energia_tempestade_2007_wh_sol",
+        "valor": 128,
+        "unidade": "Wh/sol",
+        "descricao": "Menor geração do Opportunity na tempestade de 2007",
+        "fonte": "NASA/JPL – 'NASA Mars Rovers Braving Severe Dust Storms': 148 Wh em 17/07/2007 e 128 Wh em 18/07/2007",
+        "url": "https://www.jpl.nasa.gov/news/nasa-mars-rovers-braving-severe-dust-storms",
+        "confianca": "alta",
+        "nota": "Datas: 18/07/2007, perto do sol 1237. Tau no pico, acima de 5,5. O boletim JPL de 13/07/2007 dava τ de 4,12 com 280 Wh no sol 1225 e previa cerca de 150 Wh com τ de 5,0."
+      },
+      {
+        "chave": "opportunity_energia_junho_2018_wh_sol",
+        "valor": 21,
+        "unidade": "Wh/sol",
+        "descricao": "Geração do Opportunity no último contato, durante a tempestade global",
+        "fonte": "NASA Science – 'On Mars, Light Is Energy': 'Energy level on that day (21 watt-hours)' (10/06/2018, sol 5111)",
+        "url": "https://science.nasa.gov/resource/on-mars-light-is-energy/",
+        "confianca": "alta",
+        "nota": "Data: 10/06/2018, com τ de 10,5 a 10,8. Planetary Society e SpaceNews dão 22 Wh. Antes da tempestade, em 2/06/2018, eram 645 Wh com τ de 0,6 (John Callas, JPL, citado pela SpaceNews)."
+      },
+      {
+        "chave": "insight_energia_inicio_wh_sol",
+        "valor": 5000,
+        "unidade": "Wh/sol",
+        "descricao": "Geração do InSight logo após o pouso",
+        "fonte": "NASA Science – 'InSight's Power Generation: After Landing and Spring 2022' (PIA25284): 'roughly 5,000 watt-hours each Martian day'",
+        "url": "https://science.nasa.gov/resource/insights-power-generation-after-landing-and-spring-2022/",
+        "confianca": "alta",
+        "nota": "Pouso em 26/11/2018, com painéis limpos. Na primavera de 2022 a geração já tinha caído para cerca de 500 Wh/sol pela poeira."
+      },
+      {
+        "chave": "insight_energia_final_wh_sol",
+        "valor": 285,
+        "unidade": "Wh/sol",
+        "descricao": "Última geração publicada do InSight",
+        "fonte": "NASA InSight Blog – 'NASA InSight's Power Level as of Dec. 12, 2022': cerca de 285 Wh/sol, tau de 0,96",
+        "url": "https://science.nasa.gov/blogs/insight/2022/12/12/nasa-insights-power-level-as-of-dec-12-2022/",
+        "confianca": "alta",
+        "nota": "Data: 12/12/2022. Em 18/12/2022 o InSight não respondeu, e a missão foi encerrada. Em out/2022 a tempestade regional derrubou de 425 para 275 Wh/sol (JPL)."
+      },
+      {
+        "chave": "deposicao_poeira_fracao_por_sol",
+        "valor": 0.0028,
+        "unidade": "fração/sol",
+        "descricao": "Perda média de geração por sol por poeira acumulada no painel",
+        "fonte": "NTRS 20020031145 – Jenkins, Landis et al., 'A Dust Characterization Experiment for Solar Cells Operating on Mars' (IEEE PVSC 2000): MAE do Pathfinder mediu 0,28% por dia",
+        "url": "https://ntrs.nasa.gov/citations/20020031145",
+        "confianca": "alta",
+        "nota": "Pathfinder, 1997. Conta minha com o InSight: de 5000 para 500 Wh em cerca de 1230 sols dá perto de 0,19%/sol, misturando estação e poeira. Os rovers MER tiveram limpezas por vento que zeravam parte da perda."
+      },
+      {
+        "chave": "eficiencia_painel_solar",
+        "valor": 0.27,
+        "unidade": "fração",
+        "descricao": "Eficiência de células de tripla junção GaInP/GaAs/Ge (tipo das usadas nos MER)",
+        "fonte": "NTRS 20030006444 – Landis, Bailey & Lyons, 'Photovoltaic Power for Future NASA Missions' (AIAA 2002-0718): 'up to 27% conversion efficiency in production lots'",
+        "url": "https://ntrs.nasa.gov/citations/20030006444",
+        "confianca": "alta",
+        "nota": "É eficiência AM0, de célula. No espectro avermelhado de Marte e no nível do painel (fator de empacotamento, perdas) o valor efetivo é menor. Células otimizadas para Marte chegaram a 27,4% (IEEE 2006, fonte secundária)."
+      },
+      {
+        "chave": "eficiencia_bateria_ida_e_volta",
+        "valor": 0.85,
+        "unidade": "fração",
+        "descricao": "Eficiência ida e volta de sistema de baterias de íon-lítio",
+        "fonte": "NREL/NLR Annual Technology Baseline 2025 – Utility-Scale Battery Storage: 'roundtrip efficiency of 85%'",
+        "url": "https://atb.nlr.gov/electricity/2025/utility-scale_battery_storage",
+        "confianca": "media",
+        "nota": "Não achei número da NASA. Os artigos da NASA sobre as baterias dos MER só citam 'energy efficiency' como vantagem, sem valor. O 85% é de sistema completo, CA-CA. Em barramento CC só de célula, o típico é 0,90 a 0,95 (estimativa de engenharia)."
+      },
+      {
+        "chave": "moxie_o2_max_g_h",
+        "valor": 12,
+        "unidade": "g/h",
+        "descricao": "Maior taxa de produção de O2 do MOXIE",
+        "fonte": "NASA/JPL – 'NASA's Oxygen-Generating Experiment MOXIE Completes Mars Mission' (06/09/2023)",
+        "url": "https://www.jpl.nasa.gov/news/nasas-oxygen-generating-experiment-moxie-completes-mars-mission/",
+        "confianca": "alta",
+        "nota": "Pureza de 98% ou mais. A meta original era 6 g/h. A especificação do instrumento diz até 10 g/h."
+      },
+      {
+        "chave": "moxie_potencia_w",
+        "valor": 300,
+        "unidade": "W",
+        "descricao": "Potência do instrumento MOXIE",
+        "fonte": "NASA Science – Perseverance Science Instruments (MOXIE): 'Power: 300 watts'",
+        "url": "https://science.nasa.gov/mission/mars-2020-perseverance/science-instruments/",
+        "confianca": "alta",
+        "nota": "O blog 'A Day Full of MOXIE' (NASA) diz que só cerca de 10% da potência vai para gerar O2; o resto vai para compressor e aquecimento. Uma unidade em escala real seria de cerca de 25 kW."
+      },
+      {
+        "chave": "moxie_o2_total_g",
+        "valor": 122,
+        "unidade": "g",
+        "descricao": "O2 total produzido pelo MOXIE",
+        "fonte": "NASA/JPL – 'MOXIE Completes Mars Mission': 'a total of 122 grams of oxygen'",
+        "url": "https://www.jpl.nasa.gov/news/nasas-oxygen-generating-experiment-moxie-completes-mars-mission/",
+        "confianca": "alta",
+        "nota": "Foram 16 rodadas, de 2021 até a última em 07/08/2023, que produziu 9,8 g. Cada rodada tinha cerca de 1 h de produção."
+      },
+      {
+        "chave": "kilopower_potencia_kw",
+        "valor": 10,
+        "unidade": "kWe",
+        "descricao": "Potência elétrica máxima por unidade do reator Kilopower",
+        "fonte": "NASA News Release – 'Demonstration Proves Nuclear Fission System Can Provide Space Exploration Power' (2018): 'up to 10 kilowatts of electrical power... continuously for at least 10 years'",
+        "url": "https://www.nasa.gov/news-release/demonstration-proves-nuclear-fission-system-can-provide-space-exploration-power/",
+        "confianca": "alta",
+        "nota": "A faixa de projeto é de 1 a 10 kWe. O protótipo KRUSTY era de 1 kWe (5 kWt). 'Four Kilopower units would provide enough power to establish an outpost.' O sucessor atual, Fission Surface Power, é da classe 40 kW."
+      },
+      {
+        "chave": "perseverance_velocidade_max_m_h",
+        "valor": 152,
+        "unidade": "m/h",
+        "descricao": "Velocidade máxima do Perseverance em terreno plano e duro",
+        "fonte": "NASA Science – Perseverance Rover Components: 'just under 0.1 mph (152 meters per hour)'",
+        "url": "https://science.nasa.gov/mission/mars-2020-perseverance/rover-components/",
+        "confianca": "alta",
+        "nota": "Ao dirigir consome menos de 200 W."
+      },
+      {
+        "chave": "perseverance_mmrtg_potencia_w",
+        "valor": 110,
+        "unidade": "W",
+        "descricao": "Potência elétrica do MMRTG no lançamento",
+        "fonte": "NASA Science – Rover Components: 'About 110 watts at launch, declining a few percent per year'",
+        "url": "https://science.nasa.gov/mission/mars-2020-perseverance/rover-components/",
+        "confianca": "alta",
+        "nota": "Tem duas baterias de íon-lítio para picos de demanda, que podem chegar a cerca de 900 W segundo o press kit."
+      },
+      {
+        "chave": "distancia_pouso_ao_delta_km",
+        "valor": 2,
+        "unidade": "km",
+        "descricao": "Distância do Octavia E. Butler Landing até a escarpa (frente) do delta, ponto mais próximo",
+        "fonte": "Bell et al. 2022, Science Advances: a escarpa oeste do delta vai de cerca de 2,0 a 6,0 km do OEB",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9683734/",
+        "confianca": "alta",
+        "nota": "A NASA diz que o remanescente do delta (Kodiak) fica a cerca de 2,3 km a oeste do pouso. Para chegar à base do delta (13/04/2022), o rover percorreu mais de 5 km por desvios."
+      },
+      {
+        "chave": "gelo_subsuperficie_latitude_min_graus",
+        "valor": 35,
+        "unidade": "graus N",
+        "descricao": "Menor latitude com gelo de água raso confirmado",
+        "fonte": "Golombek, Dundas et al. 2022, 'A Large New Crater Exposes the Limits of Water Ice on Mars' (JPL Open Repository / Science): 'new impact crater near 35ºN provides the lowest-latitude exposure of subsurface ice on Mars'",
+        "url": "https://dataverse.jpl.nasa.gov/dataset.xhtml?persistentId=doi:10.48577/jpl.BW3MLZ",
+        "confianca": "alta",
+        "nota": "Jezero, a 18,4°N, fica FORA dessa faixa: não há gelo raso confirmado ali. A base do jogo dependeria de água de minerais hidratados ou de transporte."
+      },
+      {
+        "chave": "opportunity_energia_inicio_missao_wh_sol",
+        "valor": 900,
+        "unidade": "Wh/sol",
+        "descricao": "Geração dos rovers MER logo após o pouso (painéis limpos)",
+        "fonte": "NASA/JPL – 'Mars Exploration Rover Mission Status' (21/10/2004): 'about 900 watt-hours per day for each rover'",
+        "url": "https://www.jpl.nasa.gov/news/mars-exploration-rover-mission-status-12/",
+        "confianca": "alta",
+        "nota": "O painel tinha cerca de 1,3 m2 de células de tripla junção."
+      },
+      {
+        "chave": "opportunity_energia_pre_tempestade_2018_wh_sol",
+        "valor": 645,
+        "unidade": "Wh/sol",
+        "descricao": "Geração do Opportunity antes da tempestade de 2018",
+        "fonte": "SpaceNews e Space.com, citando John Callas (JPL): 645 Wh com τ de 0,6 em 2/06/2018",
+        "url": "https://spacenews.com/?p=78285",
+        "confianca": "media",
+        "nota": "Fonte secundária séria citando o gerente do projeto. Não achei esse número em página da NASA."
+      },
+      {
+        "chave": "opportunity_energia_tau_4_12_wh_sol",
+        "valor": 280,
+        "unidade": "Wh/sol",
+        "descricao": "Geração do Opportunity com τ de 4,12 (sol 1225, julho de 2007)",
+        "fonte": "Boletim de status MER/JPL de 13/07/2007 (sols 1220–1225), reproduzido pela Mars Daily: 'tau ... 4.12, resulting in a mere 280 watt-hours'",
+        "url": "https://www.marsdaily.com/reports/Opportunity_Waiting_For_Dust_To_Settle_999.html",
+        "confianca": "media",
+        "nota": "Reprodução secundária de boletim da JPL; a página original da NASA saiu do ar. O mesmo boletim previa cerca de 150 Wh com τ de 5,0."
+      },
+      {
+        "chave": "jezero_tau_tipico",
+        "valor": 0.45,
+        "unidade": "adimensional",
+        "descricao": "Opacidade típica da poeira em Jezero (880 nm)",
+        "fonte": "Bell et al. 2022, Science Advances: τ de 0,4 a 0,5 nos primeiros 275 sols, cerca de 0,25 no início do verão",
+        "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9683734/",
+        "confianca": "alta",
+        "nota": "Antes das 10 h local, τ fica 0,05 a 0,10 mais alto por névoa de gelo de água."
+      },
+      {
+        "chave": "jezero_temp_media_c",
+        "valor": -55,
+        "unidade": "°C",
+        "descricao": "Temperatura média do ar em Jezero no primeiro ano marciano",
+        "fonte": "UPV/EHU via EurekAlert, sobre Rodriguez-Manfredi et al. 2023 (Nature Geoscience)",
+        "url": "https://www.eurekalert.org/news-releases/977001",
+        "confianca": "media",
+        "nota": "Comunicado de universidade da equipe do MEDA. A variação dia-noite típica é de 50 a 60 °C."
+      },
+      {
+        "chave": "jezero_pressao_amplitude_diaria_pa",
+        "valor": 35,
+        "unidade": "Pa",
+        "descricao": "Amplitude diária máxima da pressão em Jezero fora de tempestade forte",
+        "fonte": "Harri et al. 2024, JGR Planets, 'Perseverance MEDA Atmospheric Pressure Observations—Initial Results' (resumo): amplitude de 2 a 5% da média, ou 10 a 35 Pa",
+        "url": "https://agupubs.onlinelibrary.wiley.com/doi/full/10.1029/2023JE007880",
+        "confianca": "media",
+        "nota": "Lido no resumo indexado, porque a página do periódico bloqueou o acesso. Período: primeiros 414 sols. A tempestade regional a partir de Ls 135° quase dobrou a amplitude."
+      },
+      {
+        "chave": "insight_energia_tempestade_2022_wh_sol",
+        "valor": 275,
+        "unidade": "Wh/sol",
+        "descricao": "Geração do InSight sob tempestade regional (out/2022)",
+        "fonte": "NASA/JPL – 'NASA's InSight Waits Out Dust Storm' (07/10/2022): de 425 para 275 Wh/sol",
+        "url": "https://www.jpl.nasa.gov/news/nasas-insight-waits-out-dust-storm/",
+        "confianca": "alta",
+        "nota": "A tempestade foi vista em 21/09/2022. O blog da NASA dá τ de 1,5 em 19/10/2022."
+      },
+      {
+        "chave": "coeficiente_k_atenuacao_tau",
+        "valor": 0.33,
+        "unidade": "adimensional",
+        "descricao": "Coeficiente k de f(τ)=exp(-k·τ) para a energia diária em painel horizontal",
+        "fonte": "Calibração própria com os dados do Opportunity de 2018 (645 Wh com τ 0,6 e 22 Wh com τ 10,8)",
+        "url": "https://www.jpl.nasa.gov/news/opportunity-hunkers-down-during-dust-storm",
+        "confianca": "baixa",
+        "nota": "Estimativa de engenharia. k = ln(645/22)/(10,8-0,6) = 0,33; com 21 Wh e τ 10,5 dá 0,35. Erro de cerca de ±20% nos pontos de 2007 (ver observações)."
+      }
+    ],
+    "observacoes": "Fórmula proposta: E(τ) = E(τ_ref)·exp[-k·(τ - τ_ref)], ou seja, a fração relativa a céu sem poeira é f(τ) = exp(-k·τ). Vale para energia DIÁRIA em painel horizontal na mesma estação e com a mesma poeira no painel. É bem mais branda que a lei de Beer do feixe direto, exp(-τ/cos z), porque a luz espalhada para a frente compensa grande parte da perda.\nCalibração com o Opportunity em 2018: 645 Wh com τ=0,6 (2/jun) e 22 Wh com τ=10,8 (10/jun) dão k = ln(645/22)/10,2 = 0,33. Com 21 Wh e τ=10,5 (NASA Science) dá k = 0,35. Nos dois pontos de 2018 o erro é zero por construção.\nTeste independente em 2007, com base de 700 Wh e τ de base de cerca de 0,9 (base suposta): a fórmula prevê 242 Wh com τ=4,12 (medido 280 Wh, -14%) e 153 Wh com τ≈5,5 (medido 128 Wh, +20%). Erro típico de ±20% na faixa τ 1–6.\nValores práticos: f(0,5)=0,85; f(1,5)=0,61; f(5,5)=0,16; f(10,8)=0,03. k vale para baixa latitude (Meridiani, 2°S, e Jezero, 18°N, é parecido). O k sobe com ângulo zenital alto (inverno, latitude alta) e no fim da tarde.\nPara o jogo: E_sol = A·η·H0(Ls,lat)·exp(-0,33·τ)·(1-0,0028)^n, onde n é o número de sols desde a última limpeza do painel e H0 é a insolação diária de topo, entre 490 e 713 W/m2 conforme a distância ao Sol.\nLacunas: o mínimo e o máximo de pressão de Jezero vieram de trechos indexados dos artigos (confiança média). Para a eficiência de bateria não há número da NASA; usei o NREL ATB."
+  },
+  "dados": {
+    "endpoints": [
+      {
+        "nome": "NASA Image and Video Library API (busca)",
+        "url_exemplo": "https://images-api.nasa.gov/search?q=jezero&media_type=image",
+        "funciona": true,
+        "sem_chave": true,
+        "formato": "JSON no formato Collection+JSON (collection.version '1.1'). Campos: collection.href; collection.items[] com href (manifesto do asset), data[0] {nasa_id, title, date_created, center, description, keywords, media_type, secondary_creator}, links[] {href, rel = preview|alternate|canonical, render='image'}; collection.metadata.total_hits; collection.links (paginação next/prev). Aceita page_size, page, nasa_id, year_start/year_end.",
+        "observacao": "Testei em 2026-11-14 e voltou JSON válido. A busca 'jezero' sem page_size é grande (cerca de 231 mil caracteres numa página). Com page_size=5, a busca 'jezero crater landing site' deu total_hits=30. O thumbnail é o link com rel='preview' (~thumb.jpg), que nem sempre é o primeiro do array links (o primeiro costuma ser ~medium.jpg). Testei https://images-assets.nasa.gov/image/PIA23239/PIA23239~thumb.jpg: abre como image/jpeg de 76,1 KB, sem chave. O endpoint irmão https://images-api.nasa.gov/asset/PIA24542 (testado) lista orig, large, medium, small, thumb e metadata.json, mas devolve as URLs em http:// (trocar para https). Itens do JPL não têm o campo photographer: o crédito fica em secondary_creator.",
+        "data_teste": "2026-11-14"
+      },
+      {
+        "nome": "api.nasa.gov InSight Mars Weather Service",
+        "url_exemplo": "https://api.nasa.gov/insight_weather/?api_key=DEMO_KEY&feedtype=json&ver=1.0",
+        "funciona": true,
+        "sem_chave": false,
+        "formato": "JSON. Chaves de topo são os sóis ('675' a '681') + sol_keys + validity_checks. Cada sol tem AT {av, mn, mx} (temperatura do ar, °C), PRE {av, mn, mx} (pressão, Pa), HWS {av, mn, mx} (vento, m/s), First_UTC, Last_UTC e Season.",
+        "observacao": "Responde com DEMO_KEY (público, sem cadastro). Sem o parâmetro api_key dá HTTP 403 (testado). Os DADOS ESTÃO CONGELADOS: o último sol completo é o 681 (First_UTC 2020-10-25T22:29:51Z, Last_UTC 2020-10-26T23:09:26Z, Season 'fall'; AT média -62,434 °C, mín -95,447, máx -4,444; PRE média 743,55 Pa; HWS média 5,632 m/s). O sol 682 aparece como valid=false. A InSight encerrou a missão em 2022-12-21. Serve como pacote fixo de 'clima real de Marte', não como dado ao vivo. Limites do DEMO_KEY: 30 pedidos por hora e 50 por dia por IP (li em fontes secundárias, porque a página oficial carrega o texto por JavaScript).",
+        "data_teste": "2026-11-14"
+      },
+      {
+        "nome": "api.nasa.gov APOD (legado) com DEMO_KEY",
+        "url_exemplo": "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&date=2021-02-20",
+        "funciona": false,
+        "sem_chave": false,
+        "formato": "JSON {date, title, media_type, url, hdurl, explanation, service_version}. Hoje vem degradado: title='NASA Science', url/hdurl = logo da NASA (https://science.nasa.gov/wp-content/themes/nasa-child/assets/images/nasa-logo@2x.png), explanation genérica.",
+        "observacao": "Testei 4 vezes em 2026-11-14. Sem data (pede o APOD de hoje) dá HTTP 500, inclusive com &thumbs=true. Com date=2024-01-01, date=2021-02-20 ou count=1 responde 200, mas com conteúdo de preenchimento (logo da NASA no lugar da foto do dia). Por isso marquei como não funcionando para uso real. O aviso em https://api.nasa.gov/assets/html/header.html diz: 'The APOD API has been updated. It now returns information from https://science.nasa.gov/wp-json/wp/v2/apod-basic' e 'The legacy APOD API will be archived on December 1, 2026.'",
+        "data_teste": "2026-11-14"
+      },
+      {
+        "nome": "APOD novo (NASA Science WordPress REST)",
+        "url_exemplo": "https://science.nasa.gov/wp-json/wp/v2/apod-basic",
+        "funciona": true,
+        "sem_chave": true,
+        "formato": "JSON (array). Cada item tem date, post_id, title, permalink, url, media_type, hdurl, explanation, alt, credit, copyright, basic_html e basic_html_url.",
+        "observacao": "Substituto oficial do APOD indicado pela api.nasa.gov. Testei em 2026-11-14: o primeiro item é de 2026-11-14 ('Apollo 12 and Surveyor 3'). A resposta é pesada (cerca de 280 mil caracteres, porque traz o HTML completo de cada página), então convém guardar só os campos usados.",
+        "data_teste": "2026-11-14"
+      },
+      {
+        "nome": "Mars Trek WMTS (mosaico global colorido Viking MDIM 2.1, 232 m/pixel)",
+        "url_exemplo": "https://trek.nasa.gov/tiles/Mars/EQ/Mars_Viking_MDIM21_ClrMosaic_global_232m/1.0.0/default/default028mm/0/0/0.jpg",
+        "funciona": true,
+        "sem_chave": true,
+        "formato": "Tiles JPEG (image/jpeg) de 256x256 px, projeção equiretangular (EQ). Modelo de URL (do WMTSCapabilities): https://trek.nasa.gov/tiles/Mars/EQ/Mars_Viking_MDIM21_ClrMosaic_global_232m/1.0.0//{Style}/{TileMatrixSet}/{TileMatrix}/{TileRow}/{TileCol}.jpg, com Style=default e TileMatrixSet=default028mm. O nível 0 tem 2x1 tiles e o nível 1 tem 4x2, com TopLeftCorner -180 90.",
+        "observacao": "O tile 0/0/0 abriu como JPEG de 51,7 KB, sem chave. Capabilities em https://trek.nasa.gov/tiles/Mars/EQ/Mars_Viking_MDIM21_ClrMosaic_global_232m/1.0.0/WMTSCapabilities.xml (OGC WMTS 1.0.0; MatrixWidth e MatrixHeight vêm escritos como decimais, '2.0', e um parser estrito pode reclamar). Para jogo offline, baixar os níveis 0 a 3 e guardar localmente.",
+        "data_teste": "2026-11-14"
+      },
+      {
+        "nome": "Mars Rover Photos API (api.nasa.gov/mars-photos)",
+        "url_exemplo": "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=DEMO_KEY",
+        "funciona": false,
+        "sem_chave": false,
+        "formato": "Era JSON {photos[]: id, sol, camera, img_src, earth_date, rover}. Hoje responde HTTP 404.",
+        "observacao": "CONFIRMADO ARQUIVADO. Esta URL e também /mars-photos/api/v1/manifests/perseverance?api_key=DEMO_KEY dão HTTP 404 (testado em 2026-11-14). O aviso oficial em https://api.nasa.gov/assets/html/header.html diz: 'The Mars Rover API has also been archived.' Segundo fonte secundária (busca), o repositório de origem corincerami/mars-photo-api foi arquivado pelo dono em 2025-10-08. Alternativa: buscar fotos de rovers na NASA Image and Video Library.",
+        "data_teste": "2026-11-14"
+      }
+    ],
+    "fatos": [
+      {
+        "id": "marte-01",
+        "categoria": "marte",
+        "titulo": "Um dia em Marte",
+        "texto_crianca": "Um dia em Marte se chama sol e dura cerca de 24 horas e 40 minutos. É quase igual ao dia da Terra, só um pouquinho mais comprido.",
+        "valor": "24,6597 h (dia solar médio, cerca de 24 h 39 min)",
+        "fonte": "NASA NSSDCA, Mars Fact Sheet, tabela 'Orbital parameters', linha 'Length of day (hrs)'",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "data_referencia": "2025-05-19",
+        "confianca": "alta",
+        "nota": "A rotação sideral é de 24,6229 h. O dia solar (sol) é de 24,6597 h. Folha atualizada em 19 May 2025 (DRW)."
+      },
+      {
+        "id": "marte-02",
+        "categoria": "marte",
+        "titulo": "Gravidade fraquinha",
+        "texto_crianca": "Em Marte a gravidade é só cerca de 38% da gravidade da Terra. Uma criança de 30 kg se sentiria leve, como se tivesse uns 11 kg!",
+        "valor": "3,69 m/s² no equador (0,377 da Terra)",
+        "fonte": "NASA NSSDCA, Mars Fact Sheet, 'Bulk parameters', linha 'Surface acceleration (eq) (m/s2)' e razão Marte/Terra",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "data_referencia": "2025-05-19",
+        "confianca": "alta",
+        "nota": "Fiz a conta dos 11 kg: 30 x 0,377 = 11,3. A tabela comparativa da NSSDCA arredonda a gravidade para 3,7 m/s²."
+      },
+      {
+        "id": "marte-03",
+        "categoria": "marte",
+        "titulo": "Ar de gás carbônico",
+        "texto_crianca": "O ar de Marte é quase todo gás carbônico, o mesmo gás que a gente solta quando respira. Ele é tão fininho que a pressão lá é menos de 1% da pressão do ar na Terra.",
+        "valor": "CO2 95,1% (em volume); pressão de 6,36 mb (variando de 4,0 a 8,7 mb)",
+        "fonte": "NASA NSSDCA, Mars Fact Sheet, seção 'Mars Atmosphere' (Surface pressure; Composition)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "data_referencia": "2025-05-19",
+        "confianca": "alta",
+        "nota": "Outros gases: N2 2,59%, Ar 1,94%, O2 0,16%, CO 0,06%. Comparação: 6,36 mb = 0,00636 bar, contra 1 bar na Terra (tabela comparativa da NSSDCA), ou seja, cerca de 0,6%."
+      },
+      {
+        "id": "marte-04",
+        "categoria": "marte",
+        "titulo": "Muito frio",
+        "texto_crianca": "Marte é muito frio: a temperatura média fica perto de 60 graus abaixo de zero. No lugar mais quente pode chegar a 20 °C, e no mais frio, a uns 153 graus abaixo de zero.",
+        "valor": "média de cerca de -59 °C (214 K); faixa de -153 °C a +20 °C",
+        "fonte": "NASA NSSDCA, Mars Fact Sheet ('Average temperature ~214 K (-59 C)'); NASA Science, Mars Facts (faixa de temperatura)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "url_extra": "https://science.nasa.gov/mars/facts/",
+        "data_referencia": "2025-05-19",
+        "confianca": "alta",
+        "nota": "A tabela comparativa da NSSDCA usa -65 °C como média. No local do Viking 1, a variação ao longo do dia vai de -89 a -31 °C."
+      },
+      {
+        "id": "marte-05",
+        "categoria": "marte",
+        "titulo": "Por que Marte é vermelho",
+        "texto_crianca": "Marte parece vermelho porque o ferro das rochas e da poeira enferrujou. É o mesmo tipo de ferrugem que aparece num prego velho!",
+        "fonte": "NASA Science, Mars Facts ('The reason Mars looks reddish is due to oxidization — or rusting — of iron in the rocks...')",
+        "url": "https://science.nasa.gov/mars/facts/",
+        "data_referencia": "2026-07-10",
+        "confianca": "alta",
+        "nota": "Página atualizada em 10/07/2026. O prego velho é só uma comparação para a criança."
+      },
+      {
+        "id": "marte-06",
+        "categoria": "marte",
+        "titulo": "Duas luas",
+        "texto_crianca": "Marte tem duas luas pequenas, chamadas Fobos e Deimos. Deimos tem mais ou menos metade do tamanho de Fobos e fica bem mais longe de Marte.",
+        "valor": "2 luas (Fobos e Deimos)",
+        "fonte": "NASA NSSDCA, Mars Fact Sheet (Satellites: Phobos, Deimos); NASA Science, Mars Facts ('Deimos is about half as big as Phobos and orbits two and a half times farther away')",
+        "url": "https://science.nasa.gov/mars/facts/",
+        "url_extra": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "data_referencia": "2026-07-10",
+        "confianca": "alta"
+      },
+      {
+        "id": "marte-07",
+        "categoria": "marte",
+        "titulo": "Metade da Terra",
+        "texto_crianca": "Marte tem mais ou menos metade do tamanho da Terra. De um lado ao outro, ele mede cerca de 6.800 quilômetros.",
+        "valor": "diâmetro de 6.792 km; raio médio de 3.389,5 km (0,532 do raio da Terra)",
+        "fonte": "NASA NSSDCA, Mars Fact Sheet ('Volumetric mean radius' e razão 0,532); Planetary Fact Sheet - Metric (Diameter 6792 km)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "url_extra": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/",
+        "data_referencia": "2025-05-19",
+        "confianca": "alta"
+      },
+      {
+        "id": "marte-08",
+        "categoria": "marte",
+        "titulo": "Longe, longe",
+        "texto_crianca": "Marte fica, em média, a quase 228 milhões de quilômetros do Sol. A distância até a Terra muda muito: de uns 55 milhões até uns 401 milhões de quilômetros.",
+        "valor": "semieixo maior de 227,956 milhões de km; distância da Terra entre 54,6 e 401,4 milhões de km",
+        "fonte": "NASA NSSDCA, Mars Fact Sheet ('Semimajor axis (10^6 km)'; 'Distance from Earth' mínima e máxima)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "data_referencia": "2025-05-19",
+        "confianca": "alta"
+      },
+      {
+        "id": "marte-09",
+        "categoria": "marte",
+        "titulo": "Um ano bem comprido",
+        "texto_crianca": "Marte demora 687 dias da Terra para dar uma volta completa em torno do Sol. Então um ano marciano dura quase dois anos nossos!",
+        "valor": "686,980 dias terrestres (669,6 sóis)",
+        "fonte": "NASA NSSDCA, Mars Fact Sheet ('Sidereal orbit period (days)'); NASA Science, Mars Facts ('A year on Mars lasts 669.6 sols, which is the same as 687 Earth days')",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "url_extra": "https://science.nasa.gov/mars/facts/",
+        "data_referencia": "2025-05-19",
+        "confianca": "alta",
+        "nota": "687 / 365 = 1,88 ano terrestre."
+      },
+      {
+        "id": "jezero-01",
+        "categoria": "jezero",
+        "titulo": "A cratera Jezero",
+        "texto_crianca": "A cratera Jezero tem 45 quilômetros de largura. Ela fica na beira de uma grande planície chamada Isidis Planitia, um pouco ao norte do equador de Marte.",
+        "valor": "45 km (28 milhas) de largura",
+        "fonte": "NASA, press release 'NASA Announces Landing Site for Mars 2020 Rover' (19/11/2018)",
+        "url": "https://www.nasa.gov/news-release/nasa-announces-landing-site-for-mars-2020-rover/",
+        "data_referencia": "2018-11-19",
+        "confianca": "alta",
+        "nota": "Li a largura no release. A localização na borda oeste de Isidis Planitia, ao norte do equador, veio do trecho do mesmo release e do press kit do JPL mostrado na busca."
+      },
+      {
+        "id": "jezero-02",
+        "categoria": "jezero",
+        "titulo": "Um lago antigo com delta",
+        "texto_crianca": "Há uns 3,5 bilhões de anos, a cratera Jezero era um lago cheio de água. Um rio entrava nela e deixou um delta, um grande leque de areia, lama e pedras.",
+        "valor": "lago há cerca de 3,5 bilhões de anos",
+        "fonte": "NASA/JPL, Mars 2020 Perseverance Landing Press Kit, seção 'Landing Site' ('was home to a lake about 3.5 billion years ago' e 'an ancient river delta')",
+        "url": "https://www.jpl.nasa.gov/news/press_kits/mars_2020/landing/mission/landing_site/",
+        "data_referencia": "2021-02",
+        "confianca": "alta",
+        "nota": "O press kit de pouso é de fevereiro de 2021. O release de 2018 cita 'landforms reaching as far back as 3.6 billion years old' (as formas de relevo, não o lago)."
+      },
+      {
+        "id": "jezero-03",
+        "categoria": "jezero",
+        "titulo": "Por que Jezero foi escolhida",
+        "texto_crianca": "A NASA escolheu Jezero em 2018, depois de estudar mais de 60 lugares de Marte. O antigo lago e o delta podem ter guardado sinais de vida microscópica do passado.",
+        "valor": "escolhida em 19/11/2018 entre mais de 60 candidatos (busca de 5 anos)",
+        "fonte": "NASA, press release 'NASA Announces Landing Site for Mars 2020 Rover' ('could have collected and preserved ancient organic molecules and other potential signs of microbial life')",
+        "url": "https://www.nasa.gov/news-release/nasa-announces-landing-site-for-mars-2020-rover/",
+        "data_referencia": "2018-11-19",
+        "confianca": "alta"
+      },
+      {
+        "id": "perseverance-01",
+        "categoria": "perseverance",
+        "titulo": "O pouso do Perseverance",
+        "texto_crianca": "O robô Perseverance pousou na cratera Jezero em 18 de fevereiro de 2021. Até outubro de 2026, ele já tinha rodado mais de 45 quilômetros por lá.",
+        "valor": "pouso em 2021-02-18; hodômetro de 45,22 km em 2026-10-11",
+        "fonte": "NASA Science, página da missão Mars 2020: Perseverance Rover (lançamento 30/07/2020, pouso 18/02/2021; 'odometer reached 28.10 miles (45.22 kilometers)')",
+        "url": "https://science.nasa.gov/mission/mars-2020-perseverance/",
+        "data_referencia": "2021-02-18",
+        "confianca": "alta",
+        "nota": "O hodômetro é de 11/10/2026 (página atualizada em 14/10/2026). Esse número cresce: atualizar quando houver internet."
+      },
+      {
+        "id": "perseverance-02",
+        "categoria": "perseverance",
+        "titulo": "Tubinhos de amostras",
+        "texto_crianca": "O Perseverance guarda pedacinhos de rocha e de poeira de Marte em tubinhos bem fechados. Até julho de 2025 ele já tinha usado 33 tubos e deixou 10 deles no chão, num depósito chamado Three Forks.",
+        "valor": "33 tubos até 2025-07-24: 27 núcleos de rocha, 2 de regolito, 1 de atmosfera e 3 tubos-testemunha; 10 no depósito Three Forks e 23 a bordo",
+        "fonte": "NASA Science Photojournal, 'The 33 Sample Tubes Collected by Perseverance' (imagem adicionada em 24/07/2025)",
+        "url": "https://science.nasa.gov/photojournal/the-33-sample-tubes-collected-by-perseverance/",
+        "data_referencia": "2025-07-24",
+        "confianca": "alta",
+        "nota": "Contagem do sol 1.574. O depósito de Three Forks foi concluído em 28/01/2023. O número pode ter aumentado depois de 2025."
+      },
+      {
+        "id": "perseverance-03",
+        "categoria": "perseverance",
+        "titulo": "Ingenuity, o helicóptero",
+        "texto_crianca": "O Ingenuity foi a primeira aeronave a voar em outro planeta, a partir de 19 de abril de 2021. Ele foi feito para até 5 voos de teste, mas voou 72 vezes!",
+        "valor": "72 voos; 1º voo em 2021-04-19; altitude máxima de 12 m; mais de 2 h de voo no total; 14 vezes mais longe que o planejado",
+        "fonte": "NASA, press release 'After Three Years on Mars, NASA's Ingenuity Helicopter Mission Ends' (25/01/2024)",
+        "url": "https://www.nasa.gov/news-release/after-three-years-on-mars-nasas-ingenuity-helicopter-mission-ends/",
+        "data_referencia": "2024-01-25",
+        "confianca": "alta",
+        "nota": "A missão acabou porque uma ou mais pás do rotor se danificaram no pouso do último voo (18/01/2024)."
+      },
+      {
+        "id": "perseverance-04",
+        "categoria": "perseverance",
+        "titulo": "MOXIE fez oxigênio",
+        "texto_crianca": "O MOXIE, um aparelho dentro do Perseverance, fez oxigênio usando o gás carbônico do ar de Marte. No total fez 122 gramas, mais ou menos o que um cachorrinho respira em 10 horas.",
+        "valor": "122 g de O2 em 16 rodadas; pico de 12 g/h com pureza de 98% ou mais",
+        "fonte": "NASA, 'NASA's Oxygen-Generating Experiment MOXIE Completes Mars Mission' (release 2023-127)",
+        "url": "https://www.nasa.gov/missions/mars-2020-perseverance/perseverance-rover/nasas-oxygen-generating-experiment-moxie-completes-mars-mission/",
+        "data_referencia": "2023-09-06",
+        "confianca": "alta",
+        "nota": "O MOXIE 'separates one oxygen atom from each molecule of carbon dioxide'. A última rodada foi em 07/08/2023."
+      },
+      {
+        "id": "agua-01",
+        "categoria": "agua",
+        "titulo": "Gelo provado pela Phoenix",
+        "texto_crianca": "Em 2008, a sonda Phoenix esquentou um pouco do solo do norte de Marte num forninho e achou água. Os cientistas disseram que foi a primeira vez que a água de Marte foi tocada e provada.",
+        "valor": "água confirmada em 2008-07-31 pelo instrumento TEGA",
+        "fonte": "NASA, press release 08-195 'NASA Spacecraft Confirms Martian Water, Mission Extended' (citação de William Boynton, cientista-chefe do TEGA)",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/text/phoenix_pr_20080731.txt",
+        "url_canonica": "https://www.nasa.gov/home/hqnews/2008/jul/HQ_08_195_Phoenix_water.html",
+        "data_referencia": "2008-07-31",
+        "confianca": "alta",
+        "nota": "Li a cópia do release no NSSDCA. Antes disso, em 20/06/2008, o JPL anunciou que o material branco nas valas era gelo de água, porque sublimava (https://www.jpl.nasa.gov/news/nasa-phoenix-mars-lander-confirms-frozen-water/)."
+      },
+      {
+        "id": "agua-02",
+        "categoria": "agua",
+        "titulo": "Muito gelo no polo sul",
+        "texto_crianca": "No polo sul de Marte há tanto gelo que, se derretesse, cobriria o planeta inteiro com uma camada de água de uns 11 metros. Quem mediu isso foi um radar a bordo de uma nave em órbita.",
+        "valor": "camada equivalente de cerca de 11 m sobre o planeta todo; depósitos com até 3,7 km de profundidade e pelo menos 90% de água congelada",
+        "fonte": "NASA/JPL, notícia 'Mars' South Pole Ice Deep and Wide' (radar MARSIS da nave Mars Express)",
+        "url": "https://www.jpl.nasa.gov/news/mars-south-pole-ice-deep-and-wide/",
+        "data_referencia": "2007-03-15",
+        "confianca": "alta",
+        "nota": "A Mars Express é da ESA. O radar MARSIS foi feito em conjunto por NASA e Agência Espacial Italiana."
+      },
+      {
+        "id": "agua-03",
+        "categoria": "agua",
+        "titulo": "Água reciclada na ISS",
+        "texto_crianca": "Na Estação Espacial Internacional, quase toda a água é reciclada: cerca de 98%. Até o suor, o vapor da respiração e o xixi dos astronautas são limpos e viram água de beber de novo.",
+        "valor": "cerca de 98% de recuperação da água (antes do processador de salmoura era de 93 a 94%)",
+        "fonte": "NASA Marshall Space Flight Center, ficha 'Environmental Control and Life Support System' (MSFC-02-2025-G-657270), seção Water Recovery System; NASA, 'NASA Achieves Water Recovery Milestone on International Space Station' (20/06/2023)",
+        "url": "https://www.nasa.gov/wp-content/uploads/2025/08/g-657270-59-hp-environmental-control-and-life-support-system-eclss.pdf",
+        "url_extra": "https://www.nasa.gov/missions/station/iss-research/nasa-achieves-water-recovery-milestone-on-international-space-station/",
+        "data_referencia": "2023-06-20",
+        "confianca": "alta",
+        "nota": "A ficha da MSFC diz: 'ECLSS reclaims 98 percent of all astronaut sweat and urine' e que o sistema de reciclagem de água opera na estação desde 2008."
+      },
+      {
+        "id": "ar-01",
+        "categoria": "ar",
+        "titulo": "Tirando o gás carbônico do ar",
+        "texto_crianca": "Quando os astronautas respiram, eles soltam gás carbônico, que não pode se acumular dentro da estação. Máquinas com peneiras especiais, chamadas peneiras moleculares, prendem esse gás e deixam o ar limpo.",
+        "fonte": "NASA Marshall Space Flight Center, ficha 'Environmental Control and Life Support System', seção Air Revitalization System ('Carbon dioxide is removed using molecular sieves, materials that separate and capture gases based on their size.')",
+        "url": "https://www.nasa.gov/wp-content/uploads/2025/08/g-657270-59-hp-environmental-control-and-life-support-system-eclss.pdf",
+        "data_referencia": "2025",
+        "confianca": "alta",
+        "nota": "Código do documento: MSFC-02-2025. O mesmo sistema remove outros contaminantes com carvão ativado, um oxidador catalítico e hidróxido de lítio."
+      },
+      {
+        "id": "ar-02",
+        "categoria": "ar",
+        "titulo": "Oxigênio feito de água",
+        "texto_crianca": "Na ISS, o oxigênio vem da água: com eletricidade dos painéis solares, uma máquina quebra a água em oxigênio e hidrogênio. Depois o hidrogênio se junta ao gás carbônico e vira água de novo, mais um gás chamado metano.",
+        "fonte": "NASA Marshall Space Flight Center, ficha 'Environmental Control and Life Support System', seções Oxygen Generation System e ECLSS Facts (eletrólise; reator Sabatier)",
+        "url": "https://www.nasa.gov/wp-content/uploads/2025/08/g-657270-59-hp-environmental-control-and-life-support-system-eclss.pdf",
+        "data_referencia": "2025",
+        "confianca": "alta",
+        "nota": "O metano é jogado para o espaço. Na estação, esse processo se chama 'eletrólise' e usa 'an electrical current generated from the station's solar panels'."
+      },
+      {
+        "id": "energia-01",
+        "categoria": "energia",
+        "titulo": "Menos sol em Marte",
+        "texto_crianca": "Marte fica mais longe do Sol, então lá chega menos da metade da luz que chega à Terra: uns 43%. Por isso, um painel solar igual produz menos energia em Marte do que aqui.",
+        "valor": "586,2 W/m² em Marte contra 1.361,0 W/m² na Terra (razão de 0,431)",
+        "fonte": "NASA NSSDCA, Mars Fact Sheet, 'Bulk parameters', linha 'Solar irradiance (W/m2)'",
+        "url": "https://nssdc.gsfc.nasa.gov/planetary/factsheet/marsfact.html",
+        "data_referencia": "2025-05-19",
+        "confianca": "alta",
+        "nota": "A segunda frase é uma conclusão direta do número (mesmo painel, céu limpo). A poeira no ar e nos painéis reduz ainda mais a energia."
+      },
+      {
+        "id": "energia-02",
+        "categoria": "energia",
+        "titulo": "Opportunity e a tempestade de 2018",
+        "texto_crianca": "O robô Opportunity usava painéis solares e foi feito para durar só 90 dias marcianos, mas trabalhou mais de 14 anos. Em junho de 2018, uma tempestade de poeira cobriu Marte inteiro, tapou o Sol e ele nunca mais respondeu.",
+        "valor": "último contato em 2018-06-10; missão encerrada em 2019-02-13; mais de 45 km rodados; mais de mil comandos de resgate",
+        "fonte": "NASA Science, 'NASA's Opportunity Rover Mission on Mars Comes to End' (13/02/2019)",
+        "url": "https://science.nasa.gov/missions/mer/nasas-opportunity-rover-mission-on-mars-comes-to-end/",
+        "data_referencia": "2019-02-13",
+        "confianca": "alta",
+        "nota": "O relatório de fim de missão (NTRS 20200000214) fala em 'more than fourteen years operating on the surface' até o sol 5111. O release conta a missão de 2004 a 2019 como 'more than 15 years'."
+      },
+      {
+        "id": "energia-03",
+        "categoria": "energia",
+        "titulo": "InSight e os painéis empoeirados",
+        "texto_crianca": "A sonda InSight também usava energia do Sol e escutou 1.319 tremores em Marte, os martemotos. A poeira foi cobrindo os painéis, a energia caiu de uns 5.000 para uns 500 watts-hora por dia e a missão acabou em dezembro de 2022.",
+        "valor": "cerca de 5.000 Wh por sol logo após o pouso (nov/2018) e cerca de 500 Wh por sol na primavera de 2022; 1.319 martemotos; último contato em 2022-12-15",
+        "fonte": "NASA Science, 'InSight's Power Generation: After Landing and Spring 2022' (17/05/2022); NASA, 'NASA Retires InSight Mars Lander Mission After Years of Science' (21/12/2022)",
+        "url": "https://science.nasa.gov/resource/insights-power-generation-after-landing-and-spring-2022/",
+        "url_extra": "https://www.nasa.gov/missions/insight/nasa-retires-insight-mars-lander-mission-after-years-of-science/",
+        "data_referencia": "2022-12-21",
+        "confianca": "alta"
+      }
+    ],
+    "imagens": [
+      {
+        "nasa_id": "PIA23239",
+        "titulo": "Jezero Crater, Mars 2020's Landing Site",
+        "descricao_curta_pt": "A cratera Jezero vista lá de cima por uma nave em órbita: é o lugar onde o Perseverance pousou.",
+        "data": "2019-05-15T00:00:00Z",
+        "credito": "NASA/JPL-Caltech/MSSS/JHU-APL (centro: JPL)",
+        "url_thumb": "https://images-assets.nasa.gov/image/PIA23239/PIA23239~thumb.jpg",
+        "url_pagina": "https://images.nasa.gov/details/PIA23239",
+        "tema": "cratera Jezero vista de órbita",
+        "busca_usada": "q=jezero crater landing site"
+      },
+      {
+        "nasa_id": "PIA25212",
+        "titulo": "Jezero Crater's Delta Is Getting Closer",
+        "descricao_curta_pt": "O Perseverance olha para o delta de Jezero, onde um rio antigo deixou areia e pedras dentro de um lago.",
+        "data": "2022-04-19T00:00:00Z",
+        "credito": "NASA/JPL-Caltech/ASU/MSSS (centro: JPL)",
+        "url_thumb": "https://images-assets.nasa.gov/image/PIA25212/PIA25212~thumb.jpg",
+        "url_pagina": "https://images.nasa.gov/details/PIA25212",
+        "tema": "delta de Jezero",
+        "busca_usada": "q=jezero delta",
+        "alternativa_orbital": "PIA26252 'Jezero Crater Delta' (THEMIS VIS, 2023-12-05), thumb https://images-assets.nasa.gov/image/PIA26252/PIA26252~thumb.jpg"
+      },
+      {
+        "nasa_id": "PIA24542",
+        "titulo": "Perseverance's Selfie with Ingenuity",
+        "descricao_curta_pt": "O robô Perseverance tirou uma selfie com o helicóptero Ingenuity, que estava a uns 4 metros dele.",
+        "data": "2021-04-07T00:00:00Z",
+        "credito": "NASA/JPL-Caltech/MSSS (centro: JPL)",
+        "url_thumb": "https://images-assets.nasa.gov/image/PIA24542/PIA24542~thumb.jpg",
+        "url_pagina": "https://images.nasa.gov/details/PIA24542",
+        "tema": "selfie do Perseverance",
+        "busca_usada": "q=perseverance selfie"
+      },
+      {
+        "nasa_id": "PIA24550",
+        "titulo": "Ingenuity's First Flight Recorded by Mastcam-Z",
+        "descricao_curta_pt": "O helicóptero Ingenuity visto pela câmera do Perseverance no dia do primeiro voo de uma aeronave em outro planeta.",
+        "data": "2021-04-19T00:00:00Z",
+        "credito": "NASA/JPL-Caltech/ASU/MSSS (centro: JPL)",
+        "url_thumb": "https://images-assets.nasa.gov/image/PIA24550/PIA24550~thumb.jpg",
+        "url_pagina": "https://images.nasa.gov/details/PIA24550",
+        "tema": "Ingenuity",
+        "busca_usada": "q=ingenuity first flight"
+      },
+      {
+        "nasa_id": "PIA24176",
+        "titulo": "Engineers Lower MOXIE into Perseverance",
+        "descricao_curta_pt": "Engenheiros colocam o MOXIE, a máquina que fez oxigênio em Marte, dentro da barriga do Perseverance.",
+        "data": "2020-11-24T00:00:00Z",
+        "credito": "NASA/JPL-Caltech (centro: JPL)",
+        "url_thumb": "https://images-assets.nasa.gov/image/PIA24176/PIA24176~thumb.jpg",
+        "url_pagina": "https://images.nasa.gov/details/PIA24176",
+        "tema": "MOXIE",
+        "busca_usada": "q=MOXIE oxygen"
+      },
+      {
+        "nasa_id": "PIA22329",
+        "titulo": "Dust Storm Covers Opportunity",
+        "descricao_curta_pt": "Mapa de Marte mostrando a tempestade de poeira de 2018 crescendo sobre o lugar onde estava o robô Opportunity.",
+        "data": "2018-06-10T00:00:00Z",
+        "credito": "NASA/JPL-Caltech/MSSS (centro: JPL)",
+        "url_thumb": "https://images-assets.nasa.gov/image/PIA22329/PIA22329~thumb.jpg",
+        "url_pagina": "https://images.nasa.gov/details/PIA22329",
+        "tema": "tempestade de poeira em Marte",
+        "busca_usada": "q=mars global dust storm 2018",
+        "alternativa": "PIA22519 '2018 Giant Dust Storm on Mars' (2018-06-13), thumb https://images-assets.nasa.gov/image/PIA22519/PIA22519~thumb.jpg"
+      },
+      {
+        "nasa_id": "PIA10906",
+        "titulo": "Disappearing Ice",
+        "descricao_curta_pt": "Pedacinhos de gelo numa vala cavada pela sonda Phoenix somem aos poucos, porque viram vapor no ar fininho de Marte.",
+        "data": "2008-06-20T15:15:27Z",
+        "credito": "NASA/JPL-Caltech/University of Arizona/Texas A&M University (centro: JPL)",
+        "url_thumb": "https://images-assets.nasa.gov/image/PIA10906/PIA10906~thumb.jpg",
+        "url_pagina": "https://images.nasa.gov/details/PIA10906",
+        "tema": "gelo em Marte (Phoenix)",
+        "busca_usada": "q=phoenix lander ice"
+      },
+      {
+        "nasa_id": "PIA19400",
+        "titulo": "Sunset in Mars Gale Crater",
+        "descricao_curta_pt": "O pôr do sol em Marte, fotografado pelo Curiosity, fica azulado perto do Sol por causa da poeira fininha do ar.",
+        "data": "2015-05-08T23:48:38Z",
+        "credito": "NASA/JPL-Caltech/MSSS/Texas A&M Univ. (centro: JPL)",
+        "url_thumb": "https://images-assets.nasa.gov/image/PIA19400/PIA19400~thumb.jpg",
+        "url_pagina": "https://images.nasa.gov/details/PIA19400",
+        "tema": "pôr do sol em Marte",
+        "busca_usada": "q=sunset mars gale crater"
+      },
+      {
+        "nasa_id": "PIA23302",
+        "titulo": "First Humans on Mars (Artist's Concept)",
+        "descricao_curta_pt": "Desenho de artista que imagina os primeiros astronautas e suas casas em Marte.",
+        "data": "2019-06-12T00:00:00Z",
+        "credito": "NASA (centro: JPL)",
+        "url_thumb": "https://images-assets.nasa.gov/image/PIA23302/PIA23302~thumb.jpg",
+        "url_pagina": "https://images.nasa.gov/details/PIA23302",
+        "tema": "conceito artístico de base e astronautas em Marte",
+        "busca_usada": "q=astronauts mars habitat concept"
+      },
+      {
+        "nasa_id": "PIA25286",
+        "titulo": "InSight's Dusty Solar Panel",
+        "descricao_curta_pt": "Um painel solar da sonda InSight coberto de poeira, que foi diminuindo a energia dela pouco a pouco.",
+        "data": "2022-05-17T00:00:00Z",
+        "credito": "NASA/JPL-Caltech (centro: JPL)",
+        "url_thumb": "https://images-assets.nasa.gov/image/PIA25286/PIA25286~thumb.jpg",
+        "url_pagina": "https://images.nasa.gov/details/PIA25286",
+        "tema": "painéis solares empoeirados (InSight)",
+        "busca_usada": "q=insight dusty solar panel",
+        "alternativa": "PIA25287 'InSight's Final Selfie' (2022-05-23), thumb https://images-assets.nasa.gov/image/PIA25287/PIA25287~thumb.jpg"
+      }
+    ],
+    "observacoes": "Testes feitos em 2026-11-14, abrindo cada URL, sem escrever arquivos nem rodar comandos (só busca e leitura de páginas; a ficha PDF da MSFC foi lida a partir do download automático da ferramenta de leitura web). Resumo dos serviços: (1) a Image and Video Library funciona sem chave e é a melhor fonte para o pacote offline; o thumb é o link rel='preview', e /asset/<nasa_id> dá os tamanhos maiores (as URLs vêm em http, trocar para https). (2) InSight Weather responde com DEMO_KEY, mas os dados pararam no sol 681 (outubro de 2020); sem api_key dá 403. (3) O APOD legado está degradado (500 sem data; com data devolve o logo da NASA) e será arquivado em 01/12/2026; o substituto oficial science.nasa.gov/wp-json/wp/v2/apod-basic funciona sem chave. (4) Os tiles WMTS do Mars Trek abrem sem chave (JPEG de 256 px). (5) A Mars Rover Photos API está arquivada (404, com aviso oficial na api.nasa.gov). Todas as 10 imagens têm url_thumb copiado do link rel='preview' das respostas da API de busca; testei um deles (PIA23239~thumb.jpg) e abriu como JPEG. Todas são do JPL e não têm o campo photographer: o crédito vem de secondary_creator. Antes de publicar o jogo, conferir as diretrizes de uso de mídia da NASA (não li nesta sessão); a PIA23464 tem crédito de terceiro (US Embassy Sarajevo) e por isso não entrou. Os fatos usam fonte primária da NASA, com confiança 'alta'. As comparações para criança (prego enferrujado, peso de 11 kg) estão explicadas na 'nota'. Divergências registradas: temperatura média de -59 °C (folha de Marte) contra -65 °C (tabela comparativa); Opportunity com 'mais de 14 anos' de operação (relatório de fim de missão) contra 'mais de 15 anos' de missão (release). Números que mudam com o tempo e devem ser atualizados quando houver internet: hodômetro do Perseverance (45,22 km em 11/10/2026) e contagem de tubos de amostra (33 em 24/07/2025). Campos extras usados: confianca, nota, url_extra, url_canonica (fatos); data_teste (endpoints); tema, busca_usada, alternativa (imagens)."
+  }
+}

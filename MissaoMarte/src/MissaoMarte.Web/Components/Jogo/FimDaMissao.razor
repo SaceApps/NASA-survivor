@@ -1,0 +1,52 @@
+@inherits PainelBase
+
+@{
+    int estrelas = P.Estrelas();
+    string titulo = P.Fase switch
+    {
+        FaseMissao.Vitoria => "Missão cumprida!",
+        FaseMissao.Derrota => "Missão interrompida",
+        _ => "Missão incompleta",
+    };
+}
+
+<section class="cartao fim @P.Fase.ToString().ToLowerInvariant()">
+    <h2>@titulo</h2>
+    <p class="fim-motivo">@P.MotivoFim</p>
+    <div class="estrelas" role="img" aria-label="@($"{estrelas} de 5 estrelas")">
+        @for (int i = 0; i < 5; i++)
+        {
+            <span class="estrela @(i < estrelas ? "cheia" : "")"><Icone Nome="estrela" Tamanho="34" /></span>
+        }
+    </div>
+    <div class="fim-grade">
+        <div>
+            <h3>Missões de cada um</h3>
+            <ul class="missoes">
+                @foreach (var t in P.Tripulacao)
+                {
+                    var (ok, progresso) = P.MissaoIndividual(t.Profissao);
+                    <li class="@(ok ? "feito" : "")">
+                        <span class="avatar pequeno" style="background:@t.Profissao.Cor()">@t.Inicial</span>
+                        <span><b>@t.Nome</b> (@t.Profissao.Nome()): @t.Profissao.MissaoIndividual() <small>@(ok ? "Cumpriu." : "Não cumpriu.") @progresso</small></span>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div>
+            <h3>O que a missão mostrou</h3>
+            <ul class="numeros">
+                <li><span>Oxigênio feito a partir da água</span><b>@P.Relatorios.Sum(r => r.O2GeradoKg).ToString("0.0") kg</b></li>
+                <li><span>Gás carbônico tirado do ar</span><b>@P.Relatorios.Sum(r => r.Co2RemovidoKg).ToString("0.0") kg</b></li>
+                <li><span>Água usada que voltou a ser potável</span><b>@P.Relatorios.Sum(r => r.AguaRecuperadaKg).ToString("0") kg</b></li>
+                <li><span>Energia gerada pelos painéis</span><b>@P.Relatorios.Sum(r => r.GeradoKwh).ToString("0") kWh</b></li>
+                <li><span>Água tirada do solo de Marte</span><b>@P.Base.AguaExtraidaDeMarteKg.ToString("0.0") kg</b></li>
+                <li><span>Conta da massa (o que entrou, saiu e ficou)</span><b>fecha com @Math.Abs(P.DiferencaDeMassaKg).ToString("0.000000") kg de diferença</b></li>
+            </ul>
+        </div>
+    </div>
+    <div class="acoes">
+        <button class="botao principal" @onclick="Svc.Sair">Nova missão</button>
+        <button class="botao" @onclick='() => V.IrPara("relatorio")'>Rever os relatórios</button>
+    </div>
+</section>

@@ -1,0 +1,77 @@
+@inherits PainelBase
+
+@{
+    bool jogando = P.Fase == FaseMissao.EmAndamento;
+    var consertos = P.Base.Equipamentos.Where(e => (e.Saude < 0.999 || e.Desgaste >= 0.3) && !P.Servicos.Any(s => s.Tipo == "reparo" && s.Equip == e.Tipo)).ToList();
+}
+
+<section class="cartao larga estoque">
+    <ul class="numeros linha">
+        <li><span>Amostras na base, prontas para o laboratório</span><b>@P.AmostrasNaBase@(P.AmostrasChegando > 0 ? $" (+{P.AmostrasChegando} chegando; ficam prontas amanhã)" : "")</b></li>
+        <li><span>Amostras já analisadas</span><b>@P.AmostrasAnalisadas de 3</b></li>
+        <li><span>Ânimo da equipe</span><b>@P.Moral.ToString("0") de 100</b></li>
+        <li><span>Horas de trabalho por pessoa neste sol</span><b>@P.HorasPorSol h, a partir das 8 h</b></li>
+    </ul>
+</section>
+
+<div class="grade tripulacao">
+    @foreach (var t in P.Tripulacao)
+    {
+        var (ok, progresso) = P.MissaoIndividual(t.Profissao);
+        double livres = P.HorasLivres(t);
+        string saude = t.Saude <= 0 ? "perigo" : t.Saude < 50 ? "perigo" : t.Saude < 80 ? "atencao" : "bom";
+        <section class="cartao tripulante @(t.Id == V.TripulanteId ? "ativo" : "")" @onclick="() => V.Escolher(t.Id)">
+            <header>
+                <span class="avatar grande" style="background:@t.Profissao.Cor()">@t.Inicial</span>
+                <div>
+                    <h2>@t.Nome</h2>
+                    <span class="profissao">@t.Profissao.Nome()</span>
+                    <p class="fraco">@t.Profissao.Papel()</p>
+                </div>
+            </header>
+            <Medidor Nome="Saúde" Valor="@t.Saude.ToString("0")" Unidade="de 100" Fracao="@(t.Saude / 100)" Estado="@saude" />
+            <ul class="numeros">
+                <li><span><Icone Nome="relogio" Tamanho="15" /> Relógio</span><b>@Partida.HoraDoRelogio(t).ToString("0.#") h · @Horas(livres) livres</b></li>
+                <li><span>Onde está</span><b>@(t.NaBase ? "Na base" : (P.Cel(t.Pos)?.Nome ?? MapaJezero.NomeDoTerreno(P.Cel(t.Pos)!.Terreno)) + $", a {t.Pos.Distancia(Hex.Origem)} km")@(t.NoVeiculo ? " (no veículo)" : "")</b></li>
+                @if (NivelTexto >= 3)
+                {
+                    <li><span>Radiação recebida na missão</span><b>@t.DoseMsv.ToString("0.00") mSv</b></li>
+                }
+            </ul>
+            <p class="missao @(ok ? "feito" : "")"><Icone Nome="@(ok ? "bom" : "estrela")" Tamanho="16" /> <b>Missão de @t.Profissao.Nome():</b> @t.Profissao.MissaoIndividual() <small>@progresso</small></p>
+
+            @if (jogando && !t.Incapacitado)
+            {
+                <div class="acoes coluna" @onclick:stopPropagation="true">
+                    <button class="botao @(t.RotinaFeita ? "" : "principal")" disabled="@(t.RotinaFeita || !t.NaBase || livres < 1)" @onclick="() => Fazer(x => x.FazerRotina(t.Id))">
+                        @(t.RotinaFeita ? "Rotina feita" : $"Rotina: {t.Profissao.Rotina()} (1 h)")
+                    </button>
+                    @if (t.NaBase)
+                    {
+                        @foreach (var eq in consertos)
+                        {
+                            <button class="botao" @onclick="() => Fazer(x => x.Reparar(t.Id, eq.Tipo))"><Icone Nome="ferramenta" Tamanho="15" /> Consertar: @eq.Nome (@(t.Profissao == Profissao.Engenheiro ? 3 : 6) h)</button>
+                        }
+                        @if (P.Base.SujeiraPaineis >= 0.005 && !P.Servicos.Any(s => s.Tipo == "limpeza"))
+                        {
+                            <button class="botao" @onclick="() => Fazer(x => x.LimparPaineis(t.Id))">Limpar os painéis solares (@(t.Profissao == Profissao.Engenheiro ? 2 : 4) h, de traje)</button>
+                        }
+                        @if (P.AmostrasNaBase > 0)
+                        {
+                            <button class="botao" @onclick="() => Fazer(x => x.Analisar(t.Id))"><Icone Nome="ciencia" Tamanho="15" /> Analisar uma amostra (@(t.Profissao == Profissao.Cientista ? 2 : 4) h)</button>
+                        }
+                    }
+                    @foreach (var outro in P.Tripulacao.Where(o => o.Pos == t.Pos && o.Saude < 99.5))
+                    {
+                        <button class="botao" @onclick="() => Fazer(x => x.Tratar(t.Id, outro.Id))"><Icone Nome="saude" Tamanho="15" /> Cuidar de @(outro.Id == t.Id ? "si" : outro.Nome) (@(t.Profissao == Profissao.Medico ? 1 : 2) h)</button>
+                    }
+                    <button class="botao" @onclick='() => { V.Escolher(t.Id); V.Tocar(null); V.IrPara("mapa"); }'><Icone Nome="mapa" Tamanho="15" /> Sair para explorar (abrir o mapa)</button>
+                </div>
+            }
+            else if (t.Incapacitado)
+            {
+                <p class="frase perigo"><Icone Nome="perigo" Tamanho="16" /> @t.Nome precisa de socorro. Peça a alguém que esteja no mesmo lugar para cuidar.</p>
+            }
+        </section>
+    }
+</div>
